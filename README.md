@@ -6,3 +6,5 @@ For Binomial Probability Calculation -> https://hincaltopcuoglu.github.io/Binomi
 For Hypergeometric Distribution -> https://hincaltopcuoglu.github.io/hypergeometric_distribution.html
 
 For Beta Distribution -> https://hincaltopcuoglu.github.io/beta_distribution.html
+
+For Gamma Distribution -> https://hincaltopcuoglu.github.io/gamma_distribution.html
