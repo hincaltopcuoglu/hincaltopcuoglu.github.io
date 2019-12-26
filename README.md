@@ -10,3 +10,5 @@ For Beta Distribution -> https://hincaltopcuoglu.github.io/beta_distribution.htm
 For Gamma Distribution -> https://hincaltopcuoglu.github.io/gamma_distribution.html
 
 For Normal Distribution -> https://hincaltopcuoglu.github.io/normal_distribution.html
+
+For Beta Prior Binomial Data -> https://hincaltopcuoglu.github.io/beta_prior.html
