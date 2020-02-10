@@ -7,14 +7,16 @@ curve(dnorm(x, mean(discrete_normal_arr), sd(discrete_normal_arr)), add=TRUE, co
 
 ##' **define shannon entropy**
 shannon_entropy <- function(x){
-    df = count(x)
-    df$probs = df$freq / length(df)
-    for (i in 1:nrow(df)){
-      se<- -sum(df$probs[i] * log(df$probs[i]))
-      return(se)
-    }
+  df = count(x)
+  n = length(x)
+  df$probs = df$freq / n
+  se<- -sum(df$probs * log(df$probs))
+  return(se)
 }
+
 
 
 ##' **play it**
 shannon_entropy(discrete_normal_arr)
+
+
