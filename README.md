@@ -14,3 +14,5 @@ For Normal Distribution -> https://hincaltopcuoglu.github.io/normal_distribution
 For Beta Prior Binomial Data -> https://hincaltopcuoglu.github.io/beta_prior.html
 
 For Shannon Entropy -> https://hincaltopcuoglu.github.io/shannon_entropy.html
+
+For Asymptotic Feature of Shannon Entropy -> https://hincaltopcuoglu.github.io/asymptotic_feature_of_shannon_entropy.html
