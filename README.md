@@ -19,3 +19,4 @@ For Asymptotic Feature of Shannon Entropy -> https://hincaltopcuoglu.github.io/a
 
 For Reaching Best Entropy -> https://hincaltopcuoglu.github.io/reaching_best_entropy.html
 
+For Connection Between Different Entropies -> https://hincaltopcuoglu.github.io/connection_between_different_entropies.html
