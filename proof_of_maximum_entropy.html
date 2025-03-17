@@ -1,0 +1,181 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Basic Derivatives, Taylor Expansions to Proof of Maximum Entropy</title>
+
+    <!-- MathJax for LaTeX Support -->
+    <script type="text/javascript" async
+      src="https://polyfill.io/v3/polyfill.min.js?features=es6">
+    </script>
+    <script type="text/javascript" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+
+    <h1>Mathematical Proofs</h1>
+
+    <h2>Proof: Derivative of \( \ln p \)</h2>
+
+    <p>The derivative of \( \ln p \) is defined as:</p>
+
+    \[
+    \frac{d}{dp} \ln p = \lim_{\Delta p \to 0} \frac{\ln(p + \Delta p) - \ln p}{\Delta p}
+    \]
+
+    <p>Using the logarithm difference rule:</p>
+
+    \[
+    \ln(p + \Delta p) - \ln p = \ln \left( \frac{p + \Delta p}{p} \right)
+    \]
+
+    <p>Rewriting the derivative:</p>
+
+    \[
+    \frac{d}{dp} \ln p = \lim_{\Delta p \to 0} \frac{\ln(1 + \frac{\Delta p}{p})}{\Delta p}
+    \]
+
+    <p>Using the limit property:</p>
+
+    \[
+    \lim_{x \to 0} \frac{\ln(1 + x)}{x} = 1
+    \]
+
+    <p>where we set \( x = \frac{\Delta p}{p} \), we get:</p>
+
+    \[
+    \ln(1 + \frac{\Delta p}{p}) \approx \frac{\Delta p}{p}
+    \]
+
+    <p>Thus, our derivative simplifies to:</p>
+
+    \[
+    \frac{d}{dp} \ln p = \frac{1}{p}
+    \]
+
+    <hr>
+
+    <h2>Proof: Maximizing Entropy Using Lagrange Multipliers</h2>
+
+    <h3>Step 1: Define the Entropy Function</h3>
+
+    \[
+    H(p_1, p_2, \dots, p_n) = - \sum_{i=1}^{n} p_i \ln p_i
+    \]
+
+    <p>with the constraint:</p>
+
+    \[
+    \sum_{i=1}^{n} p_i = 1
+    \]
+
+    <h3>Step 2: Construct the Lagrange Function</h3>
+
+    \[
+    \mathcal{L}(p_1, p_2, \dots, p_n, \lambda) = - \sum_{i=1}^{n} p_i \ln p_i + \lambda \left( \sum_{i=1}^{n} p_i - 1 \right)
+    \]
+
+    <h3>Step 3: Differentiate the Entropy Term</h3>
+
+    \[
+    \frac{\partial}{\partial p_i} (- p_i \ln p_i) = - (\ln p_i + 1)
+    \]
+
+    <h3>Step 4: Differentiate the Lagrange Constraint</h3>
+
+    \[
+    \frac{\partial}{\partial p_i} \lambda \sum_{i=1}^{n} p_i = \lambda
+    \]
+
+    <h3>Step 5: Solve for \( p_i \)</h3>
+
+    \[
+    - (\ln p_i + 1) + \lambda = 0
+    \]
+
+    \[
+    \ln p_i = \lambda - 1
+    \]
+
+    \[
+    p_i = e^{\lambda - 1}
+    \]
+
+    <p>Since \( \sum p_i = 1 \), we solve:</p>
+
+    \[
+    n e^{\lambda - 1} = 1
+    \]
+
+    \[
+    e^{\lambda - 1} = \frac{1}{n}
+    \]
+
+    \[
+    p_i = \frac{1}{n}, \quad \forall i
+    \]
+
+    <p>This confirms entropy is maximized when all probabilities are equal.</p>
+
+    <hr>
+
+    <h2>Confirming Maximum Entropy Using Taylor Series</h2>
+
+    <h3>Step 1: Define Small Deviations</h3>
+
+    <p>Let:</p>
+
+    \[
+    p_i = \frac{1}{n} + \delta_i, \quad \text{where} \quad \sum_{i=1}^{n} \delta_i = 0
+    \]
+
+    <h3>Step 2: Taylor Expansion of \( H(p) \)</h3>
+
+    <p>Expanding entropy using a second-order Taylor series:</p>
+
+    \[
+    H(p + \delta) = H(p^*) + \sum_{i} \frac{\partial H}{\partial p_i} \Big|_{p^*} (p_i - p_i^*)
+    + \frac{1}{2} \sum_{i,j} \frac{\partial^2 H}{\partial p_i \partial p_j} \Big|_{p^*} (p_i - p_i^*) (p_j - p_j^*) + O(\delta^3)
+    \]
+
+    <h3>Step 3: Compute the First-Order Term</h3>
+
+    \[
+    \frac{\partial H}{\partial p_i} = - (\ln p_i + 1)
+    \]
+
+    <p>At \( p_i^* = 1/n \):</p>
+
+    \[
+    \frac{\partial H}{\partial p_i} \Big|_{p^*} = \ln n - 1
+    \]
+
+    <p>Since \( \sum (p_i - p_i^*) = 0 \), this term vanishes.</p>
+
+    <h3>Step 4: Compute the Second-Order Term</h3>
+
+    \[
+    \frac{\partial^2 H}{\partial p_i^2} = -\frac{1}{p_i}
+    \]
+
+    <p>At \( p_i^* = 1/n \):</p>
+
+    \[
+    \frac{\partial^2 H}{\partial p_i^2} = -n
+    \]
+
+    <p>So the second-order term is:</p>
+
+    \[
+    \frac{1}{2} \sum_i (-n) (p_i - p_i^*)^2 = -\frac{n}{2} \sum_i (p_i - p_i^*)^2
+    \]
+
+    <p>Since \( \sum_i (p_i - p_i^*)^2 \geq 0 \), this term is **always negative**, confirming **concavity**.</p>
+
+    <p>Thus, entropy is maximized at \( p_i = 1/n \)!</p>
+
+</body>
+</html>
