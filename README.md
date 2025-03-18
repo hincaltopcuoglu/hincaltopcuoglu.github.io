@@ -22,3 +22,5 @@ For Reaching Best Entropy -> https://hincaltopcuoglu.github.io/reaching_best_ent
 For Connection Between Different Entropies -> https://hincaltopcuoglu.github.io/connection_between_different_entropies.html
 
 For Proof of The Maximum Entropy using basic proofs of derivatives to taylor series expansion -> https://hincaltopcuoglu.github.io/proof_of_maximum_entropy.html
+
+For Understanding Attention Mechanism -> https://hincaltopcuoglu.github.io/attention_mechanism_explained.html
