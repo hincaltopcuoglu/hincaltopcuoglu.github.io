@@ -24,3 +24,5 @@ For Connection Between Different Entropies -> https://hincaltopcuoglu.github.io/
 For Proof of The Maximum Entropy using basic proofs of derivatives to taylor series expansion -> https://hincaltopcuoglu.github.io/proof_of_maximum_entropy.html
 
 For Understanding Attention Mechanism -> https://hincaltopcuoglu.github.io/attention_mechanism_explained.html
+
+For the Proof of Joint Entropy using Marginal and Conditional Entropy -> https://hincaltopcuoglu.github.io/proof_of_the_joint_entropy_using_conditonal_entropy.html
