@@ -1,14 +1,10 @@
----
-layout: default
-title: "Maximum Entropy with Lagrange Multipliers"
-math: true
-permalink: /maximum-entropy/
----
 
-<!-- Load MathJax -->
-<script type="text/javascript" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+--- 
+layout: default 
+title: "Maximum Entropy with Lagrange Multipliers" 
+math: true 
+permalink: /maximum-entropy/ 
+---
 
 ## 📘 Maximum Entropy with Lagrange Multipliers
 
