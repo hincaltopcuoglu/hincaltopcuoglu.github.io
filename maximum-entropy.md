@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Maximum Entropy with Lagrange Multipliers"
+math: true
+permalink: /maximum-entropy/
+---
 
 ## 📘 Maximum Entropy with Lagrange Multipliers
 
