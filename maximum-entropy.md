@@ -1,6 +1,18 @@
+---
+layout: default
+title: "Maximum Entropy with Lagrange Multipliers"
+math: true
+permalink: /maximum-entropy/
+---
+
+<!-- Load MathJax -->
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 ## 📘 Maximum Entropy with Lagrange Multipliers
 
-We want to find the discrete probability distribution \(\{p_i\}_{i=1}^n\) that maximizes Shannon entropy:
+We want to find the discrete probability distribution \( \{p_i\}_{i=1}^n \) that maximizes Shannon entropy:
 
 $$
 H(p) = -\sum_{i=1}^n p_i \log p_i
@@ -9,13 +21,11 @@ $$
 Subject to:
 
 - **Normalization:**
-
 $$
 \sum_{i=1}^n p_i = 1
 $$
 
 - **Expectation constraint:**
-
 $$
 \sum_{i=1}^n p_i x_i = M
 $$
@@ -24,7 +34,7 @@ $$
 
 ### 🪮 Step 1: Lagrangian Formulation
 
-We define the Lagrangian with multipliers \(\lambda\) and \(\theta\):
+We define the Lagrangian with multipliers \( \lambda \) and \( \theta \):
 
 $$
 \mathcal{L}(p_1, \dots, p_n, \lambda, \theta) =
@@ -37,7 +47,7 @@ $$
 
 ### 🧠 Step 2: Take Derivatives
 
-With respect to \(p_i\):
+With respect to \( p_i \):
 
 $$
 \frac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - \theta x_i = 0
@@ -69,8 +79,7 @@ $$
 Z = \sum_{j=1}^n \exp(-\theta x_j)
 $$
 
-We solve for \(\theta\) using:
-
+We solve for \( \theta \) using:
 $$
 \sum_{i=1}^n p_i x_i = M
 $$
@@ -144,7 +153,7 @@ def max_entropy_vs_random(n=10, M_target=5.5):
   $$
   p_i = \frac{1}{Z} \exp(-\theta x_i)
   $$
-- ✅ Solved for \(\theta\) numerically
+- ✅ Solved for \( \theta \) numerically
 - ✅ Compared entropy of random vs optimal distribution
 
 ---
