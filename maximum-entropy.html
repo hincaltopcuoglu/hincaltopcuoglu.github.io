@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,30 +77,60 @@
 
 <h2>👉 Python Code Implementation</h2>
 
-<pre><code># Python-style pseudocode
-import numpy as np
+<pre><code>import numpy as np
 from scipy.optimize import root_scalar
 
 def max_entropy_vs_random(n=10, M_target=5.5):
+    \"\"\"
+    Compares entropy of a random distribution vs. the distribution
+    that maximizes entropy under a given expectation constraint.
+    \"\"\"
     x = np.arange(1, n + 1)
 
+    # 1. Generate a random distribution
     rand_vals = np.random.rand(n)
-    p_random = rand_vals / rand_vals.sum()
+    p_random = rand_vals / np.sum(rand_vals)
     entropy_random = -np.sum(p_random * np.log(p_random))
+    expected_random = np.sum(p_random * x)
 
+    print(\"🎲 Random Distribution:\")
+    for i, pi in enumerate(p_random, 1):
+        print(f\"  p{i} = {pi:.6f}\")
+    print(f\"  ∑p_i = {np.sum(p_random):.6f}\")
+    print(f\"  ∑p_i * x_i = {expected_random:.6f}\")
+    print(f\"  Entropy = {entropy_random:.6f}\\n\")
+
+    # 2. Solve for maximum entropy distribution
     def constraint(theta):
-        Z = np.sum(np.exp(-theta * x))
-        p = np.exp(-theta * x) / Z
+        exp_terms = np.exp(-theta * x)
+        Z = np.sum(exp_terms)
+        p = exp_terms / Z
         return np.sum(p * x) - M_target
 
-    sol = root_scalar(constraint, bracket=[-10, 10])
+    sol = root_scalar(constraint, bracket=[-10, 10], method='brentq')
     theta = sol.root
-    Z = np.sum(np.exp(-theta * x))
-    p_opt = np.exp(-theta * x) / Z
-    entropy_opt = -np.sum(p_opt * np.log(p_opt))
 
-    print("Random entropy:", entropy_random)
-    print("Maximum entropy:", entropy_opt)
+    exp_terms = np.exp(-theta * x)
+    Z = np.sum(exp_terms)
+    p_opt = exp_terms / Z
+    entropy_opt = -np.sum(p_opt * np.log(p_opt))
+    expected_opt = np.sum(p_opt * x)
+    C = 1 / Z
+    lambda_val = -1 - np.log(C)
+
+    print(\"📈 Maximum Entropy Distribution:\")
+    for i, pi in enumerate(p_opt, 1):
+        print(f\"  p{i} = {pi:.6f}\")
+    print(f\"  θ = {theta:.6f}\")
+    print(f\"  λ = {lambda_val:.6f}\")
+    print(f\"  ∑p_i = {np.sum(p_opt):.6f}\")
+    print(f\"  ∑p_i * x_i = {expected_opt:.6f} (target M = {M_target})\")
+    print(f\"  Entropy = {entropy_opt:.6f}\")
+
+    print(\"\\n📊 Entropy Comparison:\")
+    print(f\"  Random Entropy  = {entropy_random:.6f}\")
+    print(f\"  Maximum Entropy = {entropy_opt:.6f}\")
+    print(f\"  Difference      = {entropy_opt - entropy_random:.6f}\")
 </code></pre>
 
 <hr>
