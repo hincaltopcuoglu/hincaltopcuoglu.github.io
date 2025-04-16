@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maximum Entropy with Lagrange Multipliers</title>
+
+  <!-- MathJax for LaTeX support -->
   <script>
     window.MathJax = {
       tex: {
@@ -14,10 +16,17 @@
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+
   <style>
     body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; max-width: 800px; margin: auto; }
     code { background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
     pre { background: #f4f4f4; padding: 12px; overflow-x: auto; border-radius: 4px; }
+    .code-label { font-weight: bold; margin-top: 20px; font-size: 1.1rem; }
   </style>
 </head>
 <body>
@@ -25,7 +34,6 @@
 <h2>📘 Maximum Entropy with Lagrange Multipliers</h2>
 
 <p>We want to find the discrete probability distribution \( \{p_i\}_{i=1}^n \) that maximizes Shannon entropy:</p>
-
 <p>\[ H(p) = -\sum_{i=1}^n p_i \log p_i \]</p>
 
 <p>Subject to:</p>
@@ -37,9 +45,7 @@
 <hr>
 
 <h3>🪮 Step 1: Lagrangian Formulation</h3>
-
 <p>We define the Lagrangian with multipliers \( \lambda \) and \( \theta \):</p>
-
 <p>\[
 \mathcal{L}(p_1, \dots, p_n, \lambda, \theta) =
 -\sum_{i=1}^n p_i \log p_i
@@ -50,27 +56,27 @@
 <hr>
 
 <h3>🧠 Step 2: Take Derivatives</h3>
-
 <p>With respect to \( p_i \):</p>
-
 <p>\[ \frac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - \theta x_i = 0 \]</p>
 
+<p>With respect to \( \lambda \):</p>
+<p>\[ \frac{\partial \mathcal{L}}{\partial \lambda} = -\left( \sum_{i=1}^n p_i - 1 \right) = 0 \]</p>
+
+<p>With respect to \( \theta \):</p>
+<p>\[ \frac{\partial \mathcal{L}}{\partial \theta} = -\left( \sum_{i=1}^n p_i x_i - M \right) = 0 \]</p>
+
 <p>Solving:</p>
-
 <p>\[ p_i = \exp(-1 - \lambda - \theta x_i) \]</p>
-
 <p>Use the partition function:</p>
-
-<p>\[ Z = \sum_{j=1}^n \exp(-\theta x_j) \quad \Rightarrow \quad p_i = \frac{1}{Z} \exp(-\theta x_i) \]</p>
+<p>\[ Z = \sum_{j=1}^n \exp(-\theta x_j) \Rightarrow p_i = \frac{1}{Z} \exp(-\theta x_i) \]</p>
 
 <hr>
 
 <h3>✅ Final Result</h3>
-
-<p>\[ \boxed{p_i = \frac{1}{Z} \exp(-\theta x_i)} \quad \text{where} \quad Z = \sum_{j=1}^n \exp(-\theta x_j) \]</p>
-
+<p>\[
+\boxed{p_i = \frac{1}{Z} \exp(-\theta x_i)} \quad \text{where} \quad Z = \sum_{j=1}^n \exp(-\theta x_j)
+\]</p>
 <p>We solve for \( \theta \) using:</p>
-
 <p>\[ \sum_{i=1}^n p_i x_i = M \]</p>
 
 <hr>
