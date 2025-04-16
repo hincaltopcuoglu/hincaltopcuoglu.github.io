@@ -5,6 +5,13 @@ math: true
 permalink: /maximum-entropy/
 ---
 
+<!-- Load MathJax for LaTeX rendering -->
+<script type="text/javascript"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
 ## 📘 Maximum Entropy with Lagrange Multipliers
 
 We aim to find the discrete probability distribution \( \{p_i\}_{i=1}^n \) that maximizes entropy under known constraints.
