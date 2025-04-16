@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: "Maximum Entropy with Lagrange Multipliers"
@@ -22,11 +21,13 @@ $$
 Subject to:
 
 - **Normalization:**
+
 $$
 \sum_{i=1}^n p_i = 1
 $$
 
 - **Expectation constraint:**
+
 $$
 \sum_{i=1}^n p_i x_i = M
 $$
@@ -35,15 +36,13 @@ $$
 
 ### 🪮 Step 1: Lagrangian Formulation
 
-We define the Lagrangian with multipliers \( \lambda \) and \( 	heta \):
+We define the Lagrangian with multipliers \( \lambda \) and \( \theta \):
 
 $$
-\mathcal{L}(p_1, \dots, p_n, \lambda, 	heta) =
+\mathcal{L}(p_1, \dots, p_n, \lambda, \theta) =
 -\sum_{i=1}^n p_i \log p_i
-- \lambda \left( \sum_{i=1}^n p_i - 1 
-ight)
-- 	heta \left( \sum_{i=1}^n p_i x_i - M 
-ight)
+- \lambda \left( \sum_{i=1}^n p_i - 1 \right)
+- \theta \left( \sum_{i=1}^n p_i x_i - M \right)
 $$
 
 ---
@@ -53,21 +52,21 @@ $$
 With respect to \( p_i \):
 
 $$
-rac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - 	heta x_i = 0
+\frac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - \theta x_i = 0
 $$
 
 Solving:
 
 $$
-p_i = \exp(-1 - \lambda - 	heta x_i)
+p_i = \exp(-1 - \lambda - \theta x_i)
 $$
 
 Use the partition function:
 
 $$
-Z = \sum_{j=1}^n \exp(-	heta x_j)
+Z = \sum_{j=1}^n \exp(-\theta x_j)
 \Rightarrow
-p_i = rac{1}{Z} \exp(-	heta x_i)
+p_i = \frac{1}{Z} \exp(-\theta x_i)
 $$
 
 ---
@@ -75,14 +74,15 @@ $$
 ### ✅ Final Result
 
 $$
-oxed{
-  p_i = rac{1}{Z} \exp(-	heta x_i)
+\boxed{
+  p_i = \frac{1}{Z} \exp(-\theta x_i)
 }
-\quad 	ext{where} \quad
-Z = \sum_{j=1}^n \exp(-	heta x_j)
+\quad \text{where} \quad
+Z = \sum_{j=1}^n \exp(-\theta x_j)
 $$
 
-We solve for \( 	heta \) using:
+We solve for \( \theta \) using:
+
 $$
 \sum_{i=1}^n p_i x_i = M
 $$
@@ -109,8 +109,7 @@ def max_entropy_vs_random(n=10, M_target=5.5):
         print(f"  p{i} = {pi:.6f}")
     print(f"  ∑p_i = {np.sum(p_random):.6f}")
     print(f"  ∑p_i * x_i = {expected_random:.6f}")
-    print(f"  Entropy H(p_random) = {entropy_random:.6f}
-")
+    print(f"  Entropy H(p_random) = {entropy_random:.6f}\n")
 
     # Max entropy distribution
     def constraint(theta):
@@ -141,8 +140,7 @@ def max_entropy_vs_random(n=10, M_target=5.5):
     print(f"  ∑p_i * x_i = {expected_opt:.6f} (target M = {M_target})")
     print(f"  Entropy H(p_opt) = {entropy_opt:.6f}")
 
-    print("
-📊 Entropy Comparison:")
+    print("\n📊 Entropy Comparison:")
     print(f"  Random Entropy       = {entropy_random:.6f}")
     print(f"  Maximum Entropy      = {entropy_opt:.6f}")
     print(f"  Difference           = {entropy_opt - entropy_random:.6f}")
@@ -156,9 +154,9 @@ def max_entropy_vs_random(n=10, M_target=5.5):
 - ✅ Used Lagrange multipliers to impose constraints
 - ✅ Derived:
   $$
-  p_i = rac{1}{Z} \exp(-	heta x_i)
+  p_i = \frac{1}{Z} \exp(-\theta x_i)
   $$
-- ✅ Solved for \( 	heta \) numerically
+- ✅ Solved for \( \theta \) numerically
 - ✅ Compared entropy of random vs optimal distribution
 
 ---
