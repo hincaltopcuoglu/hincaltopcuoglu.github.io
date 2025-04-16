@@ -8,8 +8,8 @@
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['\(', '\)']],
-        displayMath: [['\[', '\]']]
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
       },
       svg: { fontCache: 'global' }
     };
@@ -39,15 +39,13 @@
 
 <h3>🪮 Step 1: Lagrangian Formulation</h3>
 
-<p>We define the Lagrangian with multipliers \( \lambda \) and \( 	heta \):</p>
+<p>We define the Lagrangian with multipliers \( \lambda \) and \( \theta \):</p>
 
 <p>\[
-\mathcal{L}(p_1, \dots, p_n, \lambda, 	heta) =
+\mathcal{L}(p_1, \dots, p_n, \lambda, \theta) =
 -\sum_{i=1}^n p_i \log p_i
-- \lambda \left( \sum_{i=1}^n p_i - 1 
-ight)
-- 	heta \left( \sum_{i=1}^n p_i x_i - M 
-ight)
+- \lambda \left( \sum_{i=1}^n p_i - 1 \right)
+- \theta \left( \sum_{i=1}^n p_i x_i - M \right)
 \]</p>
 
 <hr>
@@ -56,23 +54,23 @@ ight)
 
 <p>With respect to \( p_i \):</p>
 
-<p>\[ rac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - 	heta x_i = 0 \]</p>
+<p>\[ \frac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - \theta x_i = 0 \]</p>
 
 <p>Solving:</p>
 
-<p>\[ p_i = \exp(-1 - \lambda - 	heta x_i) \]</p>
+<p>\[ p_i = \exp(-1 - \lambda - \theta x_i) \]</p>
 
 <p>Use the partition function:</p>
 
-<p>\[ Z = \sum_{j=1}^n \exp(-	heta x_j) \quad \Rightarrow \quad p_i = rac{1}{Z} \exp(-	heta x_i) \]</p>
+<p>\[ Z = \sum_{j=1}^n \exp(-\theta x_j) \quad \Rightarrow \quad p_i = \frac{1}{Z} \exp(-\theta x_i) \]</p>
 
 <hr>
 
 <h3>✅ Final Result</h3>
 
-<p>\[ oxed{p_i = rac{1}{Z} \exp(-	heta x_i)} \quad 	ext{where} \quad Z = \sum_{j=1}^n \exp(-	heta x_j) \]</p>
+<p>\[ \boxed{p_i = \frac{1}{Z} \exp(-\theta x_i)} \quad \text{where} \quad Z = \sum_{j=1}^n \exp(-\theta x_j) \]</p>
 
-<p>We solve for \( 	heta \) using:</p>
+<p>We solve for \( \theta \) using:</p>
 
 <p>\[ \sum_{i=1}^n p_i x_i = M \]</p>
 
@@ -80,7 +78,7 @@ ight)
 
 <h2>👉 Python Code Implementation</h2>
 
-<pre><code># Python-style pseudocode for clarity
+<pre><code># Python-style pseudocode
 import numpy as np
 from scipy.optimize import root_scalar
 
@@ -112,8 +110,8 @@ def max_entropy_vs_random(n=10, M_target=5.5):
 <ul>
   <li>✅ Defined and formulated the entropy maximization problem</li>
   <li>✅ Used Lagrange multipliers to impose constraints</li>
-  <li>✅ Derived: \( p_i = rac{1}{Z} \exp(-	heta x_i) \)</li>
-  <li>✅ Solved for \( 	heta \) numerically</li>
+  <li>✅ Derived: \( p_i = \frac{1}{Z} \exp(-\theta x_i) \)</li>
+  <li>✅ Solved for \( \theta \) numerically</li>
   <li>✅ Compared entropy of random vs optimal distribution</li>
 </ul>
 
