@@ -129,11 +129,11 @@ def max_entropy_vs_random(n=10, M_target=5.5):
     print("📈 Maximum Entropy Distribution:")
     for i, pi in enumerate(p_opt, start=1):
         print(f"  p{i} = {pi:.6f}")
-    print(f"  θ = {theta:.6f}")
-    print(f"  λ = {lambda_val:.6f}")
-    print(f"  ∑p_i = {np.sum(p_opt):.6f}")
-    print(f"  ∑p_i * x_i = {expected_opt:.6f} (target M = {M_target})")
-    print(f"  Entropy H(p_opt) = {entropy_opt:.6f}")
+        print(f"  θ = {theta:.6f}")
+        print(f"  λ = {lambda_val:.6f}")
+        print(f"  ∑p_i = {np.sum(p_opt):.6f}")
+        print(f"  ∑p_i * x_i = {expected_opt:.6f} (target M = {M_target})")
+        print(f"  Entropy H(p_opt) = {entropy_opt:.6f}")
 
     print("\n📊 Entropy Comparison:")
     print(f"  Random Entropy       = {entropy_random:.6f}")
