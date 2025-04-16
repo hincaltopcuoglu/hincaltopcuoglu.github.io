@@ -1,11 +1,4 @@
 
---- 
-layout: default 
-title: "Maximum Entropy with Lagrange Multipliers" 
-math: true 
-permalink: /maximum-entropy/ 
----
-
 ## 📘 Maximum Entropy with Lagrange Multipliers
 
 We want to find the discrete probability distribution \( \{p_i\}_{i=1}^n \) that maximizes Shannon entropy:
