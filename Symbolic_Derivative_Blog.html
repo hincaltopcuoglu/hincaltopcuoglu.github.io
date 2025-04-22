@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Symbolic Derivative Blog</title>
+</head>
+<body>
 <h1>✍️ Enhancing Analytical Computations with the Symbolic Derivative Tool in Python</h1>
 
 <p><img src="symbolic_derivative_tool_banner_resized.png" alt="Symbolic Derivative Tool Graphic" width="800"/></p>
@@ -97,40 +104,26 @@
 
 <h2>🔧 Getting Started</h2>
 
-<p>```bash</p>
+<pre><code># Clone the repository
+$ git clone https://github.com/hincaltopcuoglu/Symbolic-Derivative-Tool.git
+$ cd Symbolic-Derivative-Tool
 
-<h1>Clone the repository</h1>
+# Install dependencies
+$ pip install -r requirements.txt
 
-<p>$ git clone https://github.com/hincaltopcuoglu/Symbolic-Derivative-Tool.git
-$ cd Symbolic-Derivative-Tool</p>
-
-<h1>Install dependencies</h1>
-
-<p>$ pip install -r requirements.txt</p>
-
-<h1>Run the tool</h1>
-
-<p>$ python derivative_tool.py
-```</p>
+# Run the tool
+$ python derivative_tool.py
+</code></pre>
 
 <hr />
 
 <h2>📄 Example Interaction Flow</h2>
 
-<p>When you run the tool via:</p>
-
-<p><code>bash
-python derivative_tool.py
-</code></p>
-
-<p>you'll be prompted step-by-step to symbolically analyze your function. Here's a sample interaction:</p>
-
-<p>```text
-Enter a function (e.g. f(x, y) = x<strong>2 + y</strong>2): f(x, y) = x<strong>2 + 3<em>x</em>y + y</strong>2
+<pre><code>Enter a function (e.g. f(x, y) = x**2 + y**2): f(x, y) = x**2 + 3*x*y + y**2
 Differentiate with respect to: x
-Enter values for variables (e.g. x=1, y=2): x=1, y=2</p>
+Enter values for variables (e.g. x=1, y=2): x=1, y=2
 
-<p>🧪 Select an operation to perform:
+🧪 Select an operation to perform:
 1. Compare Derivative Approximations (Limit-based)
 2. Compute Gradient
 3. Compare Gradient with Numerical Derivatives
@@ -140,29 +133,25 @@ Enter values for variables (e.g. x=1, y=2): x=1, y=2</p>
 7. Compute Directional Derivative
 8. Symbolic Chain Rule Expansion
 9. Exit
-```</p>
+</code></pre>
 
-<p>For example, choosing option 2 and 4 would yield:</p>
+<pre><code>Gradient: {'x': 9.0, 'y': 8.0}
+Hessian: [[2.0, 3.0], [3.0, 2.0]]
+</code></pre>
 
-<p>`<code>text
+<pre><code>from symbolic_diff import SymbolicDifferentiator
+
+expr = "x**2 + 3*x*y + y**2"
+sd = SymbolicDifferentiator(expr, variables=["x", "y"])
+
+print("Gradient:", sd.evaluate_gradient(x=1, y=2))
+print("Hessian:", sd.evaluate_hessian(x=1, y=2))
+</code></pre>
+
+<pre><code>Output:
 Gradient: {'x': 9.0, 'y': 8.0}
 Hessian: [[2.0, 3.0], [3.0, 2.0]]
-</code>python
-from symbolic_diff import SymbolicDifferentiator</p>
-
-<p>expr = "x<strong>2 + 3<em>x</em>y + y</strong>2"
-sd = SymbolicDifferentiator(expr, variables=["x", "y"])</p>
-
-<p>print("Gradient:", sd.evaluate<em>gradient(x=1, y=2))
-print("Hessian:", sd.evaluate</em>hessian(x=1, y=2))
-````</p>
-
-<p><strong>Output:</strong></p>
-
-<p><code>
-Gradient: {'x': 9.0, 'y': 8.0}
-Hessian: [[2.0, 3.0], [3.0, 2.0]]
-</code></p>
+</code></pre>
 
 <hr />
 
@@ -187,4 +176,9 @@ Hessian: [[2.0, 3.0], [3.0, 2.0]]
 
 <p><strong>✌️ Created by</strong>: Hincal Topcuoglu</p>
 
+<hr />
+
 <p>Let us know if you use it in your research, teaching, or production work!</p>
+
+</body>
+</html>
