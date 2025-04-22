@@ -28,3 +28,5 @@ For Understanding Attention Mechanism -> https://hincaltopcuoglu.github.io/atten
 For the Proof of Joint Entropy using Marginal and Conditional Entropy -> https://hincaltopcuoglu.github.io/proof_of_the_joint_entropy_using_conditonal_entropy.html
 
 For the Proof of Maximum Entropy using Lagrange Multipliers and Derivatives with Python code -> https://hincaltopcuoglu.github.io/maximum-entropy.html
+
+For the Repo Blog of Symbolic Derivative Tool -> https://hincaltopcuoglu.github.io/Symbolic_Derivative_Blog.html
