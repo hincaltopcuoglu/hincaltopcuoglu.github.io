@@ -1,12 +1,14 @@
 <h1>✍️ Enhancing Analytical Computations with the Symbolic Derivative Tool in Python</h1>
 
-<p><img src="symbolic_derivative_tool_banner_resized.png" alt="Symbolic Derivative Tool Graphic" /></p>
+<p><img src="symbolic_derivative_tool_banner_resized.png" alt="Symbolic Derivative Tool Graphic" width="800"/></p>
 
 <h2>🔄 Introduction</h2>
 
 <p>In both machine learning and scientific computing, derivatives are at the core of optimization, analysis, and inference. While numerical differentiation is common, it can be unstable or inaccurate when dealing with complex functions or symbolic models.</p>
 
 <p>To address this, we've developed the <strong>Symbolic Derivative Tool</strong>, a Python-based utility leveraging Python's Abstract Syntax Tree (AST) to provide symbolic derivatives, gradients, Jacobians, and Hessians — all without relying on external libraries like SymPy. This tool bridges the gap between symbolic mathematics and practical data science workflows.</p>
+
+<hr />
 
 <h2>🔍 Mathematical Foundations</h2>
 
@@ -44,6 +46,8 @@
 
 <p>This measures how a function changes in any direction, used in constrained optimization, reinforcement learning, and optimization landscapes.</p>
 
+<hr />
+
 <h2>✨ Key Features</h2>
 
 <ul>
@@ -54,6 +58,8 @@
 <li>✅ Limit computation and domain validation</li>
 <li>✅ Laplacian and directional derivatives support</li>
 </ul>
+
+<hr />
 
 <h2>📊 Use Cases</h2>
 
@@ -87,21 +93,26 @@
 <li>Simulate systems with precise symbolic sensitivity analysis.</li>
 </ul>
 
+<hr />
+
 <h2>🔧 Getting Started</h2>
+
 
 <h1>Clone the repository</h1>
 
-<p> git clone https://github.com/hincaltopcuoglu/Symbolic-Derivative-Tool.git
-cd Symbolic-Derivative-Tool</p>
+<p>$ git clone https://github.com/hincaltopcuoglu/Symbolic-Derivative-Tool.git
+$ cd Symbolic-Derivative-Tool</p>
 
 <h1>Install dependencies</h1>
 
-<p> pip install -r requirements.txt</p>
+<p>$ pip install -r requirements.txt</p>
 
 <h1>Run the tool</h1>
 
-<p> python derivative_tool.py
+<p>$ python derivative_tool.py
 </p>
+
+<hr />
 
 <h2>📄 Example Interaction Flow</h2>
 
@@ -130,7 +141,12 @@ Enter values for variables (e.g. x=1, y=2): x=1, y=2</p>
 9. Exit
 </p>
 
-<p>
+<p>For example, choosing option 2 and 4 would yield:</p>
+
+<p><code>text
+Gradient: {'x': 9.0, 'y': 8.0}
+Hessian: [[2.0, 3.0], [3.0, 2.0]]
+</code>python
 from symbolic_diff import SymbolicDifferentiator</p>
 
 <p>expr = "x<strong>2 + 3<em>x</em>y + y</strong>2"
@@ -147,6 +163,8 @@ Gradient: {'x': 9.0, 'y': 8.0}
 Hessian: [[2.0, 3.0], [3.0, 2.0]]
 </code></p>
 
+<hr />
+
 <h2>🚀 Benefits</h2>
 
 <ul>
@@ -155,6 +173,8 @@ Hessian: [[2.0, 3.0], [3.0, 2.0]]
 <li>Highly interpretable; works well in ML model debugging and analysis</li>
 <li>Designed for both educational and production-oriented environments</li>
 </ul>
+
+<hr />
 
 <h2>📈 Final Thoughts</h2>
 
@@ -167,3 +187,5 @@ Hessian: [[2.0, 3.0], [3.0, 2.0]]
 <p><strong>✌️ Created by</strong>: Hincal Topcuoglu</p>
 
 <hr />
+
+<p>Let us know if you use it in your research, teaching, or production work!</p>
