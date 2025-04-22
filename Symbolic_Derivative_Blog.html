@@ -89,7 +89,7 @@
 
 <h2>🔧 Getting Started</h2>
 
-<p>```bash</p>
+<p></p>
 
 <h1>Clone the repository</h1>
 
@@ -109,13 +109,13 @@ $ cd Symbolic-Derivative-Tool</p>
 
 <p>When you run the tool via:</p>
 
-<p><code>bash
+<p><code>
 python derivative_tool.py
 </code></p>
 
 <p>you'll be prompted step-by-step to symbolically analyze your function. Here's a sample interaction:</p>
 
-<p>```text
+<p>
 Enter a function (e.g. f(x, y) = x<strong>2 + y</strong>2): f(x, y) = x<strong>2 + 3<em>x</em>y + y</strong>2
 Differentiate with respect to: x
 Enter values for variables (e.g. x=1, y=2): x=1, y=2</p>
@@ -130,9 +130,9 @@ Enter values for variables (e.g. x=1, y=2): x=1, y=2</p>
 7. Compute Directional Derivative
 8. Symbolic Chain Rule Expansion
 9. Exit
-```</p>
+</p>
 
-<p>```python
+<p>
 from symbolic_diff import SymbolicDifferentiator</p>
 
 <p>expr = "x<strong>2 + 3<em>x</em>y + y</strong>2"
@@ -140,7 +140,7 @@ sd = SymbolicDifferentiator(expr, variables=["x", "y"])</p>
 
 <p>print("Gradient:", sd.evaluate<em>gradient(x=1, y=2))
 print("Hessian:", sd.evaluate</em>hessian(x=1, y=2))
-```</p>
+</p>
 
 <p><strong>Output:</strong></p>
 
