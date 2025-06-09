@@ -30,3 +30,5 @@ For the Proof of Joint Entropy using Marginal and Conditional Entropy -> https:/
 For the Proof of Maximum Entropy using Lagrange Multipliers and Derivatives with Python code -> https://hincaltopcuoglu.github.io/maximum-entropy.html
 
 For the Repo Blog of Symbolic Derivative Tool -> https://hincaltopcuoglu.github.io/Symbolic_Derivative_Blog.html
+
+For Kernel Density Estimation Work -> https://hincaltopcuoglu.github.io/KernelDensityEstimation_LinReg_XgBoost.html
