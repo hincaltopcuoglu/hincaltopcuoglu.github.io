@@ -64,4 +64,10 @@ layout: home
     <a href="https://www.linkedin.com/in/hincal-topcuoglu/" aria-label="LinkedIn" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
     <a href="https://x.com/hincaltopcuogl1" aria-label="Twitter" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
   </div>
+  <section>
+  <h2>Contact</h2>
+  <p class="contact-info">
+    Feel free to reach out via email: <a href="mailto:hincal@topcuoglu.me">hincal@topcuoglu.me</a>
+  </p>
+</section>
 </div>
