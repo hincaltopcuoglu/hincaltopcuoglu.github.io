@@ -63,5 +63,6 @@ layout: home
     <a href="https://github.com/hincaltopcuoglu" aria-label="GitHub" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
     <a href="https://www.linkedin.com/in/hincal-topcuoglu/" aria-label="LinkedIn" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
     <a href="https://x.com/hincaltopcuogl1" aria-label="Twitter" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="mailto:hincal@topcuoglu.me" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
   </div>
 </div>
