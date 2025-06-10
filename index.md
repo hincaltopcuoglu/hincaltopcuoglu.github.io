@@ -47,7 +47,7 @@ layout: home
 
 <div class="profile">
   <img src="/assets/images/Hincal_Photo_GitHub_Ready.jpg" alt="Hincal Topcuoglu Photo" />
-  <div>
+  <div class="profile-text">
     <h1>Hincal Topcuoglu</h1>
     <p>
       I am a Data Scientist with over 13 years of experience specializing in statistics, machine learning, and big data technologies. 
@@ -58,5 +58,10 @@ layout: home
       Throughout my career, I have led teams, developed predictive models, and implemented scalable data pipelines. 
       I am passionate about continuous learning and applying innovative methods to solve real-world problems.
     </p>
+  </div>
+  <div class="social-icons">
+    <a href="https://github.com/hincaltopcuoglu" aria-label="GitHub" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/hincal-topcuoglu/" aria-label="LinkedIn" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a href="https://x.com/hincaltoocuogl1" aria-label="Twitter" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
   </div>
 </div>
