@@ -60,13 +60,3 @@ layout: home
     </p>
   </div>
 </div>
-
-<footer>
-  <div class="contact-links">
-    <a href="mailto:hincal@topcuoglu.me">Email</a> |
-    <a href="https://github.com/hincaltopcuoglu">GitHub</a> |
-    <a href="https://www.linkedin.com/in/hincal-topcuoglu/">LinkedIn</a> |
-    <a href="https://x.com/hincaltoocuogl1">Twitter</a>
-  </div>
-  <p>© 2025 Hincal Topcuoglu. Powered by Jekyll.</p>
-</footer>
