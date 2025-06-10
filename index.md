@@ -4,77 +4,93 @@ layout: home
 
 <style>
   body {
-    font-family: Arial, sans-serif;
-    max-width: none;
-    margin: 2rem 2rem 2rem 0;
-    padding: 0 1rem;
-    line-height: 1.6;
-    color: #333;
-    text-align: left;
-  }
-  header nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 1rem;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 2rem;
-  }
-  header nav ul li a {
-    text-decoration: none;
-    color: #007acc;
-    font-weight: bold;
-  }
-  header nav ul li a:hover {
-    text-decoration: underline;
-  }
-  footer {
-    margin-top: 3rem;
-    font-size: 0.9rem;
-    color: #666;
-    border-top: 1px solid #ddd;
-    padding-top: 1rem;
-    text-align: center;
-  }
-  .profile {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .profile img {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border: 2px solid #007acc;
-  }
-  .links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  .link-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s ease;
-  }
-  .link-card:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .link-card a {
-    text-decoration: none;
-    color: #007acc;
-    font-weight: bold;
-  }
-  .link-card p {
-    margin: 0.5rem 0 0 0;
-    color: #555;
-    font-size: 0.9rem;
-  }
+  font-family: Arial, sans-serif;
+  max-width: 900px; /* limit max width */
+  margin: 2rem auto; /* center horizontally with margin */
+  padding: 0 1.5rem; /* padding on left and right */
+  line-height: 1.6;
+  color: #333;
+  text-align: left;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+  overflow-x: auto; /* horizontal scroll if needed */
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: #007acc;
+  font-weight: bold;
+  white-space: nowrap; /* prevent link text from breaking */
+}
+
+header nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* more space between photo and text */
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* allow wrapping on narrow screens */
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 140px; /* slightly bigger photo */
+  height: 140px;
+  object-fit: cover;
+  border: 2px solid #007acc;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.link-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+.link-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.link-card a {
+  text-decoration: none;
+  color: #007acc;
+  font-weight: bold;
+}
+
+.link-card p {
+  margin: 0.5rem 0 0 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+  text-align: center;
+}
 </style>
 
 <header>
