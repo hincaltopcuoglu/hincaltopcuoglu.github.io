@@ -70,6 +70,7 @@ layout: home
 <section class="blogs-section">
   <h2>Blogs</h2>
   <ul class="blogs-list">
+    <li><a href="https://hincaltopcuoglu.github.io/jackknife_method.html</a></li>
     <li><a href="Symbolic_Derivative_Blog.html">Symbolic Derivative Tool Blog</a></li>
     <li><a href="KernelDensityEstimation_LinReg_XgBoost.html">Kernel Density Estimation Work</a></li>
     <!-- Add more blog links copied from your README.md here -->
