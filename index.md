@@ -87,22 +87,12 @@ layout: home
   </div>
 
   <section>
-    <h2>Navigation</h2>
-    <ul>
-      <li><a href="{{ '/cv/' | relative_url }}">CV</a></li>
-      <li><a href="{{ '/code.html' | relative_url }}">Code</a></li>
-      <li><a href="{{ '/blog.html' | relative_url }}">Blog</a></li>
-      <li><a href="{{ '/contact.html' | relative_url }}">Contact</a></li>
-    </ul>
-  </section>
-
-  <section>
     <h2>Selected Topics</h2>
     <ul>
-      <li><a href="jackknife_method.html">JackKnife Method</a></li>
-      <li><a href="Binomial_Calculation_and_Distribution_Example.html">Binomial Distribution</a></li>
-      <li><a href="shannon_entropy.html">Shannon Entropy</a></li>
-      <li><a href="attention_mechanism_explained.html">Attention Mechanism Explained</a></li>
+      <li><a href="{{ '/jackknife_method.html' | relative_url }}">JackKnife Method</a></li>
+      <li><a href="{{ '/Binomial_Calculation_and_Distribution_Example.html' | relative_url }}">Binomial Distribution</a></li>
+      <li><a href="{{ '/shannon_entropy.html' | relative_url }}">Shannon Entropy</a></li>
+      <li><a href="{{ '/attention_mechanism_explained.html' | relative_url }}">Attention Mechanism Explained</a></li>
     </ul>
   </section>
 </main>
