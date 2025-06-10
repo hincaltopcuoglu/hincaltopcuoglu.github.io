@@ -3,8 +3,6 @@ layout: home
 title: CV
 ---
 
-# Curriculum Vitae
-
 **Hincal Topcuoglu**  
 Istanbul, Turkey  
 Email: [hincal@topcuoglu.me](mailto:hincal@topcuoglu.me)  
