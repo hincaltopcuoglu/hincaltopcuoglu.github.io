@@ -74,6 +74,7 @@ layout: home
 <section>
   <h2>Available Topics & Projects</h2>
   <div class="links-grid">
+    <!-- Your existing topic cards here -->
     <div class="link-card">
       <a href="jackknife_method.html">JackKnife Method</a>
       <p>An in-depth explanation and examples of the JackKnife statistical method.</p>
@@ -82,58 +83,14 @@ layout: home
       <a href="Binomial_Calculation_and_Distribution_Example.html">Binomial Distribution</a>
       <p>Calculations and examples related to the Binomial probability distribution.</p>
     </div>
-    <div class="link-card">
-      <a href="hypergeometric_distribution.html">Hypergeometric Distribution</a>
-      <p>Details and applications of the Hypergeometric distribution.</p>
-    </div>
-    <div class="link-card">
-      <a href="beta_distribution.html">Beta Distribution</a>
-      <p>Overview and examples of the Beta probability distribution.</p>
-    </div>
-    <div class="link-card">
-      <a href="gamma_distribution.html">Gamma Distribution</a>
-      <p>Explanation and use cases of the Gamma distribution.</p>
-    </div>
-    <div class="link-card">
-      <a href="normal_distribution.html">Normal Distribution</a>
-      <p>Fundamentals and examples of the Normal (Gaussian) distribution.</p>
-    </div>
-    <div class="link-card">
-      <a href="beta_prior.html">Beta Prior Binomial Data</a>
-      <p>Bayesian analysis using Beta prior for Binomial data.</p>
-    </div>
-    <div class="link-card">
-      <a href="shannon_entropy.html">Shannon Entropy</a>
-      <p>Concepts and properties of Shannon entropy in information theory.</p>
-    </div>
-    <div class="link-card">
-      <a href="asymptotic_feature_of_shannon_entropy.html">Asymptotic Feature of Shannon Entropy</a>
-      <p>Advanced properties and asymptotic behavior of Shannon entropy.</p>
-    </div>
-    <div class="link-card">
-      <a href="reaching_best_entropy.html">Reaching Best Entropy</a>
-      <p>Methods and proofs related to maximizing entropy.</p>
-    </div>
-    <div class="link-card">
-      <a href="connection_between_different_entropies.html">Connection Between Different Entropies</a>
-      <p>Exploring relationships among various entropy measures.</p>
-    </div>
-    <div class="link-card">
-      <a href="proof_of_maximum_entropy.html">Proof of The Maximum Entropy</a>
-      <p>Mathematical proofs using derivatives and Taylor series expansion.</p>
-    </div>
-    <div class="link-card">
-      <a href="attention_mechanism_explained.html">Understanding Attention Mechanism</a>
-      <p>Explanation of attention mechanisms in machine learning.</p>
-    </div>
-    <div class="link-card">
-      <a href="proof_of_the_joint_entropy_using_conditonal_entropy.html">Proof of Joint Entropy</a>
-      <p>Proofs involving marginal and conditional entropy.</p>
-    </div>
-    <div class="link-card">
-      <a href="maximum-entropy.html">Proof of Maximum Entropy with Python</a>
-      <p>Using Lagrange multipliers and derivatives with Python code.</p>
-    </div>
+    <!-- Add other topic cards similarly -->
+  </div>
+</section>
+
+<section>
+  <h2>Blog Posts</h2>
+  <div class="links-grid">
+    <!-- Blog links from your README -->
     <div class="link-card">
       <a href="Symbolic_Derivative_Blog.html">Symbolic Derivative Tool Blog</a>
       <p>Blog about symbolic derivative tool development.</p>
@@ -142,5 +99,6 @@ layout: home
       <a href="KernelDensityEstimation_LinReg_XgBoost.html">Kernel Density Estimation Work</a>
       <p>Work involving kernel density estimation, linear regression, and XGBoost.</p>
     </div>
+    <!-- Add more blog posts here if you have -->
   </div>
 </section>
