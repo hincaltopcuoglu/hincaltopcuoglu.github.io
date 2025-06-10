@@ -59,9 +59,4 @@ layout: home
       I am passionate about continuous learning and applying innovative methods to solve real-world problems.
     </p>
   </div>
-  <div class="social-icons">
-    <a href="https://github.com/hincaltopcuoglu" aria-label="GitHub" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/hincal-topcuoglu/" aria-label="LinkedIn" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
-    <a href="https://x.com/hincaltoocuogl1" aria-label="Twitter" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
-  </div>
 </div>
