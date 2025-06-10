@@ -1,7 +1,6 @@
 ---
 layout: home
 title: CV
-permalink: /cv/
 ---
 
 # Curriculum Vitae
