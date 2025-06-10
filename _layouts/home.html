@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ page.title }} - {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ '/cv/' | relative_url }}">CV</a></li>
+        <li><a href="{{ '/research.html' | relative_url }}">Research</a></li>
+        <li><a href="{{ '/code.html' | relative_url }}">Code</a></li>
+        <li><a href="{{ '/blog.html' | relative_url }}">Blog</a></li>
+        <li><a href="{{ '/contact.html' | relative_url }}">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+    <p>© 2025 Hincal Topcuoglu. Powered by Jekyll.</p>
+    <p>
+      <a href="https://github.com/hincaltopcuoglu">GitHub</a> |
+      <a href="https://www.linkedin.com/in/hincal-topcuoglu/">LinkedIn</a> |
+      <a href="https://x.com/hincaltoocuogl1">Twitter</a> |
+      <a href="mailto:hincal@topcuoglu.me">Email</a>
+    </p>
+  </footer>
+</body>
+</html>
