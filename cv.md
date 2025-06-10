@@ -1,6 +1,7 @@
 ---
 layout: home
 title: CV
+permalink: /cv/
 ---
 
 **Hincal Topcuoglu**  
