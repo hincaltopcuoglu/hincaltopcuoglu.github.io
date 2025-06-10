@@ -43,7 +43,38 @@ layout: home
   .contact-links a:hover {
     text-decoration: underline;
   }
+  .blogs-section {
+    margin-bottom: 2rem;
+  }
+  .blogs-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .blogs-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .blogs-list li {
+    margin-bottom: 0.6rem;
+  }
+  .blogs-list a {
+    color: #007acc;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .blogs-list a:hover {
+    text-decoration: underline;
+  }
 </style>
+
+<section class="blogs-section">
+  <h2>Blogs</h2>
+  <ul class="blogs-list">
+    <li><a href="Symbolic_Derivative_Blog.html">Symbolic Derivative Tool Blog</a></li>
+    <li><a href="KernelDensityEstimation_LinReg_XgBoost.html">Kernel Density Estimation Work</a></li>
+    <!-- Add more blog links copied from your README.md here -->
+  </ul>
+</section>
 
 <div class="profile">
   <img src="/assets/images/Hincal_Photo_GitHub_Ready.jpg" alt="Hincal Topcuoglu Photo" />
