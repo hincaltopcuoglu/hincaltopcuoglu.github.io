@@ -23,3 +23,4 @@ permalink: /blog/
 - [Proof of Maximum Entropy using Lagrange Multipliers and Derivatives with Python code](maximum-entropy.html)
 - [Symbolic Derivative Tool Blog](Symbolic_Derivative_Blog.html)
 - [Kernel Density Estimation Work](KernelDensityEstimation_LinReg_XgBoost.html)
+- [For Two Distinct Clustering used, Product, Store based post campaign analysis] (Two_Clustering_Approaches_for_Analyzing_Promotions.html)
