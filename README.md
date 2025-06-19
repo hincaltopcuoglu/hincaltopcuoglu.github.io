@@ -32,3 +32,5 @@ For the Proof of Maximum Entropy using Lagrange Multipliers and Derivatives with
 For the Repo Blog of Symbolic Derivative Tool -> https://hincaltopcuoglu.github.io/blog/Symbolic_Derivative_Blog.html
 
 For Kernel Density Estimation Work -> https://hincaltopcuoglu.github.io/blog/KernelDensityEstimation_LinReg_XgBoost.html
+
+For Two Distinct Clustering used, Product, Store based post campaign analysis -> https://hincaltopcuoglu.github.io/blog/Two_Clustering_Approaches_for_Analyzing_Promotions.html
