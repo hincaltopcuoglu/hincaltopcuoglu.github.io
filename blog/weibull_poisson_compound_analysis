@@ -1,0 +1,169 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[turkish]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Sayfa Düzeni
+\geometry{margin=2.5cm}
+
+% Renk Tanımları
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+\definecolor{royalazure}{rgb}{0.0, 0.22, 0.66}
+
+% Kod Bloğu Ayarları
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{royalazure},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% Link Ayarları
+\hypersetup{
+    colorlinks=true,
+    linkcolor=royalazure,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{\textbf{Ortalamanın Ötesinde Risk Analizi: \\ Bileşik Poisson-Weibull Yaklaşımı}}
+\author{GitHub.io Blog Serisi}
+\date{\today}
+
+\begin{document}
+
+% Babel paketi fix
+\shorthandoff{=}
+
+\maketitle
+
+\begin{abstract}
+Mühendislik testlerinde ve risk yönetiminde, risk genellikle "Olay Sıklığı $\times$ Ortalama Hasar" formülüyle hesaplanır. Ancak bu deterministik yaklaşım, "Kuyruk Risklerini" (Tail Risks) ve "Gizli Tehlikeleri" (Latent Risks) göz ardı eder. Bu çalışmada, küçük örneklem boyutlarına sahip çarpışma testleri (crash tests) için stokastik bir model olan \textbf{Bileşik Poisson-Weibull Süreci} (Compound Poisson-Weibull Process) incelenmiştir. Monte Carlo simülasyonları ile, ortalamaları aynı olan ancak dağılım şekilleri (shape parameters) farklı olan senaryoların nasıl dramatik risk farkları yarattığı gösterilmiştir.
+\end{abstract}
+
+\tableofcontents
+\vspace{1cm}
+
+\section{Giriş: "Ortalama" Tuzağı}
+Yöneticiler ve karar vericiler genellikle şu basit mantığı yürütür:
+\begin{quote}
+    "Yılda ortalama 5 kaza oluyor ($\lambda=5$). Her kazanın ortalama maliyeti 500 birim ($\mu=500$). O halde seneye toplam riskimiz $5 \times 500 = 2500$ birimdir."
+\end{quote}
+
+Bu hesaplama, **"Ortalamaların Çarpımı"** prensibine dayanır ve istatistiksel olarak doğru olsa da, risk yönetimi açısından **ölümcül bir hatadır.** Çünkü bizi batıracak olan şey ortalama senaryo değil; hem kaza sayısının arttığı (Poisson şanssızlığı) hem de kazaların çok şiddetli olduğu (Weibull şanssızlığı) o nadir "Kusursuz Fırtına" (Perfect Storm) yılıdır.
+
+\section{Matematiksel Model: Bileşik Süreç}
+Gerçek risk, iki katmanlı bir belirsizlik (stokastik süreç) içerir:
+\begin{equation}
+    S = \sum_{i=1}^{N} X_i
+\end{equation}
+
+Burada:
+\begin{itemize}
+    \item $N \sim Poisson(\lambda)$: Belirli bir sürede gerçekleşen olay sayısı (Adet Belirsizliği).
+    \item $X_i \sim Weibull(\beta, \eta)$: Her bir olayın şiddeti (Şiddet Belirsizliği).
+\end{itemize}
+
+Bu toplamın dağılımı analitik olarak hesaplanamaz, bu nedenle **Monte Carlo Simülasyonu** kullanılması zorunludur.
+
+\section{Simülasyon 1: Senaryo Analizi}
+Riskin doğasını anlamak için üç farklı senaryo kurgulanmıştır:
+\begin{enumerate}
+    \item \textbf{Baz Durum:} Mevcut durum ($\lambda=5$, Shape=2.5).
+    \item \textbf{Yüksek Frekans:} Kalite kaybı, olay sayısı artıyor ($\lambda=10$).
+    \item \textbf{Ağır Kuyruk (Heavy Tail):} Tasarım hatası, olay sayısı aynı ama şiddet belirsizliği artıyor (Shape=1.5).
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    % Gorseli 'compound_risk_simulation.png' olarak kaydedin
+    \includegraphics[width=1.0\textwidth]{compound_risk_simulation.png}
+    \caption{Toplam Risk Dağılımı Karşılaştırması. Kırmızı çizgi (Ağır Kuyruk), ortalaması Baz Durum ile aynı olmasına rağmen çok daha yüksek bir felaket riski (VaR \%99.9) taşımaktadır.}
+    \label{fig:compound_sim}
+\end{figure}
+
+\subsection{Bulgular}
+Simülasyon sonuçları (Şekil \ref{fig:compound_sim}) çarpıcı bir gerçeği ortaya koymaktadır:
+\begin{itemize}
+    \item \textbf{Ortalama Risk:} Baz Durum ve Ağır Kuyruk senaryolarının ortalama riski neredeyse aynıdır ($\approx 3600$).
+    \item \textbf{Felaket Riski (VaR \%99.9):} Ağır Kuyruk senaryosunda felaket riski, Baz Duruma göre \textbf{\%15 daha yüksektir.}
+\end{itemize}
+Bu durum, sadece ortalamaya bakmanın "Gizli Riski" (Latent Risk) nasıl maskelediğini kanıtlar.
+
+\section{Simülasyon 2: Weibull Shape Parametresinin Etkisi}
+Mühendislikte "Shape Parametresi" ($\beta$), sürecin kararlılığını gösterir. İkinci simülasyonda, ortalama hasar değeri sabit tutularak ($Mean=900$), sadece $\beta$ değiştirilmiştir.
+
+\begin{lstlisting}[language=Python, caption=Shape Parametresi Simülasyon Kodu]
+# 3 Farkli Dunya: Dengesiz, Standart, Hassas
+scenarios = [
+    {"label": "Dengesiz (Shape=1.2)", "shape": 1.2},
+    {"label": "Standart (Shape=2.5)", "shape": 2.5},
+    {"label": "Hassas (Shape=5.0)", "shape": 5.0}
+]
+# Her senaryo icin 1000 kez 25'lik test yapildi.
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Gorseli 'weibull_shape_comparison.png' olarak kaydedin
+    \includegraphics[width=1.0\textwidth]{weibull_shape_comparison.png}
+    \caption{Farklı Shape parametrelerinde 25 araçlık testlerin maksimum değerleri. Düşük Shape (Kırmızı), uzun bir kuyruk riski yaratmaktadır.}
+    \label{fig:shape_sim}
+\end{figure}
+
+\subsection{Risk Çarpanı Analizi}
+Tablo \ref{tab:risk_multiplier}, Shape parametresinin "Sürpriz Faktörü" üzerindeki etkisini özetlemektedir.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Senaryo} & \textbf{Ortalama (Teorik)} & \textbf{En Kötü Sürpriz} & \textbf{Risk Çarpanı} \\ \midrule
+Hassas ($\beta=5.0$) & 900 & 1538 & \textbf{1.4x} \\
+Standart ($\beta=2.5$) & 900 & 2594 & \textbf{1.9x} \\
+Dengesiz ($\beta=1.2$) & 900 & \textbf{6344} & \textbf{3.2x} \\ \bottomrule
+\end{tabular}
+\caption{Risk Çarpanı: En kötü durumun ortalamaya oranı.}
+\label{tab:risk_multiplier}
+\end{table}
+
+\section{Sonuç ve Tavsiyeler}
+Bu çalışma, 20-25 araçlık küçük veri setlerinde risk analizi yaparken aşağıdaki adımların izlenmesi gerektiğini göstermektedir:
+
+\begin{enumerate}
+    \item \textbf{Ortalamaya Güvenmeyin:} İki tasarımın ortalama test sonucu aynı olabilir, ancak risk profilleri tamamen farklı olabilir.
+    \item \textbf{Shape Parametresini İzleyin:} Veri setinizin Weibull Shape parametresini ($\beta$) hesaplayın.
+    \begin{itemize}
+        \item $\beta < 2.0$: \textbf{Kırmızı Alarm.} Süreç dengesizdir, "Latent Risk" çok yüksektir.
+        \item $\beta > 4.0$: Süreç çok kararlıdır (Six Sigma seviyesine yakın).
+    \end{itemize}
+    \item \textbf{Bileşik Modelleme Yapın:} Filo riskini hesaplarken Poisson ve Weibull dağılımlarını harmanlayarak Monte Carlo simülasyonu kullanın.
+\end{enumerate}
+
+\end{document}
