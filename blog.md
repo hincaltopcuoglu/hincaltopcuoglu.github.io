@@ -26,3 +26,4 @@ permalink: /blog/
 - [For Two Distinct Clustering used, Product, Store based post campaign analysis](Two_Clustering_Approaches_for_Analyzing_Promotions.html)
 - [For Poisson Regression Analysis](poisson_regression.html)
 - [A Journey Through Hilbert Space and Kernel Methods](kernel_works_hilbert_space.pdf)
+- [RNN from Scratch](RNN_Study_Paper.pdf)
