@@ -40,3 +40,5 @@ For Two Distinct Clustering used, Product, Store based post campaign analysis ->
 For Poisson Regression Analysis -> https://hincaltopcuoglu.github.io/blog/poisson_regression.html
 
 For RNN from Scratch -> https://hincaltopcuoglu.github.io/blog/RNN_Study_Paper.pdf
+
+For Generalization BG Entropy to Tsallis Entropy -> https://hincaltopcuoglu.github.io/blog/Generalization_BG_Entropy_to_Tsallis.pdf
