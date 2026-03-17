@@ -27,3 +27,4 @@ permalink: /blog/
 - [For Poisson Regression Analysis](poisson_regression.html)
 - [A Journey Through Hilbert Space and Kernel Methods](kernel_works_hilbert_space.pdf)
 - [RNN from Scratch](RNN_Study_Paper.pdf)
+- [Generalization BG Entropy to Tsallis Entropy](Generalization_BG_Entropy_to_Tsallis.pdf)
