@@ -28,3 +28,4 @@ permalink: /blog/
 - [A Journey Through Hilbert Space and Kernel Methods](kernel_works_hilbert_space.pdf)
 - [RNN from Scratch](RNN_Study_Paper.pdf)
 - [Generalization BG Entropy to Tsallis Entropy](Generalization_BG_Entropy_to_Tsallis.pdf)
+- [Shannon Entropy Generalization in Tsallis Entropy form](Shannon_Generalization_in_Tsallis_Form.pdf)
