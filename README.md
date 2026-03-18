@@ -44,3 +44,5 @@ For RNN from Scratch -> https://hincaltopcuoglu.github.io/blog/RNN_Study_Paper.p
 For Generalization BG Entropy to Tsallis Entropy -> https://hincaltopcuoglu.github.io/blog/Generalization_BG_Entropy_to_Tsallis.pdf
 
 For another Generalization or Shannon Entropy in Tsallis Entropy form -> https://hincaltopcuoglu.github.io/blog/Shannon_Generalization_in_Tsallis_Form.pdf
+
+For Finding Extremum of Tsallis Entropy -> https://hincaltopcuoglu.github.io/blog/Finding_Extremum_Tsallis_Entropy.pdf
