@@ -15,7 +15,7 @@ The fundamental rule for transforming Probability Density Functions (PDFs) invol
 
 However, there is a catch: You can only find a unique inverse for a function if it is **strictly monotonic** (meaning it only increases or only decreases).
 
-![Sine Graph](partititon_pdf_2.jpg)
+![Sine Graph](../assets/images/partititon_pdf_2.jpg)
 *Figure 1: If a function is not continuously monotonic (like a sine wave), a horizontal line will intersect the curve at multiple points.*
 
 As you can see in my sketch above, if we draw a horizontal line across a non-monotonic graph, it intersects the curve at multiple points. This means a single $y$ value corresponds to multiple $x$ values. Which inverse function are we supposed to use? 
@@ -30,7 +30,7 @@ We partition the sample space into sets $A_1, A_2, \dots, A_k$ such that the fun
 
 Let's prove the logic behind this partitioning using one of the most famous transformations: squaring a random variable.
 
-![Square Transformation](partititon_pdf_1.jpg)
+![Square Transformation](../assets/imagespartititon_pdf_1.jpg)
 *Figure 2: Deriving the PDF of $Y=X^2$ using the Cumulative Distribution Function (CDF) method.*
 
 As shown in my notes, we can start from the Cumulative Distribution Function (CDF):
@@ -50,7 +50,7 @@ Where is this heavily used in the real world? It is the exact mathematical mecha
 
 If you take a standard normal random variable and square it ($Y = X^2$), the resulting distribution is a Chi-Squared distribution with 1 degree of freedom. Let's prove this using the partition theorem we just discussed.
 
-![Normal Chi-Squared](partititon_pdf_3.jpg)
+![Normal Chi-Squared](../assets/images/partititon_pdf_3.jpg)
 *Figure 3: Applying the partition theorem to the Standard Normal PDF.*
 
 The steps are clear:
