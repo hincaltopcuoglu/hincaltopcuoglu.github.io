@@ -47,4 +47,4 @@ For another Generalization or Shannon Entropy in Tsallis Entropy form -> https:/
 
 For Finding Extremum of Tsallis Entropy -> https://hincaltopcuoglu.github.io/blog/Finding_Extremum_Tsallis_Entropy.pdf
 
-For Statistical Transformations -> https://hincaltopcuoglu.github.io/blog/Statistical_Transformations.md
+For Statistical Transformations -> https://hincaltopcuoglu.github.io/blog/Statistical_Transformations.html
