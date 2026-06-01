@@ -1,5 +1,5 @@
 ---
-layout: blog
+layout: post
 title: "The Secret of Statistical Transformations: Why Do We Need Monotonic Functions and Partitions?"
 date: 2026-06-01
 categories: statistics data-science mathematics
@@ -15,8 +15,8 @@ The fundamental rule for transforming Probability Density Functions (PDFs) invol
 
 However, there is a catch: You can only find a unique inverse for a function if it is **strictly monotonic** (meaning it only increases or only decreases).
 
-> **[INSERT IMAGE 2 HERE - "partititon_pdf_2.jpg" - The page with the Sine graph]**
-> *Figure 1: If a function is not continuously monotonic (like a sine wave), a horizontal line will intersect the curve at multiple points.*
+![Sine Graph](partititon_pdf_2.jpg)
+*Figure 1: If a function is not continuously monotonic (like a sine wave), a horizontal line will intersect the curve at multiple points.*
 
 As you can see in my sketch above, if we draw a horizontal line across a non-monotonic graph, it intersects the curve at multiple points. This means a single $y$ value corresponds to multiple $x$ values. Which inverse function are we supposed to use? 
 
@@ -30,8 +30,8 @@ We partition the sample space into sets $A_1, A_2, \dots, A_k$ such that the fun
 
 Let's prove the logic behind this partitioning using one of the most famous transformations: squaring a random variable.
 
-> **[INSERT IMAGE 1 HERE - "partititon_pdf_1.jpg" - The page starting with "Square Transformation"]**
-> *Figure 2: Deriving the PDF of $Y=X^2$ using the Cumulative Distribution Function (CDF) method.*
+![Square Transformation](partititon_pdf_1.jpg)
+*Figure 2: Deriving the PDF of $Y=X^2$ using the Cumulative Distribution Function (CDF) method.*
 
 As shown in my notes, we can start from the Cumulative Distribution Function (CDF):
 
@@ -50,24 +50,30 @@ Where is this heavily used in the real world? It is the exact mathematical mecha
 
 If you take a standard normal random variable and square it ($Y = X^2$), the resulting distribution is a Chi-Squared distribution with 1 degree of freedom. Let's prove this using the partition theorem we just discussed.
 
-> **[INSERT IMAGE 3 HERE - "partititon_pdf_3.jpg" - The page starting with "Normal - chi squared relationship"]**
-> *Figure 3: Applying the partition theorem to the Standard Normal PDF.*
+![Normal Chi-Squared](partititon_pdf_3.jpg)
+*Figure 3: Applying the partition theorem to the Standard Normal PDF.*
 
 The steps are clear:
+
 1. The standard normal distribution is a bell curve. Due to the $X^2$ transformation, we divide it into two monotonic partitions: $A_1 = (-\infty, 0)$ and $A_2 = (0, \infty)$.
 2. The inverse functions for these partitions are $g_1^{-1}(y) = -\sqrt{y}$ and $g_2^{-1}(y) = \sqrt{y}$, respectively.
 3. The PDF of the standard normal distribution is:
    $$ f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2} $$
-4. We apply the theorem by plugging our inverse functions into the Normal PDF and multiplying by the absolute value of their derivatives $\left| \frac{d}{dy} g^{-1}(y) \right|$:
-   $$ f_Y(y) = \frac{1}{\sqrt{2\pi}} e^{-(-\sqrt{y})^2/2} \left| -\frac{1}{2\sqrt{y}} \right| + \frac{1}{\sqrt{2\pi}} e^{-(\sqrt{y})^2/2} \left| \frac{1}{2\sqrt{y}} \right| $$
+4. We apply the theorem by plugging our inverse functions into the Normal PDF and multiplying by the absolute value of their derivatives $\left\lvert \frac{d}{dy} g^{-1}(y) \right\rvert$:
+   
+   $$ f_Y(y) = \frac{1}{\sqrt{2\pi}} e^{-(-\sqrt{y})^2/2} \left\lvert -\frac{1}{2\sqrt{y}} \right\rvert + \frac{1}{\sqrt{2\pi}} e^{-(\sqrt{y})^2/2} \left\lvert \frac{1}{2\sqrt{y}} \right\rvert $$
+
 5. Because the normal distribution is perfectly symmetrical, these two ugly pieces are identical. When we add them together, the 2's in the denominator cancel out, leaving us with a beautiful, simplified formula:
+   
    $$ f_Y(y) = \frac{1}{\sqrt{2\pi}\sqrt{y}} e^{-y/2} \quad \text{for } y > 0 $$
 
 And there it is! That simplified equation is the exact Probability Density Function of a **Chi-squared random variable with 1 degree of freedom**.
 
 ### Conclusion
 
-The intimidating formulas in statistics textbooks filled with summation symbols ($\Sigma$) and absolute derivatives are not arbitrary mathematical torture. When a function wavers up and down, those symbols are simply the mathematical instructions to: "Slice the graph into predictable pieces, calculate the stretched probability for each piece, and add them all together."
-Reference : Casella & Berger - Statistical Inference Book
+The intimidating formulas in statistics textbooks filled with summation symbols ($\Sigma$) and absolute derivatives are not arbitrary mathematical torture. When a function wavers up and down, those symbols are simply the mathematical instructions to: "Slice the graph into predictable pieces, calculate the stretched probability for each piece, and add them all together." 
+
+*Reference : Casella & Berger - Statistical Inference Book*
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
