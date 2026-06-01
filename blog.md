@@ -30,4 +30,4 @@ permalink: /blog/
 - [Generalization BG Entropy to Tsallis Entropy](Generalization_BG_Entropy_to_Tsallis.pdf)
 - [Shannon Entropy Generalization in Tsallis Entropy form](Shannon_Generalization_in_Tsallis_Form.pdf)
 - [Finding Extremum in Tsallis Entropy](Finding_Extremum_Tsallis_Entropy.pdf)
-- [Statistical Transformations](Statistical_Transformations.md)
+- [Statistical Transformations](Statistical_Transformations.html)
