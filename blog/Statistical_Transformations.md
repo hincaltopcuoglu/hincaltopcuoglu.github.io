@@ -15,7 +15,7 @@ The fundamental rule for transforming Probability Density Functions (PDFs) invol
 
 However, there is a catch: You can only find a unique inverse for a function if it is **strictly monotonic** (meaning it only increases or only decreases).
 
-![Sine Graph](../assets/images/partititon_pdf_2.jpg)
+![Sine Graph](../assets/images/partititon_pdf_2.jpeg)
 *Figure 1: If a function is not continuously monotonic (like a sine wave), a horizontal line will intersect the curve at multiple points.*
 
 As you can see in my sketch above, if we draw a horizontal line across a non-monotonic graph, it intersects the curve at multiple points. This means a single $y$ value corresponds to multiple $x$ values. Which inverse function are we supposed to use? 
