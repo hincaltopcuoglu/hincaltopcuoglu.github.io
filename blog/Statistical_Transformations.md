@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "The Secret of Statistical Transformations: Why Do We Need Monotonic Functions and Partitions?"
 date: 2026-06-01
 categories: statistics data-science mathematics
