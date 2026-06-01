@@ -46,3 +46,5 @@ For Generalization BG Entropy to Tsallis Entropy -> https://hincaltopcuoglu.gith
 For another Generalization or Shannon Entropy in Tsallis Entropy form -> https://hincaltopcuoglu.github.io/blog/Shannon_Generalization_in_Tsallis_Form.pdf
 
 For Finding Extremum of Tsallis Entropy -> https://hincaltopcuoglu.github.io/blog/Finding_Extremum_Tsallis_Entropy.pdf
+
+For Statistical Transformations -> https://hincaltopcuoglu.github.io/blog/Statistical_Transformations.md
