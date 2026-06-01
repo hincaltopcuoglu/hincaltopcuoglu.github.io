@@ -30,7 +30,7 @@ We partition the sample space into sets $A_1, A_2, \dots, A_k$ such that the fun
 
 Let's prove the logic behind this partitioning using one of the most famous transformations: squaring a random variable.
 
-![Square Transformation](/assets/imagespartititon_pdf_1.jpg)
+![Square Transformation](/assets/images/partititon_pdf_1.jpeg)
 *Figure 2: Deriving the PDF of $Y=X^2$ using the Cumulative Distribution Function (CDF) method.*
 
 As shown in my notes, we can start from the Cumulative Distribution Function (CDF):
@@ -50,7 +50,7 @@ Where is this heavily used in the real world? It is the exact mathematical mecha
 
 If you take a standard normal random variable and square it ($Y = X^2$), the resulting distribution is a Chi-Squared distribution with 1 degree of freedom. Let's prove this using the partition theorem we just discussed.
 
-![Normal Chi-Squared](/assets/images/partititon_pdf_3.jpg)
+![Normal Chi-Squared](/assets/images/partititon_pdf_3.jpeg)
 *Figure 3: Applying the partition theorem to the Standard Normal PDF.*
 
 The steps are clear:
@@ -75,5 +75,4 @@ The intimidating formulas in statistics textbooks filled with summation symbols 
 
 *Reference : Casella & Berger - Statistical Inference Book*
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
