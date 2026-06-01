@@ -69,3 +69,5 @@ And there it is! That simplified equation is the exact Probability Density Funct
 
 The intimidating formulas in statistics textbooks filled with summation symbols ($\Sigma$) and absolute derivatives are not arbitrary mathematical torture. When a function wavers up and down, those symbols are simply the mathematical instructions to: "Slice the graph into predictable pieces, calculate the stretched probability for each piece, and add them all together."
 Reference : Casella & Berger - Statistical Inference Book
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
