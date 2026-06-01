@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Secret of Statistical Transformations: Why Do We Need Monotonic Functions and Partitions?"
-date: 2026-06-01
+date: 2023-10-27
 categories: statistics data-science mathematics
 ---
 
@@ -75,4 +75,12 @@ The intimidating formulas in statistics textbooks filled with summation symbols 
 
 *Reference : Casella & Berger - Statistical Inference Book*
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
