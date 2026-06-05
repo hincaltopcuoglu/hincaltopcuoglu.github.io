@@ -6,8 +6,8 @@ date: 2025-01-15
 author: Hincal Topcuoglu
 categories: [data-science, machine-learning, e-commerce, conversion-optimization]
 tags: [propensity-modeling, customer-segmentation, ga4, random-forest, python, cro, behavioral-analytics]
-cover_image: /assets/images/posts/cover-beyond-dashboards.png
-image: /assets/images/posts/cover-beyond-dashboards.png
+cover_image: /assets/images/cover-beyond-dashboards.png
+image: /assets/images/cover-beyond-dashboards.png
 description: "A practical walkthrough of building a two-model propensity scoring engine and K-Means behavioral segmentation on GA4 e-commerce data — with actionable business recommendations for each segment."
 excerpt: "Most analytics teams report what happened. I built a system that predicts what will happen next — and identifies which visitors are worth targeting before they leave."
 canonical_url: https://hincaltopcuoglu.github.io/blog/beyond-dashboards-behavioral-predictive-modeling
@@ -57,7 +57,7 @@ This model uses all available behavioral signals, including late-funnel variable
 
 **Purpose:** Operational scoring — rank all sessions by conversion probability for post-session remarketing, email targeting, and audience creation.
 
-![Conversion Lift: Top 10% Propensity Group vs Site Average](/assets/images/posts/fig1-conversion-lift.png)
+![Conversion Lift: Top 10% Propensity Group vs Site Average](/assets/images/fig1-conversion-lift.png)
 *Figure 1: The top 10% of sessions ranked by propensity score converted at 24.16% — a 3.27x lift over the 7.39% site average.*
 
 **Key results:**
@@ -72,7 +72,7 @@ This model uses all available behavioral signals, including late-funnel variable
 
 **Top predictive features:**
 
-![Feature Importance — Full Session Propensity Model](/assets/images/posts/fig2-feature-importance.png)
+![Feature Importance — Full Session Propensity Model](/assets/images/fig2-feature-importance.png)
 *Figure 2: Engagement score, add-to-cart behavior, and checkout progression dominate feature importance — confirming that funnel depth is the strongest conversion signal.*
 
 ---
@@ -114,7 +114,7 @@ The drop in predictive power compared to Model A is **expected and honest**. Whe
 
 Using K-Means clustering (k=6, selected by silhouette score), I identified six distinct visitor segments based purely on behavioral features — without using the conversion label.
 
-![Customer Segments — Behavioral Segmentation](/assets/images/posts/fig3-customer-segments.png)
+![Customer Segments — Behavioral Segmentation](/assets/images/fig3-customer-segments.png)
 *Figure 3: Four key segments with distinct behavioral profiles and conversion rates. Each segment requires a different intervention strategy.*
 
 The key insight: **not all non-converting sessions are the same.**
@@ -200,7 +200,7 @@ Recommended actions:
 
 ## The Predictive Growth Engine: End-to-End Architecture
 
-![Predictive Growth Engine Workflow](/assets/images/posts/fig4-predictive-workflow.png)
+![Predictive Growth Engine Workflow](/assets/images/fig4-predictive-workflow.png)
 *Figure 4: The full pipeline — from raw GA4 behavioral data through feature engineering, dual propensity models, and segmentation — to segment-specific business actions.*
 
 The architecture connects five layers:
