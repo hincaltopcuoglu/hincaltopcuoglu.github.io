@@ -2,7 +2,7 @@
 layout: post
 title: "Beyond Dashboards: Using Behavioral Predictive Modeling to Drive E-commerce Conversion"
 subtitle: "How I built a propensity scoring engine and behavioral segmentation to identify high-intent sessions in a Fashion E-commerce dataset."
-date: 2025-01-15
+date: 2026-06-05
 author: Hincal Topcuoglu
 categories: [data-science, machine-learning, e-commerce, conversion-optimization]
 tags: [propensity-modeling, customer-segmentation, ga4, random-forest, python, cro, behavioral-analytics]
