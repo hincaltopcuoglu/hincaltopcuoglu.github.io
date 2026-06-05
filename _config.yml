@@ -3,8 +3,12 @@ email: hincal@topcuoglu.me
 description: Data Scientist with 13 years of experience in statistics, machine learning, and big data.
 baseurl: ""
 url: "https://hincaltopcuoglu.github.io"
-
 theme: minima
+
+header_pages:
+  - index.md
+  - cv.md
+  - blog.md
 
 plugins:
   - jekyll-feed
