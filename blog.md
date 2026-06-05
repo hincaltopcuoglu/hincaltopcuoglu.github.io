@@ -31,3 +31,4 @@ permalink: /blog/
 - [Shannon Entropy Generalization in Tsallis Entropy form](Shannon_Generalization_in_Tsallis_Form.pdf)
 - [Finding Extremum in Tsallis Entropy](Finding_Extremum_Tsallis_Entropy.pdf)
 - [Statistical Transformations](Statistical_Transformations.html)
+- [Behavioral Predictive Modelling for E-Commerce](beyond-dashboards-behavioral-predictive-modeling.html)
