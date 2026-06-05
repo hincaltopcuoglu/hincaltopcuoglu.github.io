@@ -256,4 +256,4 @@ If you are working on a similar problem or want to discuss how this approach cou
 
 ---
 
-**[Connect on LinkedIn](https://www.linkedin.com/in/hincal-topcuoglu/) · [View the code on GitHub](https://github.com/hincaltopcuoglu)**
+**[Connect on LinkedIn](https://www.linkedin.com/in/hincal-topcuoglu/) ·)**
