@@ -6,17 +6,7 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8H2BWG1389"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-G-8H2BWG1389', {
-      send_page_view: true
-    });
-  </script>
+  {% include google-analytics.html %}
 </head>
 
 <body>
@@ -40,16 +30,13 @@
 
   <!-- Custom behavioral tracking -->
   <script>
-    // 1) Scroll depth tracking
     const scrollMilestones = [25, 50, 75, 90];
     const scrollFired = {};
 
     window.addEventListener('scroll', function() {
       const docHeight = document.body.scrollHeight - window.innerHeight;
       if (docHeight <= 0) return;
-
       const scrollPercent = Math.round((window.scrollY / docHeight) * 100);
-
       scrollMilestones.forEach(function(milestone) {
         if (scrollPercent >= milestone && !scrollFired[milestone]) {
           scrollFired[milestone] = true;
@@ -62,7 +49,6 @@
       });
     });
 
-    // 2) Time on page tracking
     const timeCheckpoints = [15, 30, 60, 120, 300];
     timeCheckpoints.forEach(function(seconds) {
       setTimeout(function() {
@@ -74,82 +60,35 @@
       }, seconds * 1000);
     });
 
-    // 3) General click + outbound tracking
     document.addEventListener('click', function(e) {
       const target = e.target.closest('a, button');
       if (!target) return;
-
       const label = (target.innerText || target.textContent || '').trim().substring(0, 100);
       const href = target.getAttribute('href') || '';
 
-      // navigation clicks
-      if (href === '/' || href === '/cv/' || href === '/blog/' ||
-          href.includes('/cv') || href.includes('/blog')) {
-        gtag('event', 'nav_click', {
-          link_text: label,
-          link_url: href,
-          page_path: window.location.pathname
-        });
+      if (href === '/' || href.includes('/cv') || href.includes('/blog')) {
+        gtag('event', 'nav_click', { link_text: label, link_url: href, page_path: window.location.pathname });
       }
+      if (href.includes('/cv')) gtag('event', 'cv_open', { page_path: window.location.pathname });
+      if (href.includes('/blog')) gtag('event', 'blog_open', { page_path: window.location.pathname });
 
-      // special internal page intent
-      if (href.includes('/cv')) {
-        gtag('event', 'cv_open', {
-          link_text: label || 'CV',
-          page_path: window.location.pathname
-        });
-      }
-
-      if (href.includes('/blog')) {
-        gtag('event', 'blog_open', {
-          link_text: label || 'Blog',
-          page_path: window.location.pathname
-        });
-      }
-
-      // outbound clicks
       if (href.startsWith('http') && !href.includes(window.location.hostname)) {
-        gtag('event', 'outbound_click', {
-          link_text: label,
-          link_url: href,
-          page_path: window.location.pathname
-        });
-
-        // profile-level labeling
-        if (href.includes('linkedin.com')) {
-          gtag('event', 'linkedin_click', {
-            page_path: window.location.pathname
-          });
-        }
-
-        if (href.includes('github.com')) {
-          gtag('event', 'github_click', {
-            page_path: window.location.pathname
-          });
-        }
-
-        if (href.includes('x.com') || href.includes('twitter.com')) {
-          gtag('event', 'x_click', {
-            page_path: window.location.pathname
-          });
-        }
+        gtag('event', 'outbound_click', { link_text: label, link_url: href, page_path: window.location.pathname });
+        if (href.includes('linkedin.com')) gtag('event', 'linkedin_click', { page_path: window.location.pathname });
+        if (href.includes('github.com'))   gtag('event', 'github_click',   { page_path: window.location.pathname });
+        if (href.includes('x.com'))        gtag('event', 'x_click',        { page_path: window.location.pathname });
       }
     });
 
-    // 4) Section visibility tracking if sections have IDs
     document.querySelectorAll('section[id]').forEach(function(section) {
       const observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            gtag('event', 'section_view', {
-              section_id: entry.target.id,
-              page_path: window.location.pathname
-            });
+            gtag('event', 'section_view', { section_id: entry.target.id, page_path: window.location.pathname });
             observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0.5 });
-
       observer.observe(section);
     });
   </script>
