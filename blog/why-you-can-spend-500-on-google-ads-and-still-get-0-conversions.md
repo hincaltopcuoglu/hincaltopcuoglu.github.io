@@ -66,9 +66,7 @@ Because the wrong move at this stage is usually one of these:
 
 With $500 spent and 160 clicks, the average cost per click is:
 
-$$
-CPC = \frac{500}{160} = 3.125
-$$
+**CPC = 500 / 160 = 3.125**
 
 So the campaign is buying traffic at about **$3.13 per click**.
 
