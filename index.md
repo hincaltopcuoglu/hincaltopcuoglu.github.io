@@ -50,6 +50,50 @@ body {
   margin: 1.2rem 0;
 }
 
+.highlight-box-dark {
+  background: #fff8f0;
+  border-left: 4px solid #e07b00;
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  margin: 1.2rem 0;
+}
+
+.case-study-card {
+  border: 1px solid #dde8f5;
+  border-radius: 10px;
+  padding: 1.4rem 1.6rem;
+  background: #f7fbff;
+  margin: 1.2rem 0;
+}
+
+.case-study-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #007acc;
+}
+
+.case-study-card .metrics {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 0.8rem 0;
+}
+
+.case-study-card .metric {
+  text-align: center;
+}
+
+.case-study-card .metric .value {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #007acc;
+}
+
+.case-study-card .metric .label {
+  font-size: 0.85rem;
+  color: #555;
+}
+
 .metrics-list,
 .focus-list,
 .link-list {
@@ -72,140 +116,4 @@ body {
 .cta-button {
   display: inline-block;
   padding: 0.8rem 1.1rem;
-  background: #007acc;
-  color: #fff !important;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.2s ease;
-}
-
-.cta-button:hover {
-  background: #005f99;
-}
-
-.cta-button.secondary {
-  background: #f2f2f2;
-  color: #222 !important;
-}
-
-.cta-button.secondary:hover {
-  background: #e5e5e5;
-}
-
-.small-note {
-  color: #666;
-  font-size: 0.95rem;
-}
-
-footer {
-  margin-top: 3rem;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 1px solid #ddd;
-  padding-top: 1rem;
-  text-align: center;
-}
-</style>
-
-<section id="hero" class="hero">
-  <h1>Hincal Topcuoglu</h1>
-  <p>
-    I am a Data Scientist with 13+ years of experience in statistics, machine learning, and large-scale analytics.
-    I work across e-commerce, telecommunications, banking, travel, and aviation to turn complex business problems into measurable outcomes.
-  </p>
-
-  <div class="highlight-box">
-    <strong>Current focus:</strong> conversion modeling, customer analytics, predictive modeling, and applied machine learning for business growth.
-  </div>
-
-  <div class="cta-row">
-    <a class="cta-button" href="{{ '/cv/' | relative_url }}">View CV</a>
-    <a class="cta-button secondary" href="{{ '/blog/' | relative_url }}">Read Blog</a>
-    <a class="cta-button secondary" href="https://www.linkedin.com/in/hincal-topcuoglu/">LinkedIn</a>
-    <a class="cta-button secondary" href="https://github.com/hincaltopcuoglu">GitHub</a>
-  </div>
-</section>
-
-<section id="about" class="section-block">
-  <h2>About</h2>
-  <p>
-    My background is rooted in statistics, machine learning, and data-driven decision systems.
-    Over the years, I have built predictive models, designed analytical frameworks, led teams, and developed scalable data solutions for multiple industries.
-  </p>
-  <p>
-    I enjoy solving real-world problems where data science can create a clear business impact:
-    improving conversion, reducing churn, optimizing marketing efficiency, and supporting better strategic decisions.
-  </p>
-</section>
-
-<section id="expertise" class="section-block">
-  <h2>What I Work On</h2>
-  <ul class="focus-list">
-    <li>Predictive modeling and machine learning</li>
-    <li>Statistical analysis and experimentation</li>
-    <li>Customer analytics, segmentation, and retention</li>
-    <li>Conversion optimization and behavioral modeling</li>
-    <li>Marketing analytics and performance measurement</li>
-    <li>Scalable data pipelines and analytics workflows</li>
-  </ul>
-</section>
-
-<section id="impact" class="section-block">
-  <h2>How I Think About Impact</h2>
-  <p>
-    I focus on building solutions that do more than generate dashboards.
-    My approach is to connect statistical rigor with business outcomes:
-    identifying what matters, modeling it correctly, and turning results into action.
-  </p>
-
-  <div class="highlight-box">
-    <strong>Typical questions I like solving:</strong>
-    <ul class="metrics-list">
-      <li>Which users are most likely to convert?</li>
-      <li>Which customers are at risk of churn?</li>
-      <li>Which campaigns create real value rather than noisy traffic?</li>
-      <li>How can data be turned into measurable business decisions?</li>
-    </ul>
-  </div>
-</section>
-
-<section id="blog-highlights" class="section-block">
-  <h2>Writing & Technical Notes</h2>
-  <p>
-    I regularly write about statistics, probability, machine learning, information theory, and analytical methods.
-    These articles reflect both theoretical depth and practical curiosity.
-  </p>
-
-  <div class="cta-row">
-    <a class="cta-button secondary" href="{{ '/blog/' | relative_url }}">Explore Blog Posts</a>
-  </div>
-
-  <p class="small-note">
-    The blog includes notes on entropy, distributions, kernel methods, regression, clustering, and machine learning concepts.
-  </p>
-</section>
-
-<section id="profiles" class="section-block">
-  <h2>Profiles</h2>
-  <ul class="link-list">
-    <li><a href="https://github.com/hincaltopcuoglu">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/hincal-topcuoglu/">LinkedIn</a></li>
-    <li><a href="https://x.com/hincaltopcuogl1">X</a></li>
-  </ul>
-</section>
-
-<section id="contact-intent" class="section-block">
-  <h2>Start Here</h2>
-  <p>
-    If you want to understand my background, start with the CV.
-    If you want to see how I think technically, explore the blog.
-    If you want to connect professionally, LinkedIn is the best place to reach me.
-  </p>
-
-  <div class="cta-row">
-    <a class="cta-button" href="{{ '/cv/' | relative_url }}">Open CV</a>
-    <a class="cta-button secondary" href="{{ '/blog/' | relative_url }}">Open Blog</a>
-    <a class="cta-button secondary" href="https://www.linkedin.com/in/hincal-topcuoglu/">Connect on LinkedIn</a>
-  </div>
-</section>
+  background: #
