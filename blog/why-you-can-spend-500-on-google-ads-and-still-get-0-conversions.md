@@ -8,7 +8,7 @@ categories: [google-ads, analytics, conversion-optimization]
 tags: [google ads, conversion rate optimization, ga4, paid acquisition, behavioral analytics, landing pages]
 ---
 
-![Spent Money. Got Clicks. Still 0 Conversions.](/assets/images/posts/google-ads-zero-conversions-cover.png)
+![Spent Money. Got Clicks. Still 0 Conversions.](/assets/images/google-ads-zero-conversions-cover.png)
 
 > **Short summary:**  
 > Spending money on Google Ads and getting clicks without conversions is one of the most frustrating moments in paid acquisition. But in low-volume campaigns, the first diagnosis should not be panic. It should be structure. Before declaring the channel broken, you need to audit tracking, search intent, landing page clarity, CTA friction, and trust signals. In other words: diagnose behavior before optimizing outcomes.
