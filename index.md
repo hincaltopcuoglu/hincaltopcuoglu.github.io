@@ -189,7 +189,7 @@ footer {
   <div class="highlight-box">
     <strong>My approach:</strong> Instead of waiting for data to accumulate, I use behavioral signals,
     semantic site analysis, and statistical priors to build predictive systems that work
-    from day one — even with 83 visitors and 0 conversions.
+    from day one — even with X visitors and 0 conversions.
   </div>
 
   <p>
