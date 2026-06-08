@@ -51,4 +51,4 @@ For Statistical Transformations -> https://hincaltopcuoglu.github.io/blog/Statis
 
 For Behavioral Predictive Modeling in E-Commerce -> https://hincaltopcuoglu.github.io/blog/beyond-dashboards-behavioral-predictive-modeling.html
 
-For The problem of Cold Start E-Commerce Traffic / Conversion Problem -> https://hincaltopcuoglu.github.io/blog/why-you-can-spend-500-on-google-ads-and-still-get-0-conversions.html
+For The problem of Cold Start E-Commerce Traffic / Conversion Problem -> https://hincaltopcuoglu.github.io/blog/why-you-can-spend-500-on-google-ads-and-still-get-0-conversions/
