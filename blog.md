@@ -33,3 +33,4 @@ permalink: /blog/
 - [Statistical Transformations](Statistical_Transformations.html)
 - [Behavioral Predictive Modelling for E-Commerce](beyond-dashboards-behavioral-predictive-modeling.html)
 - [Why you can spend 500$ on google ads and still get 0 conversions](why-you-can-spend-500-on-google-ads-and-still-get-0-conversions/)
+- [For Understanding the diagnosis of your web traffic](the-real-problem-isnt-traffic-its-not-knowing-whats-broken/)
