@@ -34,4 +34,4 @@ permalink: /blog/
 - [Behavioral Predictive Modelling for E-Commerce](beyond-dashboards-behavioral-predictive-modeling.html)
 - [Why you can spend 500$ on google ads and still get 0 conversions](why-you-can-spend-500-on-google-ads-and-still-get-0-conversions/)
 - [For Understanding the diagnosis of your web traffic](the-real-problem-isnt-traffic-its-not-knowing-whats-broken/)
-- [Boost Conversions with Your GA Data — First Improvements in 14 Days](boost-conversions-with-ga4/)
+- [Boost Conversions with Your GA Data — First Improvements in 14 Days](boost-conversions-with-ga4.html)
