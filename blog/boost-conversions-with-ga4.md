@@ -13,7 +13,7 @@ author: Hincal Topcuoglu
 
 #### I clean GA4 data and deliver actionable CRO recommendations fast. Request a free short analysis.
 
-Good conversion experiments start with trust in your data. Before you A/B test headlines, funnels, or CTAs, you need to know that the events and sessions feeding those experiments actually reflect real user behavior — not duplicated hits, instrumentation loops, or bursty telemetry. In this short note I show what we looked for, why it matters, and how a focused 14‑day workflow produces usable CRO ideas you can test immediately.
+Good conversion experiments start with trust in your data. Before you A/B test headlines, funnels, or CTAs, you need to know that the events and sessions feeding those experiments actually reflect real user behavior — not duplicated hits, instrumentation loops, or bursty telemetry. In this short note I show what to be looked for, why it matters, and how a focused 14‑day workflow produces usable CRO ideas you can test immediately.
 
 What I set out to do
 * Objective: determine whether raw GA4 events were reliable enough to support A/B tests and predictive models, and — if not — produce a short prioritized plan to fix measurement and generate low-effort A/B ideas.
