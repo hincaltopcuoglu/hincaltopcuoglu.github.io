@@ -55,4 +55,4 @@ For The problem of Cold Start E-Commerce Traffic / Conversion Problem -> https:/
 
 For Understanding the diagnosis of your web traffic -> https://hincaltopcuoglu.github.io/blog/the-real-problem-isnt-traffic-its-not-knowing-whats-broken/
 
-For Boosting Conversions with Your GA Data — First Improvements in 14 Days -> https://hincaltopcuoglu.github.io/blog/boost-conversions-with-ga4.html
+For Boosting Conversions with Your GA Data — First Improvements in 14 Days -> https://hincaltopcuoglu.github.io/blog/boost-conversions-with-ga4/
