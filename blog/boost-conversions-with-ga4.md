@@ -20,7 +20,7 @@ What I set out to do
 * Data: a compact production dataset (~625 raw events) used as a diagnostic lab to reveal common GA4 problems that scale to larger sites.
 * Approach (quick): triage → clean → aggregate → validate. I first identify noisy instrumentation (duplicates, same‑timestamp bursts, repeated events), then sessionize and aggregate to session level, and finally run basic predictive and sanity checks to see whether signals remain after cleaning.
 
-* ✅ Real data, real recommendations — we find and fix instrumentation errors.  
+* ✅ Real data, real recommendations — I find and fix instrumentation errors.  
 * ⚡ Fast wins — high‑uplift ideas with minimal implementation effort.  
 * 📈 Test‑ready tracking — recommendations delivered so they can be A/B tested immediately.
 
