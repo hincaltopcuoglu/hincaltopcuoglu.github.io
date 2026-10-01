@@ -6,6 +6,7 @@ permalink: /blog/
 
 # Blog Posts
 
+- [Predicting Blog Post Views with Empirical Bayes and Jaccard Similarity](Predicting_Blog_Post_Views_with_Empirical_Bayes_and_Jaccard_Similarity.html)
 - [JackKnife Method](jackknife_method.html)
 - [Binomial Distribution](Binomial_Calculation_and_Distribution_Example.html)
 - [Hypergeometric Distribution](hypergeometric_distribution.html)

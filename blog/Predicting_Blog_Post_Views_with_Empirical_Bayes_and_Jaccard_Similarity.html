@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Hıncal Topçuoğlu" />
+  <meta name="dcterms.date" content="2026-10-01" />
+  <meta name="description" content="How to forecast how many page views a new blog post will get before you hit publish — using conjugate Bayesian models, empirical Bayes over your own historical corpus, and Jaccard title similarity as a content prior." />
+  <title>Predicting Blog Post Views with Empirical Bayes and Jaccard Similarity</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Predicting Blog Post Views with Empirical Bayes and
+Jaccard Similarity</h1>
+<p class="author">Hıncal Topçuoğlu</p>
+<p class="date">2026-10-01</p>
+</header>
+<h2 id="the-problem-writing-a-post-blind">The problem: writing a post
+blind</h2>
+<p>You spend three days writing a post, hit publish, and then… silence.
+A week later you check analytics: 14 views, mostly you refreshing the
+tab.</p>
+<p>What if you could predict view counts <em>before</em> writing? Not a
+guess — a posterior predictive distribution with credible intervals,
+computed from your own historical corpus.</p>
+<p>This post walks through the small Bayesian system I built to do
+exactly that for my own blog. It uses only <strong>conjugate analytical
+Bayes</strong> — no MCMC, no PyMC, just closed-form posteriors.</p>
+<h2 id="the-bayesian-framing">The Bayesian framing</h2>
+<p>Each historical post <span class="math inline"><em>i</em></span> has
+an unobserved “true view rate” <span
+class="math inline"><em>λ</em><sub><em>i</em></sub></span> and an
+observed count <span
+class="math inline"><em>X</em><sub><em>i</em></sub></span>:</p>
+<p><span
+class="math display"><em>X</em><sub><em>i</em></sub> ∼ Poisson(<em>λ</em><sub><em>i</em></sub>),   <em>λ</em><sub><em>i</em></sub> ∼ Gamma(<em>α</em>, <em>β</em>)</span></p>
+<p>in the rate parameterization where <span
+class="math inline">𝔼[<em>λ</em>] = <em>α</em>/<em>β</em></span>.</p>
+<p>This is the <strong>Poisson-Gamma</strong> conjugate pair. The
+posterior after seeing <span class="math inline"><em>X</em></span>
+observations across <span class="math inline"><em>T</em></span> periods
+is itself a Gamma:</p>
+<p><span
+class="math display"><em>λ</em> ∣ <em>X</em> ∼ Gamma(<em>α</em> + <em>X</em>, <em>β</em> + <em>T</em>)</span></p>
+<p>For my own GA4 corpus (90 days, 3 unique posts, 430 views), the
+<strong>global empirical Bayes</strong> prior comes out to:</p>
+<p><span
+class="math display"><em>λ</em><sub>global</sub> ∼ Gamma(<em>α</em> = 0.54, <em>β</em> = 0.004)</span></p>
+<p>with a mean of <span class="math inline">144</span> views per period.
+The mean is dominated by the homepage’s <span
+class="math inline">421</span> views; the variance is enormous. Useful
+as a fallback, but not great for distinguishing good titles from bad
+ones.</p>
+<h2 id="content-aware-prior-via-jaccard-similarity">Content-aware prior
+via Jaccard similarity</h2>
+<p>The naive global prior says every post is like every other post.
+That’s wrong. A post titled <em>“Building a Bayesian Forecasting
+Pipeline for Google Analytics 4”</em> shares almost nothing with the
+homepage.</p>
+<p>Tokenize each title to lowercase word-tokens of length <span
+class="math inline"> ≥ 2</span>, then compute set-Jaccard
+similarity:</p>
+<p><span class="math display">$$
+\text{sim}(a, b) \;=\; \frac{|T(a) \cap T(b)|}{|T(a) \cup T(b)|}
+$$</span></p>
+<p>For my corpus the only words that recur are the personal-name tokens
+(<em>“Hincal”</em>, <em>“Topcuoglu”</em>) and the page-type tokens
+(<em>“Home”</em>, <em>“Blog”</em>, <em>“CV”</em>). So a new title
+matches weakly or not at all — and the model correctly concludes it has
+no historical analogue and falls back to the global prior.</p>
+<p>This is <strong>Bayesian shrinkage in the right direction</strong>: a
+novel topic inherits the corpus mean; a familiar topic inherits the
+matching post’s history.</p>
+<h2 id="method-of-moments-gamma-fit">Method-of-moments Gamma fit</h2>
+<p>We need <span class="math inline">(<em>α</em>, <em>β</em>)</span> for
+the empirical rates. The <strong>method-of-moments</strong> estimator
+for Gamma under rate parameterization is closed-form:</p>
+<p><span class="math display">$$
+\hat{\beta} = \frac{\bar{r}}{s^2_r}, \qquad
+\hat{\alpha} = \bar{r} \cdot \hat{\beta}
+$$</span></p>
+<p>where <span class="math inline"><em>r̄</em></span> and <span
+class="math inline"><em>s</em><sub><em>r</em></sub><sup>2</sup></span>
+are the sample mean and variance of the empirical rates. No MCMC, no
+SciPy fitting, no optimization. For my corpus this gives <span
+class="math inline"><em>α̂</em> = 0.54</span>, <span
+class="math inline"><em>β̂</em> = 0.004</span>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.models.content_prior <span class="im">import</span> fit_gamma_method_of_moments</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>rates <span class="op">=</span> np.array([<span class="fl">421.0</span>, <span class="fl">6.0</span>, <span class="fl">3.0</span>])  <span class="co"># + smoothing in practice</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>prior <span class="op">=</span> fit_gamma_method_of_moments(rates)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># → GammaPosterior(alpha=0.54, beta=0.004)</span></span></code></pre></div>
+<p>For the <strong>content-aware</strong> prior, weights are
+similarity-proportional pseudo-counts: a post at similarity <span
+class="math inline"><em>s</em></span> contributes <span
+class="math inline">max (round(20<em>s</em>), 1)</span> samples to the
+rate distribution we fit on.</p>
+<h2 id="blending-content-prior-with-global-prior">Blending content prior
+with global prior</h2>
+<p>The two priors get blended by average similarity:</p>
+<p><span
+class="math display"><em>w</em><sub>blend</sub> = clip(<em>s̄</em><sub>top-K</sub> ⋅ 2.5, 0, 1)</span></p>
+<p><span
+class="math display"><em>λ</em><sub>final</sub> ∼ Gamma(<em>w</em><em>α</em><sub><em>c</em></sub> + (1 − <em>w</em>)<em>α</em><sub><em>g</em></sub>, <em>w</em><em>β</em><sub><em>c</em></sub> + (1 − <em>w</em>)<em>β</em><sub><em>g</em></sub>)</span></p>
+<p>A novel title has <span class="math inline"><em>s̄</em> ≈ 0</span>, so
+<span class="math inline"><em>w</em> → 0</span> and we get the global
+prior. A title identical to a top performer has <span
+class="math inline"><em>s̄</em> ≈ 1</span>, so <span
+class="math inline"><em>w</em> → 1</span> and we get the content
+prior.</p>
+<h2 id="posterior-predictive">Posterior predictive</h2>
+<p>The predictive distribution is the mixture</p>
+<p><span
+class="math display"><em>X</em><sub>new</sub> ∼ Poisson(<em>λ</em><sub>new</sub>),   <em>λ</em><sub>new</sub> ∼ Gamma(<em>α</em><sub><em>f</em></sub>, <em>β</em><sub><em>f</em></sub>)</span></p>
+<p>sampled directly. For a candidate title like <em>“Hincal Topcuoglu
+Resume CV”</em> on my corpus this comes out to:</p>
+<pre><code>Posterior λ mean:                  113.25
+Posterior λ std:                   180.99
+Predictive mean:                   113.17
+Predictive median:                  40
+50% CI:                            [6, 143]
+95% CI:                            [0, 479]</code></pre>
+<p>with similarity profile</p>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th style="text-align: right;">Sim</th>
+<th style="text-align: right;">Views</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CV - Hincal Topcuoglu</td>
+<td style="text-align: right;">0.750</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td>Home - Hincal Topcuoglu</td>
+<td style="text-align: right;">0.400</td>
+<td style="text-align: right;">421</td>
+</tr>
+<tr>
+<td>Blog - Hincal Topcuoglu</td>
+<td style="text-align: right;">0.400</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>So a CV-like title inherits shrinkage toward the CV’s low count (6
+views) rather than being inflated by the homepage’s 421.</p>
+<h2 id="real-example-predicting-this-very-post">Real example: predicting
+this very post</h2>
+<p>This post was written in two passes. First the system predicted what
+views it would get <em>before</em> the draft existed:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python scripts/predict_post.py <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Predicting Blog Post Views with Empirical Bayes and Jaccard Similarity&quot;</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--csv</span> data/raw/top_pages.csv</span></code></pre></div>
+<p>The title shares one token — <code>"blog"</code> — with the corpus
+post <em>“Blog - Hincal Topcuoglu”</em>. The blend weight is small
+(0.21), and the content prior collapses onto a single weakly-matched
+post with 3 views:</p>
+<pre><code>Avg similarity:  0.083   (blend weight: 0.21)
+Similar posts used:          1   (Blog - Hincal Topcuoglu)
+Posterior λ mean:           3.99
+Posterior λ std:            4.32
+Predictive mean:            4.00
+Predictive median:          2
+50% CI:                     [1, 6]
+95% CI:                     [0, 13]</code></pre>
+<p>The 95% interval is <code>[0, 13]</code> — narrow enough to be
+useful, wide enough to admit the truth. After publication we’ll re-run
+the pipeline and rescore to see whether the post landed inside the
+band.</p>
+<p>The interesting thing about this prediction is <em>what it doesn’t
+include</em>: the model has no signal about whether this post is well-
+written, well-titled, or well-distributed. It only knows that the title
+weakly resembles a low-traffic blog page. The point estimate of
+<strong>2</strong> is the corpus saying <em>“you picked a topic we’ve
+seen before and it didn’t get many views — but the interval is honest,
+so don’t be surprised by anything from 0 to 13”</em>.</p>
+<p>This is the system telling you, in calibrated language, <strong>what
+it knows and what it doesn’t</strong>.</p>
+<h2 id="limitations">Limitations</h2>
+<p>A few things this system <em>cannot</em> do yet:</p>
+<ul>
+<li><strong>Sparse corpus collapse</strong>. With 3 posts, every title
+falls back to the global prior. The system needs ~10 posts before the
+similarity weighting meaningfully moves predictions.</li>
+<li><strong>Token-level similarity is crude</strong>. “Python tutorial”
+and “tutorial on Python” tokenize identically, but “Bayesian inference
+primer” and “Primer on Bayesian inference” have Jaccard <span
+class="math inline"> = 0.4</span> despite being semantically identical.
+Embeddings would fix this.</li>
+<li><strong>No temporal decay</strong>. A post from 2019 is treated the
+same as one from last week. Real blogs have momentum, seasonal traffic,
+and decay.</li>
+<li><strong>Survivorship bias</strong>. The corpus only includes posts
+that already exist. Titles you <em>didn’t</em> publish are missing from
+the training set.</li>
+</ul>
+<h2 id="when-to-upgrade">When to upgrade</h2>
+<ul>
+<li><strong>5–10 posts published</strong>: similarity starts to be
+informative. Add per-author and per-tag features.</li>
+<li><strong>20+ posts</strong>: replace Jaccard with sentence embeddings
+(<code>all-MiniLM-L6-v2</code>) and re-fit. The whole module stays the
+same.</li>
+<li><strong>50+ posts</strong>: add a hierarchical model over
+<code>author × topic × month</code> with partial pooling. Same
+content-aware prior idea, richer hierarchy.</li>
+<li><strong>GA4 + Search Console</strong>: pull query-level data so the
+prior knows which topics have actual search demand.</li>
+</ul>
+<h2 id="why-this-matters">Why this matters</h2>
+<p>The point of forecasting views is not to optimize for the algorithm.
+It’s to <strong>make the publish decision visible</strong>: do you want
+to write a post whose 95% credible interval is <code>[1, 535]</code>?
+Probably not — you should pick a topic the model has seen before, or
+accept that you are exploring and write it anyway.</p>
+<p>Once you have a few dozen posts, the system will start telling you,
+in calibrated probabilistic language, which topics the corpus already
+understands and which ones it doesn’t. That, more than the point
+estimate, is what makes it useful.</p>
+</body>
+</html>
