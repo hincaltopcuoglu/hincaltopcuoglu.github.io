@@ -3,158 +3,9 @@ layout: home
 title: Home
 ---
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 980px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
-  line-height: 1.7;
-  color: #333;
-  text-align: left;
-}
-
-.hero {
-  margin: 2rem 0 3rem 0;
-}
-
-.hero h1 {
-  font-size: 2.4rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero p {
-  font-size: 1.1rem;
-  max-width: 760px;
-}
-
-.section-block {
-  margin: 3rem 0;
-}
-
-.section-block h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #111;
-}
-
-.section-block p {
-  margin-bottom: 1rem;
-}
-
-.highlight-box {
-  background: #f7fbff;
-  border-left: 4px solid #007acc;
-  padding: 1rem 1.2rem;
-  border-radius: 6px;
-  margin: 1.2rem 0;
-}
-
-.highlight-box-dark {
-  background: #fff8f0;
-  border-left: 4px solid #e07b00;
-  padding: 1rem 1.2rem;
-  border-radius: 6px;
-  margin: 1.2rem 0;
-}
-
-.case-study-card {
-  border: 1px solid #dde8f5;
-  border-radius: 10px;
-  padding: 1.4rem 1.6rem;
-  background: #f7fbff;
-  margin: 1.2rem 0;
-}
-
-.case-study-card h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  color: #007acc;
-}
-
-.case-study-card .metrics {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin: 0.8rem 0;
-}
-
-.case-study-card .metric {
-  text-align: center;
-}
-
-.case-study-card .metric .value {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #007acc;
-}
-
-.case-study-card .metric .label {
-  font-size: 0.85rem;
-  color: #555;
-}
-
-.metrics-list,
-.focus-list,
-.link-list {
-  padding-left: 1.2rem;
-}
-
-.metrics-list li,
-.focus-list li,
-.link-list li {
-  margin-bottom: 0.6rem;
-}
-
-.cta-row {
-  display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-top: 1.5rem;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 0.8rem 1.1rem;
-  background: #007acc;
-  color: #fff !important;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.2s ease;
-}
-
-.cta-button:hover {
-  background: #005f99;
-}
-
-.cta-button.secondary {
-  background: #f2f2f2;
-  color: #222 !important;
-}
-
-.cta-button.secondary:hover {
-  background: #e5e5e5;
-}
-
-.small-note {
-  color: #666;
-  font-size: 0.95rem;
-}
-
-footer {
-  margin-top: 3rem;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 1px solid #ddd;
-  padding-top: 1rem;
-  text-align: center;
-}
-</style>
-
-<section id="hero" class="hero">
+<section id="hero" class="home-hero">
   <h1>Hincal Topcuoglu</h1>
-  <p>
+  <p class="lead">
     Data Scientist with 14+ years of experience in statistics, machine learning, and large-scale analytics.
     I help e-commerce, SaaS, and growth teams answer one question:
     <strong>"Which users are worth acting on — and when?"</strong>
@@ -174,7 +25,7 @@ footer {
   </div>
 </section>
 
-<section id="cold-start" class="section-block">
+<section id="cold-start" class="home-section">
   <h2>The Cold Start Problem in Analytics</h2>
   <p>
     Every new website, product, or campaign starts with the same challenge: <strong>zero data.</strong>
@@ -198,7 +49,7 @@ footer {
   </p>
 </section>
 
-<section id="case-study" class="section-block">
+<section id="case-study" class="home-section">
   <h2>Featured Case Study</h2>
   <p>
     A complete behavioral analytics pipeline built on a high-fidelity synthetic GA4 dataset
@@ -233,7 +84,7 @@ footer {
   </div>
 </section>
 
-<section id="about" class="section-block">
+<section id="about" class="home-section">
   <h2>About</h2>
   <p>
     My background is rooted in statistics, machine learning, and data-driven decision systems.
@@ -246,9 +97,9 @@ footer {
   </p>
 </section>
 
-<section id="expertise" class="section-block">
+<section id="expertise" class="home-section">
   <h2>What I Work On</h2>
-  <ul class="focus-list">
+  <ul>
     <li>Behavioral propensity modeling and real-time session scoring</li>
     <li>Cold start analytics — predictive systems for low-data environments</li>
     <li>Customer segmentation, retention modeling, and churn prediction</li>
@@ -259,7 +110,7 @@ footer {
   </ul>
 </section>
 
-<section id="impact" class="section-block">
+<section id="impact" class="home-section">
   <h2>How I Think About Impact</h2>
   <p>
     I focus on building solutions that do more than generate dashboards.
@@ -269,7 +120,7 @@ footer {
 
   <div class="highlight-box">
     <strong>Typical questions I like solving:</strong>
-    <ul class="metrics-list">
+    <ul>
       <li>Which users are most likely to convert — before they reach checkout?</li>
       <li>Which customers are at risk of churn — before they cancel?</li>
       <li>Which campaigns create real value rather than noisy traffic?</li>
@@ -278,8 +129,8 @@ footer {
   </div>
 </section>
 
-<section id="blog-highlights" class="section-block">
-  <h2>Writing & Technical Notes</h2>
+<section id="blog-highlights" class="home-section">
+  <h2>Writing &amp; Technical Notes</h2>
   <p>
     I write about statistics, machine learning, information theory, and applied analytics.
     Some posts are deeply theoretical. Others are practical walkthroughs with code.
@@ -296,16 +147,16 @@ footer {
   </p>
 </section>
 
-<section id="profiles" class="section-block">
+<section id="profiles" class="home-section">
   <h2>Profiles</h2>
-  <ul class="link-list">
+  <ul>
     <li><a href="https://github.com/hincaltopcuoglu">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/hincal-topcuoglu/">LinkedIn</a></li>
     <li><a href="https://x.com/hincaltopcuogl1">X / Twitter</a></li>
   </ul>
 </section>
 
-<section id="contact-intent" class="section-block">
+<section id="contact-intent" class="home-section">
   <h2>Start Here</h2>
   <p>
     If you want to understand my background, start with the CV.
@@ -320,3 +171,4 @@ footer {
     <a class="cta-button secondary" href="https://www.linkedin.com/in/hincal-topcuoglu/">Connect on LinkedIn</a>
   </div>
 </section>
+
