@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ page.title }} - {{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -9,23 +10,40 @@
   {% include google-analytics.html %}
 </head>
 
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{{ '/' | relative_url }}">Home</a></li>
-        <li><a href="{{ '/cv/' | relative_url }}">CV</a></li>
-        <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
-      </ul>
+{%- assign is_blog = false -%}
+{%- if page.url == '/blog/' or page.url == '/blog/index.html' -%}
+  {%- assign is_blog = true -%}
+{%- endif -%}
+
+<body class="{% if is_blog %}page-blog-index{% endif %}">
+
+  <header class="site-header">
+    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a>
+      <a href="{{ '/' | relative_url }}#about" {% if page.url contains 'about' %}class="active"{% endif %}>About</a>
+      <a href="{{ '/cv/' | relative_url }}" {% if page.url contains '/cv' %}class="active"{% endif %}>CV</a>
+      <a href="{{ '/blog/' | relative_url }}" {% if is_blog or page.url contains '/blog' %}class="active"{% endif %}>Blog</a>
+      <a href="mailto:{{ site.email }}">Contact</a>
+      <span class="search-icon" role="button" tabindex="0" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </span>
     </nav>
   </header>
 
-  <main>
+  <main class="site-main">
     {{ content }}
   </main>
 
-  <footer>
-    <p>© 2025 Hincal Topcuoglu. Powered by Jekyll.</p>
+  <footer class="site-footer">
+    <div class="footer-left">© 2026 {{ site.title }}</div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ '/' | relative_url }}#about">About</a>
+      <a href="{{ '/cv/' | relative_url }}">CV</a>
+      <a href="{{ '/blog/' | relative_url }}">Blog</a>
+      <a href="mailto:{{ site.email }}">Contact</a>
+    </nav>
   </footer>
 
   <!-- Custom behavioral tracking -->
@@ -91,6 +109,37 @@
       }, { threshold: 0.5 });
       observer.observe(section);
     });
+
+    // Filter pills — visual selection only, persisted to sessionStorage
+    (function() {
+      const pills = document.querySelectorAll('.filter-pills button');
+      if (!pills.length) return;
+      const STORAGE_KEY = 'blog_filter';
+      const stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        pills.forEach(function(p) {
+          p.classList.toggle('active', p.textContent.trim() === stored);
+          p.setAttribute('aria-selected', p.textContent.trim() === stored ? 'true' : 'false');
+        });
+      }
+      pills.forEach(function(p) {
+        p.addEventListener('click', function() {
+          pills.forEach(function(x) {
+            x.classList.remove('active');
+            x.setAttribute('aria-selected', 'false');
+          });
+          p.classList.add('active');
+          p.setAttribute('aria-selected', 'true');
+          sessionStorage.setItem(STORAGE_KEY, p.textContent.trim());
+          if (typeof gtag === 'function') {
+            gtag('event', 'blog_filter', {
+              filter: p.textContent.trim(),
+              page_path: window.location.pathname
+            });
+          }
+        });
+      });
+    })();
   </script>
 
   <!-- MathJax for LaTeX rendering -->
