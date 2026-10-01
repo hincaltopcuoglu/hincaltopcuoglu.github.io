@@ -15,12 +15,7 @@
   {%- assign is_blog = true -%}
 {%- endif -%}
 
-{%- assign is_home = false -%}
-{%- if page.url == '/' or page.url == '/index.html' -%}
-  {%- assign is_home = true -%}
-{%- endif -%}
-
-<body class="{% if is_blog %}page-blog-index{% endif %}{% if is_home %} page-home{% endif %}">
+<body class="{% if is_blog %}page-blog-index{% endif %}">
 
   <header class="site-header">
     <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
