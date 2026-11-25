@@ -248,6 +248,15 @@
       if (empty) empty.hidden = shown !== 0;
       if (countEl) countEl.textContent = shown;
 
+      // Keep the "Showing N of M" line in sync.
+      var statusEl = document.getElementById('filter-status');
+      if (statusEl) {
+        var suffix = statusEl.getAttribute('data-suffix') || '';
+        statusEl.innerHTML = 'Showing <span id="filter-count">' + shown + '</span> of ' +
+          (cards.length) + suffix;
+        countEl = document.getElementById('filter-count');
+      }
+
       if (updateUrl) {
         var url = new URL(window.location.href);
         if (category === 'All') url.searchParams.delete('topic');
@@ -291,6 +300,11 @@
         if (countEl) countEl.textContent = shown;
         var emptyEl = document.getElementById('filter-empty');
         if (emptyEl) emptyEl.hidden = shown !== 0;
+        var statusEl = document.getElementById('filter-status');
+        if (statusEl) {
+          statusEl.innerHTML = 'Showing <span id="filter-count">' + shown + '</span> of ' +
+            cards.length + (statusEl.getAttribute('data-suffix') || '');
+        }
       });
     }
 

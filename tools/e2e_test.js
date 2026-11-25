@@ -161,7 +161,7 @@ function check(name, pass, detail) {
     `${statsVisible} visible, cats=${statsCats.join(',')}`);
 
   const statusText = (await page.textContent('#filter-status')).replace(/\s+/g, ' ').trim();
-  check('blog: status line updates', /Showing 9 of 25/.test(statusText), statusText);
+  check('blog: status line updates', /Showing 9 of 30/.test(statusText), statusText);
 
   const urlAfter = page.url();
   check('blog: filter writes to the URL', urlAfter.includes('topic=Statistics'), urlAfter);

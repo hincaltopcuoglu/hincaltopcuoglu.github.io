@@ -23,6 +23,12 @@ permalink: /blog/
 
 {%- assign topic_order = "Applied Data Science,Information Theory,Machine Learning,Statistics" | split: "," -%}
 
+{%- comment -%} The PDF papers live outside the post collection {%- endcomment -%}
+{%- assign paper_count = 0 -%}
+{%- for item in site.data.post_meta -%}
+  {%- if item[0] contains '.pdf' -%}{%- assign paper_count = paper_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
 <div class="blog-page">
 
   <header class="blog-header">
@@ -73,8 +79,9 @@ permalink: /blog/
     </label>
   </div>
 
-  <p class="filter-status" id="filter-status" aria-live="polite">
-    Showing <span id="filter-count">{{ posts.size }}</span> of {{ posts.size }} posts
+  <p class="filter-status" id="filter-status" aria-live="polite"
+     data-suffix=" posts ({{ posts.size }} articles, {{ paper_count }} papers)">
+    Showing <span id="filter-count">{{ posts.size }}</span> of {{ posts.size }} articles, {{ paper_count }} papers
   </p>
 
   {%- comment -%} ---- Featured post ---- {%- endcomment -%}
@@ -204,10 +211,6 @@ permalink: /blog/
   {%- endif %}
 
   {%- comment -%} ---- Papers (PDF) ---- {%- endcomment -%}
-  {%- assign paper_count = 0 -%}
-  {%- for item in site.data.post_meta -%}
-    {%- if item[0] contains '.pdf' -%}{%- assign paper_count = paper_count | plus: 1 -%}{%- endif -%}
-  {%- endfor -%}
   {%- if paper_count > 0 %}
   <section class="blog-section" data-reveal>
     <h2 class="section-heading">
