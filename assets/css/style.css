@@ -2027,3 +2027,21 @@ kbd {
   font-size: 0.8em;
   color: var(--color-text-soft);
 }
+
+/* ---------- 16. Publication links on the CV ------------------------ */
+.cv-publications a {
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease);
+}
+
+.cv-publications a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+.cv-pub-venue {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--color-text-soft);
+}

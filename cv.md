@@ -166,6 +166,12 @@ permalink: /cv/
   <section class="cv-section" data-reveal>
     <h2 class="cv-heading">Selected Publications</h2>
     <ul class="cv-publications">
+      <li>
+        <a href="https://www.mdpi.com/1099-4300/28/1/20" target="_blank" rel="noopener">
+          LAFS: A Fast, Differentiable Approach to Feature Selection Using Learnable Attention
+        </a>
+        <span class="cv-pub-venue">Entropy, 28(1), 20 — 2025</span>
+      </li>
       <li>Determining the Weights of the Least Squares for NonLinear DataSets by Entropy Measures (MSc Thesis)</li>
       <li>Image Similarity for Hotel Images — IOCEANS 2021</li>
       <li>Entropy Measures in Weighted Least Squares — UYIK 2020</li>
