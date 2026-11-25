@@ -1,0 +1,112 @@
+---
+title: "Gamma Distribution"
+date: 2019-12-23
+permalink: /blog/gamma_distribution.html
+layout: post
+categories: [Statistics]
+legacy_flavour: bootstrap
+---
+<pre class="r"><code>options(warn=-1)</code></pre>
+<p><strong>Gamma Distribution</strong> <em>The Gamma Distribution is commonly used distribution for a continous random variable that only take values on non negative values 0 &lt;= x &lt; inf</em></p>
+<p><em>it has a probability density function g(x;a,b) ==&gt; k</em>(x^(r-1))<em>((exp(1))^(-v</em>x)) for 0&lt;= x &lt; inf*</p>
+<p><em>the shape of the curve is determined by (x^(r-1))</em>((exp(1))^(-v*x)) and k is the constant to make this equation probabaility density function</p>
+<p><em>k (constant) is generalization of factorial function v^r/Fact(r)</em></p>
+<p><em>so lets create probability density function for gamma distribution</em></p>
+<pre class="r"><code>gamma&lt;-function(x,r,v){
+  k = (v**r)/(factorial(r))
+  gammf&lt;- k*(x^(r-1))*((exp(1))^(-v*x))
+  print(paste(&quot;k is : &quot; ,k))
+  return(gammf)
+}</code></pre>
+<p><em>lets create a variable that ranges between 0 and inf</em></p>
+<pre class="r"><code>x &lt;- seq(0, 5, length = 21)</code></pre>
+<p><em>define a and b values</em></p>
+<pre class="r"><code>r_v &lt;- c(1,2,3,4,5)</code></pre>
+<p><em>plot probability densities with loop</em></p>
+<pre class="r"><code>dist&lt;-NULL
+for (r in r_v){
+  for (v in r_v){
+    dist&lt;- gamma(x,r,v)
+    plot(x,dist,type=&quot;b&quot;,col=&quot;blue&quot;,main = paste(&quot;Gamma (&quot;,r,&quot;,&quot;,v,&quot;)&quot;),ylab=&quot;density&quot;)
+  }
+}</code></pre>
+<pre><code>## [1] &quot;k is :  1&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-01.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  2&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-02.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  3&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-03.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  4&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-04.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  5&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-05.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.5&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-06.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  2&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-07.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  4.5&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-08.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  8&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-09.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  12.5&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-10.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.166666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-11.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  1.33333333333333&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-12.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  4.5&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-13.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  10.6666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-14.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  20.8333333333333&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-15.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.0416666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-16.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.666666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-17.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  3.375&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-18.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  10.6666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-19.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  26.0416666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-20.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.00833333333333333&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-21.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  0.266666666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-22.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  2.025&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-23.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  8.53333333333333&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-24.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<pre><code>## [1] &quot;k is :  26.0416666666667&quot;</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-gamma-distribution-25.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><em>we can see same shapes with different parameters of r,v but the area under curves are differs from each other</em></p>
+<p><em>Thanks: Hincal Topcuoglu</em></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>

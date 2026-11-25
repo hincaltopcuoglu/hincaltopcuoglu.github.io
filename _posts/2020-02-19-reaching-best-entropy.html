@@ -1,0 +1,102 @@
+---
+title: "Reaching Best Entropy"
+date: 2020-02-19
+permalink: /blog/reaching_best_entropy.html
+layout: post
+categories: [Information Theory]
+legacy_flavour: bootstrap
+---
+<pre class="r"><code>options(warn=-1)
+library(plyr)
+library(ggplot2)
+library(gganimate)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:plyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<p><strong>define shannon entropy</strong></p>
+<pre class="r"><code>shannon_entropy &lt;- function(x){
+  df = plyr::count(x)
+  n = length(x)
+  df$probs = df$freq / n
+  se&lt;- -sum(df$probs * log(df$probs,base=2))
+  return(se)
+}</code></pre>
+<p><strong>create probabilities and dataset using these probabilities</strong></p>
+<pre class="r"><code>xx&lt;-data.frame()
+yy&lt;-seq(0,1,0.05)
+data&lt;-NULL
+for (i in 1:length(yy)){
+  data &lt;- sample(c(1,0), 1000, replace=TRUE, prob = c(yy[i],1-yy[i]))
+  xx[i,&quot;probs&quot;]&lt;-shannon_entropy(data)
+  xx[i,&quot;indice&quot;] &lt;- yy[i]
+  
+}</code></pre>
+<p><strong>create plot</strong></p>
+<pre class="r"><code>myplot&lt;-xx %&gt;%
+  ggplot( aes(x=indice, y=probs,color=&quot;steerblue&quot;)) +
+  geom_line(show.legend = FALSE) +
+  geom_point(show.legend = FALSE) +
+  #scale_color_viridis_d() +
+  ggtitle(&quot;Maksimum Entropy Riches the highest value when probabilty is equal&quot;) +
+#  theme_ipsum() +
+  ylab(&quot;Probabilities&quot;) +
+  transition_reveal(indice)</code></pre>
+<p><strong>animate it</strong></p>
+<pre class="r"><code>animate(myplot, duration = 5, fps = 20, width = 700, height = 600, renderer = gifski_renderer())</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2020-02-19-reaching-best-entropy-01.gif" loading="lazy" decoding="async" /><!-- --></p>
+<pre class="r"><code>anim_save(&quot;output.gif&quot;)</code></pre>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>

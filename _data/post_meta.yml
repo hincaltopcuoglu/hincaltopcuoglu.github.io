@@ -1,0 +1,309 @@
+# ======================================================================
+# Post metadata registry
+# ----------------------------------------------------------------------
+# Single source of truth for every blog post: display title, description,
+# categories, reading time and accent colour. Consumed by:
+#   - blog.md                (auto-generated post grid)
+#   - _includes/head.html    (meta / Open Graph tags)
+#   - assets/js/site.js      (search index)
+#
+# Keys are the post permalink path. Posts not listed here fall back to
+# their front matter, then to a generated title.
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# Featured
+# ----------------------------------------------------------------------
+/blog/Predicting_Blog_Post_Views_with_Empirical_Bayes_and_Jaccard_Similarity.html:
+  title: "Predicting Blog Post Views with Empirical Bayes & Jaccard Similarity"
+  description: "Forecast page views before publishing using conjugate Bayesian models, empirical Bayes over your own corpus, and Jaccard title similarity as a content prior."
+  categories: [Applied Data Science]
+  tags: [bayesian, python, empirical-bayes, jaccard, content-strategy, ga4]
+  date: 2026-10-01
+  reading_time: 10
+  featured: true
+  accent: "#7c3aed"
+
+# ----------------------------------------------------------------------
+# Applied / business
+# ----------------------------------------------------------------------
+/blog/boost-conversions-with-ga4/:
+  title: "Boost Conversions with Your GA Data — First Improvements in 14 Days"
+  description: "Cleaning GA4 data and turning it into actionable CRO recommendations fast."
+  categories: [Applied Data Science]
+  tags: [GA4, Measurement, Optimization]
+  date: 2026-06-13
+  reading_time: 9
+  accent: "#0891b2"
+
+/blog/the-real-problem-isnt-traffic-its-not-knowing-whats-broken:
+  title: "The Real Problem Isn't Traffic. It's Not Knowing What's Broken"
+  description: "Why most businesses misdiagnose growth plateaus — it's rarely a traffic deficit, it's dynamic blindness to the funnel's real failure points."
+  categories: [Applied Data Science]
+  tags: [data-science, diagnostics, funnel-analysis, analytics, business-strategy]
+  date: 2026-06-09
+  reading_time: 8
+  accent: "#0891b2"
+  cover: "/assets/images/funnel-diagnostics.svg"
+
+/blog/why-you-can-spend-500-on-google-ads-and-still-get-0-conversions/:
+  title: "Why You Can Spend $500 on Google Ads and Still Get 0 Conversions"
+  description: "A behavioral analytics framework for diagnosing low-volume Google Ads campaigns before the data is statistically sufficient."
+  categories: [Applied Data Science]
+  tags: [google-ads, analytics, conversion-optimization]
+  date: 2026-06-08
+  reading_time: 10
+  accent: "#0891b2"
+  cover: "/assets/images/google-ads-zero-conversions-cover.webp"
+
+/blog/beyond-dashboards-behavioral-predictive-modeling.html:
+  title: "Beyond Dashboards: Behavioral Predictive Modeling for E-Commerce"
+  description: "A complete propensity-scoring pipeline and K-Means behavioral segmentation built on a high-fidelity GA4 dataset — 3.27x conversion lift on the top 10% segment."
+  categories: [Applied Data Science]
+  tags: [propensity-modeling, customer-segmentation, ga4, random-forest, python, cro]
+  date: 2026-06-05
+  reading_time: 12
+  accent: "#0891b2"
+  cover: "/assets/images/cover-beyond-dashboards.webp"
+
+/blog/Statistical_Transformations.html:
+  title: "The Secret of Statistical Transformations"
+  description: "Why we need monotonic functions and partitions — and how they turn raw numbers into decisions."
+  categories: [Statistics]
+  tags: [statistics, data-science, mathematics, transformations]
+  date: 2026-06-01
+  reading_time: 9
+  accent: "#2563eb"
+
+# ----------------------------------------------------------------------
+# Information theory
+# ----------------------------------------------------------------------
+/blog/shannon_entropy.html:
+  title: "Shannon Entropy"
+  description: "Information theory basics and its applications in data science."
+  categories: [Information Theory]
+  tags: [entropy, information-theory, statistics, r]
+  date: 2025-12-01
+  reading_time: 8
+  accent: "#7c3aed"
+
+/blog/connection_between_different_entropies.html:
+  title: "Tsallis Entropy"
+  description: "Generalizing Shannon's framework with Tsallis entropy."
+  categories: [Information Theory]
+  tags: [entropy, tsallis, information-theory, r]
+  date: 2020-02-20
+  reading_time: 9
+  accent: "#7c3aed"
+
+/blog/asymptotic_feature_of_shannon_entropy.html:
+  title: "Asymptotic Feature of Shannon Entropy"
+  description: "How Shannon entropy behaves as the sample space grows large."
+  categories: [Information Theory]
+  tags: [entropy, asymptotics, statistics, r]
+  date: 2025-11-01
+  reading_time: 7
+  accent: "#7c3aed"
+
+/blog/reaching_best_entropy.html:
+  title: "Reaching Best Entropy"
+  description: "Maximising entropy over a discrete distribution — the practical route to the best-fitting model."
+  categories: [Information Theory]
+  tags: [entropy, maximum-entropy, optimization, r]
+  date: 2020-02-19
+  reading_time: 9
+  accent: "#7c3aed"
+
+/blog/proof_of_maximum_entropy.html:
+  title: "Proof of the Maximum Entropy Principle"
+  description: "Maximum entropy derived from first principles using derivatives and Taylor series expansion."
+  categories: [Information Theory]
+  tags: [entropy, maximum-entropy, proof, mathematics]
+  date: 2025-11-01
+  reading_time: 8
+  accent: "#7c3aed"
+
+/blog/proof_of_the_joint_entropy_using_conditonal_entropy.html:
+  title: "Proof of Joint Entropy using Conditional Entropy"
+  description: "Deriving the joint entropy identity from marginal and conditional entropy."
+  categories: [Information Theory]
+  tags: [entropy, proof, mathematics, information-theory]
+  date: 2025-11-01
+  reading_time: 6
+  accent: "#7c3aed"
+
+/blog/maximum-entropy.html:
+  title: "Maximum Entropy with Lagrange Multipliers"
+  description: "The proof of maximum entropy using Lagrange multipliers, with Python code."
+  categories: [Information Theory]
+  tags: [entropy, maximum-entropy, lagrange, python, optimization]
+  date: 2025-11-01
+  reading_time: 9
+  accent: "#7c3aed"
+
+# ----------------------------------------------------------------------
+# Statistics / probability
+# ----------------------------------------------------------------------
+/blog/jackknife_method.html:
+  title: "Overview of the Jackknife Method"
+  description: "An introduction to the jackknife resampling technique and when it beats the bootstrap."
+  categories: [Statistics]
+  tags: [jackknife, resampling, statistics, uncertainty]
+  date: 2019-05-12
+  reading_time: 7
+  accent: "#2563eb"
+
+/blog/normal_distribution.html:
+  title: "Normal Distribution"
+  description: "Properties, visualizations and common use cases of the normal distribution."
+  categories: [Statistics]
+  tags: [normal, distribution, statistics, r]
+  date: 2019-12-23
+  reading_time: 7
+  accent: "#2563eb"
+
+/blog/beta_distribution.html:
+  title: "Beta Distribution"
+  description: "Understanding the Beta distribution and its properties."
+  categories: [Statistics]
+  tags: [beta, distribution, statistics, r]
+  date: 2019-12-23
+  reading_time: 6
+  accent: "#2563eb"
+
+/blog/beta_prior.html:
+  title: "Beta Prior for Binomial Data"
+  description: "Using a beta prior to regularise binomial estimates when data is scarce."
+  categories: [Statistics]
+  tags: [beta, binomial, prior, bayesian, r]
+  date: 2019-12-26
+  reading_time: 8
+  accent: "#2563eb"
+
+/blog/hypergeometric_distribution.html:
+  title: "Hypergeometric Distribution"
+  description: "The hypergeometric distribution and its real-world applications."
+  categories: [Statistics]
+  tags: [hypergeometric, distribution, statistics, r]
+  date: 2019-11-25
+  reading_time: 6
+  accent: "#2563eb"
+
+/blog/Binomial_Calculation_and_Distribution_Example.html:
+  title: "Binomial Calculation and Distribution"
+  description: "A worked example of binomial calculation and the binomial distribution in R."
+  categories: [Statistics]
+  tags: [binomial, distribution, statistics, r]
+  date: 2019-11-25
+  reading_time: 6
+  accent: "#2563eb"
+
+/blog/gamma_distribution.html:
+  title: "Gamma Distribution"
+  description: "The gamma distribution, its parameters and practical uses."
+  categories: [Statistics]
+  tags: [gamma, distribution, statistics, r]
+  date: 2019-12-23
+  reading_time: 7
+  accent: "#2563eb"
+
+/blog/poisson_regression.html:
+  title: "Poisson Regression Analysis"
+  description: "Count outcome modelling with Poisson regression — formulation, fitting and interpretation."
+  categories: [Statistics]
+  tags: [poisson, regression, count-data, statistics]
+  date: 2025-11-17
+  reading_time: 10
+  accent: "#2563eb"
+
+# ----------------------------------------------------------------------
+# Machine learning
+# ----------------------------------------------------------------------
+/blog/KernelDensityEstimation_LinReg_XgBoost.html:
+  title: "Kernel Density Estimation, Linear Regression & XGBoost"
+  description: "A workbench comparing kernel density estimation, linear regression and gradient boosting on the same problem."
+  categories: [Machine Learning]
+  tags: [kde, linear-regression, xgboost, machine-learning]
+  date: 2025-06-10
+  reading_time: 12
+  accent: "#059669"
+
+/blog/Two_Clustering_Approaches_for_Analyzing_Promotions.html:
+  title: "Two Clustering Approaches for Analyzing Promotions"
+  description: "Product-based and store-based clustering of post-campaign promotion data, and what each view reveals."
+  categories: [Machine Learning]
+  tags: [clustering, kmeans, promotions, machine-learning]
+  date: 2025-06-19
+  reading_time: 11
+  accent: "#059669"
+
+/blog/attention_mechanism_explained.html:
+  title: "Understanding the Attention Mechanism"
+  description: "How attention actually works — queries, keys, values and scaled dot-product attention, explained."
+  categories: [Machine Learning]
+  tags: [attention, transformers, llm, deep-learning]
+  date: 2025-11-01
+  reading_time: 10
+  accent: "#059669"
+
+/blog/Symbolic_Derivative_Blog.html:
+  title: "Enhancing Analytical Computations with the Symbolic Derivative Tool"
+  description: "An open-source symbolic derivative tool for speeding up analytical derivations."
+  categories: [Machine Learning]
+  tags: [symbolic, calculus, tools, python]
+  date: 2025-06-10
+  reading_time: 6
+  accent: "#059669"
+
+# ----------------------------------------------------------------------
+# Papers (PDF) — published as static files, linked from the blog index
+# ----------------------------------------------------------------------
+/blog/kernel_works_hilbert_space.pdf:
+  title: "Hilbert Space and Kernel Methods"
+  description: "An introduction to Hilbert spaces and the kernel trick, with the maths behind kernel methods."
+  categories: [Machine Learning]
+  tags: [kernel-methods, hilbert-space, svm, mathematics]
+  date: 2026-02-22
+  reading_time: 12
+  accent: "#059669"
+  is_paper: true
+
+/blog/RNN_Study_Paper.pdf:
+  title: "RNN from Scratch"
+  description: "Building a recurrent neural network from the ground up, with working code."
+  categories: [Machine Learning]
+  tags: [rnn, deep-learning, neural-networks, python]
+  date: 2026-02-23
+  reading_time: 14
+  accent: "#059669"
+  is_paper: true
+
+/blog/Generalization_BG_Entropy_to_Tsallis.pdf:
+  title: "Generalizing Boltzmann–Gibbs Entropy to Tsallis Entropy"
+  description: "A worked derivation of the Tsallis generalisation of the Boltzmann–Gibbs entropy."
+  categories: [Information Theory]
+  tags: [entropy, tsallis, thermodynamics, mathematics]
+  date: 2026-03-17
+  reading_time: 11
+  accent: "#7c3aed"
+  is_paper: true
+
+/blog/Shannon_Generalization_in_Tsallis_Form.pdf:
+  title: "Shannon Entropy in Tsallis Form"
+  description: "Another route to the Tsallis generalisation of Shannon entropy, compared with the Boltzmann–Gibbs path."
+  categories: [Information Theory]
+  tags: [entropy, shannon, tsallis, mathematics]
+  date: 2026-03-17
+  reading_time: 10
+  accent: "#7c3aed"
+  is_paper: true
+
+/blog/Finding_Extremum_Tsallis_Entropy.pdf:
+  title: "Finding the Extremum of Tsallis Entropy"
+  description: "Locating the extremum of the Tsallis entropy and interpreting what it means."
+  categories: [Information Theory]
+  tags: [entropy, tsallis, optimization, mathematics]
+  date: 2026-03-18
+  reading_time: 9
+  accent: "#7c3aed"
+  is_paper: true

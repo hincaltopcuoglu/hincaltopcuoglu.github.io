@@ -1,0 +1,120 @@
+---
+title: "Maximum Entropy with Lagrange Multipliers"
+date: 2025-11-01
+permalink: /blog/maximum-entropy.html
+layout: post
+categories: [Information Theory]
+legacy_flavour: plain
+---
+<h1>📘 Maximum Entropy with Lagrange Multipliers</h1>
+
+<p>We aim to find the discrete probability distribution \( \{p_i\}_{i=1}^n \) that maximizes Shannon entropy:</p>
+
+<p>
+\[
+H(p) = -\sum_{i=1}^n p_i \log p_i
+\]
+</p>
+
+<p>Subject to:</p>
+<ul>
+  <li>Normalization: \( \sum p_i = 1 \)</li>
+  <li>Expectation: \( \sum p_i x_i = M \)</li>
+</ul>
+
+<h2>🧠 Step 2: Take Derivatives</h2>
+
+<p>The Lagrangian is:</p>
+<p>
+\[
+\mathcal{L}(p_1, \dots, p_n, \lambda, \theta) = -\sum p_i \log p_i - \lambda \left(\sum p_i - 1\right) - \theta \left(\sum p_i x_i - M\right)
+\]
+</p>
+
+<p>Taking partial derivatives:</p>
+<ul>
+  <li>\( \frac{\partial \mathcal{L}}{\partial p_i} = -\log p_i - 1 - \lambda - \theta x_i = 0 \)</li>
+  <li>\( \frac{\partial \mathcal{L}}{\partial \lambda} = \sum p_i - 1 = 0 \)</li>
+  <li>\( \frac{\partial \mathcal{L}}{\partial \theta} = \sum p_i x_i - M = 0 \)</li>
+</ul>
+
+<p>This leads to the solution:</p>
+
+<p>
+\[
+p_i = \frac{1}{Z} \exp(-\theta x_i), \quad \text{where} \quad Z = \sum_{j=1}^n \exp(-\theta x_j)
+\]
+</p>
+
+<h2>🧪 Python Code</h2>
+
+<pre><code class="language-python">import numpy as np
+from scipy.optimize import root_scalar
+
+def max_entropy_vs_random(n=10, M_target=5.5):
+    """
+    Compare entropy of a random vs maximum entropy distribution
+    under an expected value constraint.
+    """
+    x = np.arange(1, n + 1)
+
+    # Random distribution
+    rand_vals = np.random.rand(n)
+    p_random = rand_vals / np.sum(rand_vals)
+    entropy_random = -np.sum(p_random * np.log(p_random))
+    expected_random = np.sum(p_random * x)
+
+    print("🎲 Random Distribution:")
+    for i, pi in enumerate(p_random, start=1):
+        print(f"  p{i} = {pi:.6f}")
+    print(f"  Entropy = {entropy_random:.6f},  Mean = {expected_random:.4f}\\n")
+
+    # Maximum entropy distribution using Lagrange
+    def moment_constraint(theta):
+        Z = np.sum(np.exp(-theta * x))
+        p = np.exp(-theta * x) / Z
+        return np.sum(p * x) - M_target
+
+    sol = root_scalar(moment_constraint, bracket=[-10, 10], method="brentq")
+    theta = sol.root
+
+    exp_vals = np.exp(-theta * x)
+    Z = np.sum(exp_vals)
+    p_opt = exp_vals / Z
+    entropy_opt = -np.sum(p_opt * np.log(p_opt))
+    expected_opt = np.sum(p_opt * x)
+    lambda_val = -1 - np.log(1 / Z)
+
+    print("📈 Maximum Entropy Distribution:")
+    for i, pi in enumerate(p_opt, 1):
+        print(f"  p{i} = {pi:.6f}")
+    print(f"  θ = {theta:.6f}")
+    print(f"  λ = {lambda_val:.6f}")
+    print(f"  ∑p_i = {np.sum(p_opt):.6f}")
+    print(f"  ∑p_i * x_i = {expected_opt:.6f} (target M = {M_target})")
+    print(f"  Entropy = {entropy_opt:.6f}")
+
+    print("\\n📊 Entropy Comparison:")
+    print(f"  Random Entropy  = {entropy_random:.6f}")
+    print(f"  Maximum Entropy = {entropy_opt:.6f}")
+    print(f"  Difference      = {entropy_opt - entropy_random:.6f}")
+</code></pre>
+
+<h2>📌 What Did We Do?</h2>
+<ul>
+  <li>✅ Defined the entropy function and constraints</li>
+  <li>✅ Constructed the Lagrangian and computed all partial derivatives</li>
+  <li>✅ Derived the exponential form of \( p_i \)</li>
+  <li>✅ Solved for optimal distribution numerically</li>
+  <li>✅ Compared random and max entropy outcomes</li>
+</ul>
+
+<h2>💡 Why Maximum Entropy?</h2>
+<p>The principle of maximum entropy gives the most unbiased distribution possible under known constraints. It:</p>
+<ul>
+  <li>🧠 Avoids adding assumptions beyond the data</li>
+  <li>🎯 Reflects only what is known (e.g., a known average)</li>
+  <li>⚙️ Is foundational in physics, statistics, and machine learning</li>
+</ul>
+
+<blockquote><strong>Maximum entropy</strong> is the fairest model when you know only a few things — and refuse to guess the rest.</blockquote>

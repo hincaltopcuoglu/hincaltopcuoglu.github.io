@@ -1,0 +1,62 @@
+---
+title: "Beta Distribution"
+date: 2019-12-23
+permalink: /blog/beta_distribution.html
+layout: post
+categories: [Statistics]
+legacy_flavour: bootstrap
+---
+<pre class="r"><code>options(warn=-1)</code></pre>
+<p><strong>Beta Distribution</strong> <em>The Beta Distribution is commonly used distribution for a continous random variable that only take values betweeen 0 &lt;= x &lt;= 1</em></p>
+<p><em>it has a probability density function g(x;a,b) ==&gt; k</em>(x^(a-1))<em>((1-x)^(b-1)) for 0&lt;= x &lt;=1</em></p>
+<p><em>the shape of the curve is determined by (x^(a-1))</em>((1-x)^(b-1)) and k is the constant to make this equation probabaility density function</p>
+<p><em>k (constant) is generalization of factorial function Fact(a+b)/Fact(a)</em>Fact(b)</p>
+<ul>
+<li>so lets create probability density function for beta distribution*</li>
+</ul>
+<pre class="r"><code>beta&lt;-function(x,a,b){
+  betaf&lt;-(factorial(a+b)/(factorial(a)*factorial(b)))*(x^(a-1))*((1-x)^(b-1))
+  return(betaf)
+}</code></pre>
+<p><em>lets create a variable that ranges between 0 and 1</em></p>
+<pre class="r"><code>x &lt;- seq(0, 1, length = 21)</code></pre>
+<p><em>define a and b values</em></p>
+<pre class="r"><code>a_b &lt;- c(0.5,1,2,3,4,5)</code></pre>
+<p><em>plot probability densities with loop</em></p>
+<pre class="r"><code>dist&lt;-NULL
+for (a in a_b){
+  for (b in a_b){
+    dist&lt;- beta(x,a,b)
+    plot(x,dist,type=&quot;b&quot;,col=&quot;blue&quot;,main = paste(&quot;Beta (&quot;,a,&quot;,&quot;,b,&quot;)&quot;),ylab=&quot;density&quot;)
+  }
+}</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-01.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-02.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-03.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-04.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-05.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-06.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-07.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-08.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-09.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-10.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-11.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-12.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-13.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-14.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-15.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-16.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-17.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-18.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-19.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-20.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-21.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-22.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-23.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-24.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-25.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-26.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-27.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-28.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-29.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-30.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-31.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-32.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-33.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-34.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-35.png" width="1344" height="960" loading="lazy" decoding="async" /><img src="{{ site.baseurl }}/assets/images/posts/2019-12-23-beta-distribution-36.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><em>Thanks: Hincal Topcuoglu</em></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>

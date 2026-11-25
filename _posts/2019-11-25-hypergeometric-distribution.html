@@ -1,0 +1,205 @@
+---
+title: "Hypergeometric Distribution"
+date: 2019-11-25
+permalink: /blog/hypergeometric_distribution.html
+layout: post
+categories: [Statistics]
+legacy_flavour: bootstrap
+---
+<pre class="r"><code>options(warn=-1)</code></pre>
+<p><strong>HyperGeometric distribution models sampling without replacement, we take a ball from a cup and dont throw it back,so each time we try to find the “success” ( here success is getting black ball for example&quot;) with remaining count of balls. So the probability depends on previous drawnings.</strong>  <strong>lets create a vector with fails and successes(here ones are success or desired output, getting black ball for example)</strong><br />
+</p>
+<pre class="r"><code>observations &lt;- c(0,0,1,0,1,1,0,1,0,0,0,0)</code></pre>
+<p><strong>define hypergeometric distribution function</strong><br />
+<strong>N : Total number of observations</strong><br />
+<strong>R : Total Number of desired output in vector</strong><br />
+<strong>n : trial count</strong><br />
+<strong>y : desired output or success</strong></p>
+<pre class="r"><code>hyper_func &lt;- function(N,R,n,y){
+  temp&lt;-((factorial(R) / (factorial(y) * factorial(R-y))) * (factorial(N-R) / (factorial(n-y) * factorial(N-R-n+y)))) / (factorial(N) / (factorial(n) * factorial(N-n)))
+  return(temp)
+}</code></pre>
+<p><strong>suppose that we have 12 balls in a cup and 4 of them is black, what is the probability of getting one black in first draw ?</strong></p>
+<pre class="r"><code>hyper_func(length(observations),4,1,1)</code></pre>
+<pre><code>## [1] 0.3333333</code></pre>
+<p><strong>lets look at the event from another aspect, what is the probability of gettin one black ball in one draw or two draw ?</strong></p>
+<pre class="r"><code>for (i in 1:2){
+  sumx &lt;- sum(observations)
+  len &lt;- length(observations)
+  print(hyper_func(len,sumx,i,1))
+}</code></pre>
+<pre><code>## [1] 0.3333333
+## [1] 0.4848485</code></pre>
+<p><strong>what is the probability of gettin one black ball when we make one to five draw ?</strong></p>
+<pre class="r"><code>for (i in 1:5){
+  sumx &lt;- sum(observations)
+  len &lt;- length(observations)
+  print(hyper_func(len,sumx,i,1))
+}</code></pre>
+<pre><code>## [1] 0.3333333
+## [1] 0.4848485
+## [1] 0.5090909
+## [1] 0.4525253
+## [1] 0.3535354</code></pre>
+<p><strong>what if to 12 draw ?</strong></p>
+<pre class="r"><code>for (i in 1:12){
+  sumx &lt;- sum(observations)
+  len &lt;- length(observations)
+  print(hyper_func(len,sumx,i,1))
+}</code></pre>
+<pre><code>## [1] 0.3333333
+## [1] 0.4848485
+## [1] 0.5090909
+## [1] 0.4525253
+## [1] 0.3535354
+## [1] 0.2424242
+## [1] 0.1414141
+## [1] 0.06464646
+## [1] 0.01818182
+## [1] NaN
+## [1] NaN
+## [1] NaN</code></pre>
+<p><strong>so lets create another vector which includes successes</strong></p>
+<pre class="r"><code>Vec &lt;- c(rep(0, 100), rep(1, 10))
+
+Vec</code></pre>
+<pre><code>##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [36] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1
+## [106] 1 1 1 1 1</code></pre>
+<p><strong>lets calculate it for this vector, what is the probability of getting 3 black balls if we make up to 50 draws ?</strong></p>
+<pre class="r"><code>result &lt;- NULL
+for (i in 1:50){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  result[i] &lt;- hyper_func(len,sumx,i,3)
+  print(result[i])
+}</code></pre>
+<pre><code>## [1] NaN
+## [1] NaN
+## [1] 0.0005560189
+## [1] 0.002078575
+## [1] 0.004853277
+## [1] 0.009059451
+## [1] 0.01478694
+## [1] 0.0220512
+## [1] 0.03080683
+## [1] 0.04095958
+## [1] 0.05237706
+## [1] 0.06489817
+## [1] 0.07834136
+## [1] 0.09251183
+## [1] 0.1072077
+## [1] 0.1222255
+## [1] 0.1373643
+## [1] 0.1524301
+## [1] 0.1672382
+## [1] 0.1816161
+## [1] 0.1954055
+## [1] 0.2084634
+## [1] 0.2206632
+## [1] 0.2318957
+## [1] 0.2420687
+## [1] 0.2511076
+## [1] 0.2589547
+## [1] 0.2655689
+## [1] 0.2709252
+## [1] 0.2750132
+## [1] 0.277837
+## [1] 0.2794135
+## [1] 0.2797718
+## [1] 0.2789513
+## [1] 0.2770014
+## [1] 0.2739796
+## [1] 0.2699505
+## [1] 0.2649846
+## [1] 0.2591574
+## [1] 0.2525478
+## [1] 0.2452372
+## [1] 0.2373087
+## [1] 0.2288458
+## [1] 0.2199319
+## [1] 0.2106491
+## [1] 0.2010775
+## [1] 0.191295
+## [1] 0.181376
+## [1] 0.1713914
+## [1] 0.161408</code></pre>
+<p><strong>for plotting :</strong> <strong>50 draws to get 3 black balls</strong></p>
+<pre class="r"><code>res1&lt;-NULL
+for (i in 1:50){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  res1[i] &lt;- hyper_func(len,sumx,i,3)
+}</code></pre>
+<p><strong>plot 1</strong></p>
+<pre class="r"><code>plot(res1,type=&quot;b&quot;,main=&quot;Binom Distribution&quot;,ylab=&quot;Binomial Distributions of Values&quot;, xlab = &quot;Number of Trials&quot;,col=&quot;blue&quot;)</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-11-25-hypergeometric-distribution-01.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><strong>50 draws to get 4 black balls</strong></p>
+<pre class="r"><code>res2 &lt;- NULL
+for (i in 1:50){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  res2[i] &lt;- hyper_func(len,sumx,i,4)
+}</code></pre>
+<p><strong>plot 2</strong></p>
+<pre class="r"><code>plot(res2,type=&quot;b&quot;,main=&quot;Binom Distribution&quot;,ylab=&quot;Binomial Distributions of Values&quot;, xlab = &quot;Number of Trials&quot;,col=&quot;green&quot;)</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-11-25-hypergeometric-distribution-02.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><strong>60 draws to get 4 black balls</strong></p>
+<pre class="r"><code>res3&lt;-NULL
+for (i in 1:60){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  res3[i] &lt;- hyper_func(len,sumx,i,4)
+}</code></pre>
+<p><strong>plot 3</strong></p>
+<pre class="r"><code>plot(res3,type=&quot;b&quot;,main=&quot;Binom Distribution&quot;,ylab=&quot;Binomial Distributions of Values&quot;, xlab = &quot;Number of Trials&quot;,col=&quot;red&quot;)</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-11-25-hypergeometric-distribution-03.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><strong>#</strong> <strong>80 draws to get 4 black balls</strong></p>
+<pre class="r"><code>res4&lt;-NULL
+for (i in 1:80){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  res4[i] &lt;- hyper_func(len,sumx,i,4)
+}</code></pre>
+<p><strong>plot 4</strong></p>
+<pre class="r"><code>plot(res4,type=&quot;b&quot;,main=&quot;Binom Distribution&quot;,ylab=&quot;Binomial Distributions of Values&quot;, xlab = &quot;Number of Trials&quot;,col=&quot;red&quot;)</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-11-25-hypergeometric-distribution-04.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+<p><strong>90 draws to get 4 black balls</strong></p>
+<pre class="r"><code>res5&lt;-NULL
+for (i in 1:90){
+  sumx &lt;- sum(Vec)
+  len &lt;- length(Vec)
+  res5[i] &lt;- hyper_func(len,sumx,i,4)
+}</code></pre>
+<p><strong>plot 5</strong></p>
+<pre class="r"><code>plot(res5,type=&quot;b&quot;,main=&quot;Binom Distribution&quot;,ylab=&quot;Binomial Distributions of Values&quot;, xlab = &quot;Number of Trials&quot;,col=&quot;orange&quot;)</code></pre>
+<p><img src="{{ site.baseurl }}/assets/images/posts/2019-11-25-hypergeometric-distribution-05.png" width="1344" height="960" loading="lazy" decoding="async" /></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>

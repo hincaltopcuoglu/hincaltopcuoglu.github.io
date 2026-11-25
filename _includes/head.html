@@ -1,0 +1,67 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{%- comment -%}
+  Shared <head> content for every page.
+  `meta` is resolved from _data/post_meta.yml when the page is a post.
+{%- endcomment -%}
+{%- assign meta = nil -%}
+{%- if page.url and site.data.post_meta[page.url] -%}
+  {%- assign meta = site.data.post_meta[page.url] -%}
+{%- endif -%}
+
+{%- assign page_title = page.title | default: site.title -%}
+{%- if meta and meta.title -%}
+  {%- assign page_title = meta.title -%}
+{%- endif -%}
+{%- if page.title == "Home" -%}
+  {%- assign page_title = site.title -%}
+{%- endif -%}
+
+{%- assign page_desc = meta.description | default: page.description | default: page.excerpt | default: site.description -%}
+{%- assign page_image = meta.cover | default: page.cover_image | default: page.image -%}
+{%- if page_image -%}
+  {%- assign page_image = page_image | relative_url -%}
+{%- endif -%}
+
+<title>{{ page_title | strip_html | normalize_whitespace }} — {{ site.title }}</title>
+<meta name="description" content="{{ page_desc | strip_html | normalize_whitespace | truncate: 300 }}" />
+<meta name="author" content="{{ site.title }}" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
+<meta property="og:title" content="{{ page_title | strip_html | normalize_whitespace }}" />
+<meta property="og:description" content="{{ page_desc | strip_html | normalize_whitespace | truncate: 300 }}" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<meta property="og:site_name" content="{{ site.title }}" />
+{% if page_image %}<meta property="og:image" content="{{ page_image | absolute_url }}" />{% endif %}
+{% if page.layout == 'post' and page.date %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+{% endif %}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ page_title | strip_html | normalize_whitespace }}" />
+<meta name="twitter:description" content="{{ page_desc | strip_html | normalize_whitespace | truncate: 300 }}" />
+{% if page_image %}<meta name="twitter:image" content="{{ page_image | absolute_url }}" />{% endif %}
+
+<link rel="icon" href="{{ '/assets/images/favicon.svg' | relative_url }}" type="image/svg+xml" />
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}" />
+
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+{%- comment -%} Legacy export stylesheets / scripts {%- endcomment -%}
+{%- if page.legacy_flavour == 'bootstrap' %}
+<link rel="stylesheet" href="{{ '/assets/css/legacy/rstudio-bootstrap.css' | relative_url }}" />
+{%- elsif page.legacy_flavour == 'jupyter' %}
+<link rel="stylesheet" href="{{ '/assets/css/legacy/jupyter-1.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/assets/css/legacy/jupyter-2.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/assets/css/legacy/jupyter-3.css' | relative_url }}" />
+{%- endif %}
+{%- if page.legacy_flavour %}
+<script src="{{ '/assets/js/legacy/rstudio-jquery.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/legacy/rstudio-bootstrap.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/legacy/rstudio-hl.js' | relative_url }}"></script>
+{%- endif %}
+
+{% include google-analytics.html %}

@@ -1,0 +1,1088 @@
+---
+title: "Kernel Density Estimation, Linear Regression & XGBoost"
+date: 2025-06-10
+permalink: /blog/KernelDensityEstimation_LinReg_XgBoost.html
+layout: post
+categories: [Machine Learning]
+legacy_flavour: jupyter
+---
+<main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7167bbda-79a2-4dce-8204-b9fcac7d3e1a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="09.06.2025">09.06.2025<a class="anchor-link" href="#09.06.2025">¶</a></h3><h3 id="Hincal-Topcuoglu-Phd(c)">Hincal Topcuoglu Phd(c)<a class="anchor-link" href="#Hincal-Topcuoglu-Phd(c)">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ca1589a1-6129-4058-b0ae-b422e010ee5e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-Do-We-Need-to-Look-at-Distributions-before-setting-up-a-Model-?">Why Do We Need to Look at Distributions before setting up a Model ?<a class="anchor-link" href="#Why-Do-We-Need-to-Look-at-Distributions-before-setting-up-a-Model-?">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8d26e327-d187-4754-b01c-6f78a065cfdd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>As<span class="w"> </span>many<span class="w"> </span>Data<span class="w"> </span>Scientists<span class="w"> </span>know,<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>process<span class="w"> </span>of<span class="w"> </span>modelling,<span class="w"> </span><span class="k">if</span><span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>not<span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span><span class="s2">"Algoritm Data Scientist"</span><span class="w"> </span>who<span class="w"> </span>puts<span class="w"> </span>the<span class="w"> </span>data<span class="w"> </span>directly<span class="w"> </span>into<span class="w"> </span>ML<span class="w"> </span>algorithm<span class="w"> </span>and<span class="w"> </span>get<span class="w"> </span>results,<span class="w"> </span>the<span class="w"> </span>data<span class="w"> </span>preparation,<span class="w"> </span>checking<span class="w"> </span>nulls,<span class="w"> </span>outliers,<span class="w"> </span>imputing<span class="w"> </span>them<span class="w"> </span>or<span class="w"> </span>discarding<span class="w"> </span><span class="o">(</span>regard<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>data<span class="o">)</span>,<span class="w"> </span>statistical<span class="w"> </span>assumption<span class="w"> </span>checkings<span class="w"> </span><span class="o">(</span>tests<span class="w"> </span>etc.<span class="o">)</span>,<span class="w"> </span>plotting<span class="w"> </span>distributions,<span class="w"> </span>feature<span class="w"> </span>engineering,<span class="w"> </span>feature<span class="w"> </span>selection<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>works<span class="w"> </span>take<span class="w"> </span>on<span class="w"> </span>average<span class="w"> </span>%70<span class="w"> </span>of<span class="w"> </span>time.
+
+So<span class="w"> </span>apart<span class="w"> </span>from<span class="w"> </span>other<span class="w"> </span>data<span class="w"> </span>steps<span class="w"> </span>which<span class="w"> </span>I<span class="w"> </span>mentioned<span class="w"> </span>above,<span class="w"> </span>I<span class="w"> </span>think<span class="w"> </span>crucial<span class="w"> </span>first<span class="w"> </span>step<span class="w"> </span>is<span class="w"> </span>to<span class="w"> </span>look<span class="w"> </span>your<span class="w"> </span>data.<span class="w"> </span>So<span class="w"> </span>you<span class="w"> </span>should<span class="w"> </span>plot<span class="w"> </span>the<span class="w"> </span>your<span class="w"> </span>variables<span class="w"> </span>and<span class="w"> </span>get<span class="w"> </span>their<span class="w"> </span>density<span class="w"> </span>plots.
+
+Why<span class="w"> </span>?
+
+Because<span class="w"> </span>once<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>an<span class="w"> </span>idea<span class="w"> </span>about<span class="w"> </span>what<span class="w"> </span>is<span class="w"> </span>your<span class="w"> </span>data<span class="w"> </span>tell<span class="w"> </span>you,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>prepare<span class="w"> </span>it<span class="w"> </span><span class="o">(</span>regarding<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>business<span class="w"> </span>problem<span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>modelling<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>ML<span class="w"> </span>algorithms<span class="w"> </span>even<span class="w"> </span>linear<span class="w"> </span>or<span class="w"> </span>non-linear<span class="w"> </span>ones<span class="w"> </span><span class="o">(</span><span class="k">if</span><span class="w"> </span>you<span class="w"> </span>know<span class="w"> </span>assumptions<span class="w"> </span>of<span class="w"> </span>these<span class="w"> </span>algorithms<span class="w"> </span>too<span class="o">)</span>.
+
+So<span class="w"> </span>Lets<span class="w"> </span>dive<span class="w"> </span>into<span class="w"> </span>a<span class="w"> </span>data<span class="w"> </span>which<span class="w"> </span>I<span class="w"> </span>created<span class="w"> </span>artificially<span class="w"> </span>below<span class="w"> </span>and<span class="w"> </span>interpret<span class="w"> </span>what<span class="w"> </span>does<span class="w"> </span>it<span class="w"> </span>tells<span class="w"> </span>us..
+</pre></div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4c55b965-ee9b-4841-be3d-438e19258c92">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">shapiro</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">boxcox</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KernelDensity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d81f62b9-b4ea-4b6b-bae5-1f0ca9707fe7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">shapiro</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Create correlated variables</span>
+<span class="c1"># Base Gaussian variable</span>
+<span class="n">base_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Targets</span>
+<span class="c1"># Right skewed target correlated with base_gaussian (add noise)</span>
+<span class="n">target_skewed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">base_gaussian</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
+
+<span class="c1"># Gaussian target correlated with base_gaussian (add noise)</span>
+<span class="n">target_gaussian</span> <span class="o">=</span> <span class="n">base_gaussian</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Independent variables</span>
+<span class="c1"># One Gaussian correlated with base_gaussian</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">base_gaussian</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Two non-parametric random variables (less correlated)</span>
+<span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">-</span> <span class="mi">3</span>
+
+
+<span class="c1"># Create an arbitrary empirical distribution (non-parametric)</span>
+<span class="n">empirical_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="p">])</span>
+
+<span class="c1"># Sample from this empirical distribution with replacement</span>
+<span class="n">X4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">empirical_data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Combine features into a matrix</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="n">X4</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Plot distributions of target variables and features</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">target_skewed</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'orange'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Right Skewed Target Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">target_gaussian</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Gaussian Target Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Gaussian Feature X1 Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'purple'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Uniform Feature X2 Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X3</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'brown'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Beta Feature X3 Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X4</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'magenta'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Non Parametric Feature X4 Distribution'</span><span class="p">)</span>
+
+<span class="c1"># Hide unused subplots</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-01.png" width="1790" height="989" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6be7dd69-8e04-4889-ab87-5fca24561ae4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>So<span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span>look<span class="w"> </span>at<span class="w"> </span>the<span class="w"> </span>graphs,<span class="w"> </span>I<span class="w"> </span>created<span class="w"> </span>two<span class="w"> </span>target<span class="w"> </span>variable<span class="w"> </span>one<span class="w"> </span>with<span class="w"> </span>right-skewed<span class="w"> </span>form<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>is<span class="w"> </span><span class="k">in</span><span class="w"> </span>Gaussian<span class="w"> </span>form.<span class="w"> </span>The<span class="w"> </span>four<span class="w"> </span>independent<span class="w"> </span>variables<span class="o">(</span>predictors<span class="o">)</span><span class="w"> </span>have<span class="w"> </span>some<span class="w"> </span>gaussian,<span class="w"> </span>and<span class="w"> </span>non-gaussian<span class="w"> </span>forms.
+-<span class="w"> </span>So<span class="w"> </span>Can<span class="w"> </span>I<span class="w"> </span>apply<span class="w"> </span>a<span class="w"> </span>simple<span class="w"> </span>linear<span class="w"> </span>regression<span class="w"> </span>model<span class="w"> </span>to<span class="w"> </span>them<span class="w"> </span>?
+-<span class="w"> </span>What<span class="w"> </span>are<span class="w"> </span>the<span class="w"> </span>assumptions<span class="w"> </span>of<span class="w"> </span>Linear<span class="w"> </span>Regression<span class="w"> </span>?
+
+-<span class="w"> </span>I<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>mention<span class="w"> </span>all<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>assumptions<span class="w"> </span>here<span class="w"> </span>but<span class="w"> </span>two:
+-<span class="w"> </span><span class="m">1</span>-<span class="o">)</span><span class="w"> </span>Homoscedasticity,<span class="w"> </span>or<span class="w"> </span>homogeneity<span class="w"> </span>of<span class="w"> </span>variances,<span class="w"> </span>is<span class="w"> </span>an<span class="w"> </span>assumption<span class="w"> </span>of<span class="w"> </span>equal<span class="w"> </span>or<span class="w"> </span>similar<span class="w"> </span>variances<span class="w"> </span><span class="k">in</span><span class="w"> </span>different<span class="w"> </span>groups<span class="w"> </span>being<span class="w"> </span>compared.
+-<span class="w"> </span><span class="m">2</span>-<span class="o">)</span><span class="w"> </span>Another<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>linear<span class="w"> </span>relationship<span class="w"> </span>between<span class="w"> </span>target<span class="w"> </span>variable<span class="w"> </span>and<span class="w"> </span>predictors<span class="w"> </span>so<span class="w"> </span>We<span class="w"> </span>should<span class="w"> </span>expect<span class="w"> </span>Gaussian<span class="w"> </span>Distribution<span class="w"> </span>when<span class="w"> </span>we<span class="w"> </span>modeled<span class="w"> </span><span class="k">in</span><span class="w"> </span>residuals,<span class="w"> </span>this<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>important<span class="w"> </span>part.
+
+-<span class="w"> </span>What<span class="w"> </span>these<span class="w"> </span>graphs<span class="w"> </span>tell<span class="w"> </span>us<span class="w"> </span>?
+-<span class="w"> </span>Transformation<span class="w"> </span><span class="o">(</span>right-skewed<span class="w"> </span>target<span class="w"> </span>variable<span class="o">)</span><span class="w"> </span>?
+-<span class="w"> </span>Outlier<span class="w"> </span>handling<span class="w"> </span>?
+-<span class="w"> </span>Imputation<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>ideas<span class="w"> </span>?
+-<span class="w"> </span>Discarding<span class="w"> </span>uniform<span class="w"> </span>variable<span class="w"> </span>?
+
+All<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>answered<span class="w"> </span>yourself<span class="w"> </span>to<span class="w"> </span>apply<span class="w"> </span>your<span class="w"> </span>modelling.
+
+There<span class="w"> </span>are<span class="w"> </span>some<span class="w"> </span>parametric<span class="w"> </span>ones<span class="w"> </span><span class="o">(</span><span class="k">for</span><span class="w"> </span>example<span class="w"> </span>X1,<span class="w"> </span>X2,<span class="w"> </span>X3<span class="o">)</span><span class="w"> </span>and<span class="w"> </span>non-parametric<span class="w"> </span>one<span class="w"> </span><span class="o">(</span>X4<span class="o">)</span>.<span class="w"> </span>Why<span class="w"> </span>I<span class="w"> </span>am<span class="w"> </span>talking<span class="w"> </span>about<span class="w"> </span>this<span class="w"> </span>?<span class="w"> </span>Because<span class="w"> </span><span class="k">in</span><span class="w"> </span>real<span class="w"> </span>life<span class="w"> </span>scenarios,<span class="w"> </span>we<span class="w"> </span>dont<span class="w"> </span>deal<span class="w"> </span>with<span class="w"> </span>known<span class="w"> </span>parametric<span class="w"> </span>distributions<span class="w"> </span>but<span class="w"> </span>highly<span class="w"> </span>non-parametric<span class="w"> </span>ones.
+
+So<span class="w"> </span>how<span class="w"> </span><span class="k">do</span><span class="w"> </span>we<span class="w"> </span>use<span class="w"> </span>these<span class="w"> </span>graphs<span class="w"> </span>?
+
+Here<span class="w"> </span><span class="s2">"Kernel Density Estimation"</span><span class="w"> </span>comes<span class="w"> </span>to<span class="w"> </span>play.
+
+So<span class="w"> </span>What<span class="w"> </span>is<span class="w"> </span><span class="s2">"Kernel Density Estimation"</span><span class="w"> </span>?
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2ad1c55a-5841-4582-87c2-b46005aca960">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>1-) What is a Non-Parametric Distribution?</p>
+<ul>
+<li>A non-parametric distribution means we don’t assume any predefined functional form (like Gaussian, exponential, etc.) for the distribution of the variable. Instead, we let the data speak for itself.</li>
+</ul>
+<p>2-) How to Estimate the Density Function Non-Parametrically ?</p>
+<ul>
+<li>Using Kernel Density Estimation (KDE).</li>
+<li>KDE is a smoothing technique that estimates the probability density function (PDF) from data without assuming a parametric form.</li>
+</ul>
+<p>The KDE at a point ( x ) is defined as:</p>
+<p>$$
+\hat{f}(x) = \frac{1}{n h} \sum_{i=1}^n K\left(\frac{x - x_i}{h}\right)
+$$
+where:</p>
+<ul>
+<li>( n ) is the number of data points,</li>
+<li>( h ) is the bandwidth (smoothing parameter</li>
+<li>( K ) is the kernel function (e.g., Gaussian kernel),</li>
+<li>( x_i ) are the observed data points.</li>
+</ul>
+<p>3-) What is "x" here ?</p>
+<ul>
+<li>lets say you have some data : data = [2.1, 2.4, 2.6, 3.0, 3.2]</li>
+<li>If you wnat to estimate density at x = 2.5, you plug x = 2.5 into the KDE Formula,</li>
+<li>The kernel function measures how close each data point x_i, is to your target point x, scaled by the bandwith "h"</li>
+</ul>
+<p>4-) Intuition:</p>
+<ul>
+<li>If many data points lie close to $x$, the estimated density $\hat{f}(x)$ will be high; if few data points are near $x$, it will be low.</li>
+<li>The bandwidth h controls the smoothing. Large means smoother curves, small means more detail.</li>
+</ul>
+<p>5-) So if we do not assuming a parametric form for data why we use for example gaussian kernel function ? even we have already known that our data or some of our variables or not in Gaussian form ? (There are many kernel functions, I mentioned Gaussian kernel function to be understood easily for the most people)</p>
+<ul>
+<li><p>We don’t assume the data follows a Gaussian distribution, but we use a Gaussian-shaped weighting function (kernel) as a mathematical tool to estimate the density. It's not assuming the underlying data is Gaussian — it’s using a Gaussian-shaped curve to “spread” each data point’s influence locally.</p>
+</li>
+<li><p>When doing non-parametric estimation, like KDE, the goal is:
+Estimate the shape of the underlying density without assuming a global functional form (like normal, exponential, etc.). But to compute the estimate, we still need some local smoothing mechanism — that’s what the kernel function is for. The kernel is just a window function used to spread the influence of each data point. It could be Gaussian, Epanechnikov, Uniform, or others. The choice of kernel has minor impact — what matters most is the bandwidth h.</p>
+</li>
+</ul>
+<p>6-) Think of it like this:</p>
+<ul>
+<li>Imagine you place a little “bump” (bell curve) centered at each data point.</li>
+<li>Those bumps can be Gaussian, triangular, etc.</li>
+<li>Then you add up all those bumps → this gives you a smooth approximation of the PDF.</li>
+<li>The bump shape (i.e., kernel) is not a claim about your data's distribution, just a tool for estimating the density.</li>
+</ul>
+<p>7-) KDE Based Algorithms:</p>
+<ul>
+<li><p>Kernel Density-based Anomaly Detection:
+KDE can be used to estimate the density of normal data points. Points falling in low-density regions (low KDE values) are flagged as anomalies or outliers.</p>
+</li>
+<li><p>Mean Shift Clustering:
+This is a clustering algorithm that uses KDE to find modes (peaks) in the data distribution. It iteratively shifts points towards the nearest high-density region estimated by KDE.</p>
+</li>
+<li><p>Non-parametric Bayesian Methods:
+Some Bayesian non-parametric models use KDE-like approaches to estimate distributions without assuming parametric forms.</p>
+</li>
+<li><p>Density-based Classification:
+KDE can be used to estimate class-conditional densities in a non-parametric way, which can then be used for classification (e.g., Parzen window classifiers).</p>
+</li>
+<li><p>Generative Models:
+KDE can be used as a simple generative model to sample new data points by sampling from the estimated density.</p>
+</li>
+</ul>
+<p>While KDE itself is not a standalone "algorithm" like decision trees or SVMs, it is a fundamental tool used within many algorithms for density estimation, clustering, anomaly detection, and more.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e48f7f7-3a36-4142-aefd-00989f8382ad">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id=""><a class="anchor-link" href="#">¶</a></h4>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b21fa9f-786d-4e53-b33c-6fc52f45dc8a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Lets-show-it">Lets show it<a class="anchor-link" href="#Lets-show-it">¶</a></h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3f982d91-9624-48d9-8881-160fd2dff2b5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Define Gaussian kernel function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">bandwidth</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">bandwidth</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Function to plot KDE and bumps for a target variable</span>
+<span class="c1"># using all features combined as data points</span>
+
+<span class="c1"># Plot KDE with bumps inside</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_kde_with_bumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+    <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="c1"># Select 20 random points for bumps</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># for reproducibility</span>
+    <span class="n">selected_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="n">bumps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gaussian_kernel</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">)</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">selected_points</span><span class="p">])</span>
+    <span class="n">kde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gaussian_kernel</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">)</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">kde</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'KDE'</span><span class="p">)</span>
+
+    <span class="n">max_kde</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">bump</span> <span class="ow">in</span> <span class="n">bumps</span><span class="p">:</span>
+        <span class="n">scaled_bump</span> <span class="o">=</span> <span class="n">bump</span> <span class="o">*</span> <span class="n">max_kde</span> <span class="o">*</span> <span class="mf">0.4</span> 
+        <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scaled_bump</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">rugplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'KDE with 20 Larger Gaussian Bumps Inside for Non-Parametric Variable X4'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Value'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Density'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_kde_with_bumps</span><span class="p">(</span><span class="n">X4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-02.png" width="1010" height="547" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=04aa610a-eccd-4585-8326-43cdf70d068d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Using a Gaussian kernel in KDE does not mean you're assuming the data is Gaussian — you're just using a Gaussian-shaped function to help estimate the unknown density in a flexible, non-parametric way.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b4e4784f-d9e5-47c5-8beb-26b58e91e14a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="If-a-variable-has-a-non-parametric-distribution,-and-we-estimate-its-density-using-KDE-with-a-Gaussian-kernel,-how-does-that-help-us-use-it-in-linear-regression-as-an-independent-variable?-What%E2%80%99s-the-benefit?">If a variable has a non-parametric distribution, and we estimate its density using KDE with a Gaussian kernel, how does that help us use it in linear regression as an independent variable? What’s the benefit?<a class="anchor-link" href="#If-a-variable-has-a-non-parametric-distribution,-and-we-estimate-its-density-using-KDE-with-a-Gaussian-kernel,-how-does-that-help-us-use-it-in-linear-regression-as-an-independent-variable?-What%E2%80%99s-the-benefit?">¶</a></h4><ul>
+<li>KDE is for estimating the distribution of a variable — not for transforming or modeling the variable directly in regression.</li>
+<li>So one doesnt needs to apply KDE to the independent variable before using it in linear regression. But KDE can still be useful in two key ways:</li>
+</ul>
+<p>1-) Understanding the Marginal Distribution of the Variable</p>
+<ul>
+<li>If you're unsure of your predictor’s distribution (e.g., skewed, multimodal), KDE helps visualize or test this.</li>
+<li>This can inform:
+Whether to apply transformations (e.g., log, Box-Cox),Whether linear regression assumptions (like homoscedasticity, linearity) might be violated</li>
+</ul>
+<p>2-) Feature Engineering via Density Estimates (Advanced Use)
+One could use KDE as a feature generator:
+For example, if a variable X has a strange distribution, you could compute:
+— the estimated density at each point — and use that as an additional input in your regression.</p>
+<p>This can be useful if:</p>
+<ul>
+<li>You want to give the model access to how common or rare a value is.</li>
+<li>You're doing anomaly detection, probability modeling, or semi-parametric modeling.</li>
+</ul>
+<p>3-) What About Linear Regression?
+Linear regression doesn’t care if your independent variable has a non-parametric distribution. It only assumes:</p>
+<ul>
+<li>The relationship between independent and dependent variables is linear</li>
+<li>The residuals (errors) are normally distributed (for valid inference)</li>
+</ul>
+<p>So:</p>
+<ul>
+<li>A skewed or weirdly-shaped independent variable is fine.</li>
+<li>You don’t need to apply KDE to that variable before regression.</li>
+</ul>
+<p>Instead, KDE helps you analyze, explore, or preprocess the variable before putting it in the model.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b4460d6-ba3d-4fa2-97c9-e8a0776c06bd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Lets-Make-Modelling">Lets Make Modelling<a class="anchor-link" href="#Lets-Make-Modelling">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d8851b91-6ee7-4c9e-bab5-734f6c0e3423">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Lets-first-check-correlation-graph-to-check-linearity">Lets first check correlation graph to check linearity<a class="anchor-link" href="#Lets-first-check-correlation-graph-to-check-linearity">¶</a></h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4f2dbdce-d9ed-4e88-93ae-231b3ccc0c05">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Combine all variables into a DataFrame</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'target_skewed'</span><span class="p">:</span> <span class="n">target_skewed</span><span class="p">,</span>
+    <span class="s1">'target_gaussian'</span><span class="p">:</span> <span class="n">target_gaussian</span><span class="p">,</span>
+    <span class="s1">'X1'</span><span class="p">:</span> <span class="n">X1</span><span class="p">,</span>
+    <span class="s1">'X2'</span><span class="p">:</span> <span class="n">X2</span><span class="p">,</span>
+    <span class="s1">'X3'</span><span class="p">:</span> <span class="n">X3</span><span class="p">,</span>
+    <span class="s1">'X4'</span><span class="p">:</span> <span class="n">X4</span>
+<span class="p">})</span>
+
+<span class="c1"># Calculate correlation matrix</span>
+<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="c1"># Plot heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">".2f"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'coolwarm'</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Correlation Heatmap of Targets and Features'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-03.png" width="722" height="625" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ee764564-9ddd-4741-b748-8cd659fcd5e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Linear regression and residual analysis function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">linear_regression_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span>
+
+    <span class="c1"># Calculate metrics</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Mean Squared Error (MSE): </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Root Mean Squared Error (RMSE): </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    
+    <span class="c1"># Plot residuals histogram</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Residuals Distribution'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Residuals'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># Normality test (Shapiro-Wilk)</span>
+    <span class="n">stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">residuals</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Shapiro-Wilk Test: Statistic=</span><span class="si">{</span><span class="n">stat</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, p-value=</span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p_value</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Residuals appear to be normally distributed (fail to reject H0)'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Residuals do not appear to be normally distributed (reject H0)'</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">residuals</span>
+
+<span class="c1"># Apply linear regression and residual analysis for right skewed target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Right Skewed Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_skewed</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_skewed</span><span class="p">)</span>
+
+<span class="c1"># Apply linear regression and residual analysis for gaussian target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Gaussian Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_gaussian</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_gaussian</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Right Skewed Target Model Residuals Analysis:
+R² Score: 0.1562
+Mean Squared Error (MSE): 24.7569
+Root Mean Squared Error (RMSE): 4.9756
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-04.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.2556, p-value=0.0000
+Residuals do not appear to be normally distributed (reject H0)
+
+Gaussian Target Model Residuals Analysis:
+R² Score: 0.6307
+Mean Squared Error (MSE): 0.4278
+Root Mean Squared Error (RMSE): 0.6540
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-05.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.9972, p-value=0.5608
+Residuals appear to be normally distributed (fail to reject H0)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a520a6ff-bf6a-433c-8280-05b64e317c5c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Comment: As you can see the applying of the linear regression to two target variables, you can see that one holds assumptions of linear regression and one doesnt provide the assumptions(above one)
+So lets play with the skewed target variable since its kde plot tells me there is a need to transform so I will apply Box-Cox transformation since it is highly right skewed, plot it and then check results</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=af25cea6-2771-49fa-8440-8d082ed67894">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Apply Box-Cox transformation (Box-Cox requires positive data)</span>
+<span class="n">target_skewed_positive</span> <span class="o">=</span> <span class="n">target_skewed</span> <span class="o">+</span> <span class="mf">1e-6</span>  <span class="c1"># shift to avoid zero</span>
+<span class="n">transformed</span><span class="p">,</span> <span class="n">lambda_bc</span> <span class="o">=</span> <span class="n">boxcox</span><span class="p">(</span><span class="n">target_skewed_positive</span><span class="p">)</span>
+
+<span class="c1"># Plot distributions</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">target_skewed</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'orange'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Original Right Skewed Target Distribution'</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Box-Cox Transformed Target Distribution (lambda=</span><span class="si">{</span><span class="n">lambda_bc</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Create DataFrame for correlation</span>
+<span class="n">corr_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'Original_Skewed'</span><span class="p">:</span> <span class="n">target_skewed</span><span class="p">,</span>
+    <span class="s1">'BoxCox_Transformed'</span><span class="p">:</span> <span class="n">transformed</span><span class="p">,</span>
+    <span class="s1">'X1'</span><span class="p">:</span> <span class="n">X1</span><span class="p">,</span>
+    <span class="s1">'X2'</span><span class="p">:</span> <span class="n">X2</span><span class="p">,</span>
+    <span class="s1">'X3'</span><span class="p">:</span> <span class="n">X3</span><span class="p">,</span>
+    <span class="s1">'X4'</span><span class="p">:</span> <span class="n">X4</span>
+<span class="p">})</span>
+
+<span class="c1"># Correlation matrix</span>
+<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">corr_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="c1"># Plot heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'coolwarm'</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Correlation Heatmap: Original vs Box-Cox Transformed'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-06.png" width="1189" height="490" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-07.png" width="621" height="582" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a37d30da-5629-48cf-8dc9-cd08de4a8b2c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Apply linear regression and residual analysis for right skewed target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Right Skewed Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_skewed</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_skewed</span><span class="p">)</span>
+
+<span class="c1"># Apply linear regression and residual analysis for gaussian target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Gaussian Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_box_cox</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">transformed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Right Skewed Target Model Residuals Analysis:
+R² Score: 0.1562
+Mean Squared Error (MSE): 24.7569
+Root Mean Squared Error (RMSE): 4.9756
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-08.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.2556, p-value=0.0000
+Residuals do not appear to be normally distributed (reject H0)
+
+Gaussian Target Model Residuals Analysis:
+R² Score: 0.6372
+Mean Squared Error (MSE): 0.4049
+Root Mean Squared Error (RMSE): 0.6363
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-09.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.9978, p-value=0.7636
+Residuals appear to be normally distributed (fail to reject H0)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6b975994-c0cd-4cf4-83dc-a940715e78c2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Comment: As you can see that we have a linear regression model too with Box-Cox transformation, it means we used KDE to infer what our data says to us, how we can deal it, and how to use it for our purposes. On the other hand look carefully the regression results of gaussian target, and box-cox target variables.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c1d69221-36b9-4af7-94b4-d40a1a9cc0c9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Lets also play with the non-parametric X4 variable, to check if we use it in our lineer model:</p>
+<ul>
+<li>Estimate the density values at each data point:</li>
+</ul>
+<p>Use KDE to compute the estimated density (probability density function value) at each X4 data point. This density value reflects how common or rare that value is in the distribution.</p>
+<ul>
+<li>Use the KDE density values as a new feature:</li>
+</ul>
+<p>Add these density estimates as an additional feature in your model. Points in dense regions get higher values, and points in sparse regions get lower values, which can help the model understand the data distribution better.</p>
+<ul>
+<li>Optionally, evaluate KDE at new points:</li>
+</ul>
+<p>If you want to predict on new data, you can evaluate the KDE at those new X4 values to get their density feature.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=38711536-c3b1-4f1e-9e8a-f1c346540181">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># X4 is your 1D non-parametric variable, shape (n_samples,)</span>
+<span class="n">X4_reshaped</span> <span class="o">=</span> <span class="n">X4</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Fit KDE model on X4</span>
+<span class="n">kde</span> <span class="o">=</span> <span class="n">KernelDensity</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X4_reshaped</span><span class="p">)</span>
+
+<span class="c1"># Compute log density for each point</span>
+<span class="n">log_density</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X4_reshaped</span><span class="p">)</span>
+
+<span class="c1"># Convert log density to density</span>
+<span class="n">density_feature</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_density</span><span class="p">)</span>
+
+<span class="c1"># Plot distribution of KDE feature</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">density_feature</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'teal'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Distribution of KDE Feature from X4'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'KDE Density Value'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Now density_feature can be added as a new feature to your dataset</span>
+<span class="c1"># Create DataFrame for correlation</span>
+<span class="n">corr_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'Target_Skewed'</span><span class="p">:</span> <span class="n">target_skewed</span><span class="p">,</span>
+    <span class="s1">'Target_Gaussian'</span><span class="p">:</span> <span class="n">target_gaussian</span><span class="p">,</span>
+    <span class="s1">'Target_BoxCox'</span><span class="p">:</span> <span class="n">transformed</span><span class="p">,</span>
+    <span class="s1">'X1'</span><span class="p">:</span> <span class="n">X1</span><span class="p">,</span>
+    <span class="s1">'X2'</span><span class="p">:</span> <span class="n">X2</span><span class="p">,</span>
+    <span class="s1">'X3'</span><span class="p">:</span> <span class="n">X3</span><span class="p">,</span>
+    <span class="s1">'X4'</span><span class="p">:</span> <span class="n">X4</span><span class="p">,</span>
+    <span class="s1">'X4_KDE_Feature'</span><span class="p">:</span> <span class="n">density_feature</span>
+<span class="p">})</span>
+
+<span class="c1"># Correlation matrix</span>
+<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">corr_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="c1"># Plot heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'coolwarm'</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Correlation Heatmap: Targets and Predictors (including KDE feature)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-10.png" width="695" height="470" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-11.png" width="864" height="781" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7100ea61-0f05-4804-9984-4f7084c6531d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Comment: Lets apply to linear regression model with discarding X4 and putting X4_KDE_Feaure variable</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1d9ed872-bdf8-4a31-8540-9e7572236261">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Combine features into a matrix</span>
+<span class="n">X_kde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="n">density_feature</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Apply linear regression and residual analysis for right skewed target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Right Skewed Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_skewed</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X_kde</span><span class="p">,</span> <span class="n">target_skewed</span><span class="p">)</span>
+
+<span class="c1"># Apply linear regression and residual analysis for gaussian target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Gaussian Target Model Residuals Analysis:'</span><span class="p">)</span>
+<span class="n">residuals_box_cox</span> <span class="o">=</span> <span class="n">linear_regression_residuals</span><span class="p">(</span><span class="n">X_kde</span><span class="p">,</span> <span class="n">transformed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Right Skewed Target Model Residuals Analysis:
+R² Score: 0.1598
+Mean Squared Error (MSE): 24.6512
+Root Mean Squared Error (RMSE): 4.9650
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-12.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.2593, p-value=0.0000
+Residuals do not appear to be normally distributed (reject H0)
+
+Gaussian Target Model Residuals Analysis:
+R² Score: 0.6372
+Mean Squared Error (MSE): 0.4050
+Root Mean Squared Error (RMSE): 0.6364
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-13.png" width="531" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shapiro-Wilk Test: Statistic=0.9978, p-value=0.7640
+Residuals appear to be normally distributed (fail to reject H0)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a99073cf-266a-4fe9-b579-657a5eed6863">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Comment: Same but a little slightly improved results, lets apply Xgboost to finalize the study and check feature importances</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4de2a054-59aa-41a2-949b-da3a38c92d18">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>XGBoost Regression Assumptions</p>
+<ul>
+<li><p>XGBoost is a powerful gradient boosting algorithm with the following key assumptions and characteristics:</p>
+</li>
+<li><p>Additive model: Builds an ensemble of weak learners (usually decision trees) sequentially, each correcting errors of the previous.</p>
+</li>
+<li><p>No strict distribution assumptions: Unlike linear regression, XGBoost does not assume linearity or normality of residuals.</p>
+</li>
+<li><p>Feature independence: While not strictly required, uncorrelated features often help model performance.</p>
+</li>
+<li><p>Sufficient data: Works best with enough data to learn complex patterns.</p>
+</li>
+<li><p>Hyperparameter tuning: Performance depends on tuning parameters like learning rate, tree depth, and regularization</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9cb8520e-1944-466a-9dfa-a1ecbb7b2631">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Prepare feature matrix and targets</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="n">density_feature</span><span class="p">])</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Gaussian'</span><span class="p">:</span> <span class="n">target_gaussian</span><span class="p">,</span>
+    <span class="s1">'Skewed'</span><span class="p">:</span> <span class="n">target_skewed</span><span class="p">,</span>
+    <span class="s1">'BoxCox'</span><span class="p">:</span> <span class="n">transformed</span>
+<span class="p">}</span>
+
+<span class="c1"># Function to train, predict and evaluate XGBoost model</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_evaluate_xgb</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">target_name</span><span class="p">):</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'--- </span><span class="si">{</span><span class="n">target_name</span><span class="si">}</span><span class="s1"> Target ---'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Mean Squared Error (MSE): </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Root Mean Squared Error (RMSE): </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+    
+    <span class="c1"># Feature importance plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s1">'X1'</span><span class="p">,</span> <span class="s1">'X2'</span><span class="p">,</span> <span class="s1">'X3'</span><span class="p">,</span> <span class="s1">'X4_KDE'</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Feature Importances for </span><span class="si">{</span><span class="n">target_name</span><span class="si">}</span><span class="s1"> Target'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Importance'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Run for each target</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">train_evaluate_xgb</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>--- Gaussian Target ---
+R² Score: 0.5490
+Mean Squared Error (MSE): 0.5951
+Root Mean Squared Error (RMSE): 0.7714
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-14.png" width="712" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>--- Skewed Target ---
+R² Score: 0.0723
+Mean Squared Error (MSE): 110.3246
+Root Mean Squared Error (RMSE): 10.5036
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-15.png" width="703" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>--- BoxCox Target ---
+R² Score: 0.3718
+Mean Squared Error (MSE): 0.6480
+Root Mean Squared Error (RMSE): 0.8050
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img src="{{ site.baseurl }}/assets/images/posts/2025-06-10-kerneldensityestimation-linreg-xgboost-16.png" width="703" height="393" loading="lazy" decoding="async" alt="No description has been provided for this image" class="" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=321ec09d-0e1d-4193-88cb-f3ceb0546466">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Comment: It is good to see that Xgboost model underperforms regard to linear regression model. Even Xgboost is a powerful algorithm, our data told us that it has linear or near-linear distribution so applying a non-linear algorithm is needless to this case. On the other hand check the variable X4_KDE from the aspect of non-linearity, Its importance increased. However in this data case it is needless.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6f90402a-11cd-49ad-afa9-1e03cc87f1e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Final Result: Always look, check and play with your data, do not trust on just algorithms themselves. After this you will not be stranged when plotting KDE plot with seaborn or another library, do not forget that it gives us underlying distribution of our variable. Thanks</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=496e3e64-5132-4146-a292-bb3e93fe906f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="This-Study-was-done-by-Hincal-Topcuoglu">This Study was done by Hincal Topcuoglu<a class="anchor-link" href="#This-Study-was-done-by-Hincal-Topcuoglu">¶</a></h4>
+</div>
+</div>
+</div>
+</div>
+</main>

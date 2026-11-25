@@ -1,0 +1,39 @@
+---
+title: "Asymptotic Feature of Shannon Entropy"
+date: 2025-11-01
+permalink: /blog/asymptotic_feature_of_shannon_entropy.html
+layout: post
+categories: [Information Theory]
+legacy_flavour: plain
+---
+<pre><code class="r">library(plyr)
+</code></pre>
+
+<p><strong>define shannon entropy</strong></p>
+
+<pre><code class="r">shannon_entropy &lt;- function(x){
+  df = count(x)
+  n = length(x)
+  df$probs = df$freq / n
+  se&lt;- -sum(df$probs * log(df$probs))
+  return(se)
+}
+</code></pre>
+
+<ul>
+<li>create numbers between 1000 and 100000 and get shannon entropy results and then plot it**</li>
+</ul>
+
+<pre><code class="r">discrete_normal_arr&lt;-NULL
+for ( i in seq(1000,100000,10)){
+  discrete_normal_arr[i]&lt;-shannon_entropy(round(rnorm(i, 500, 10), 0))
+}
+
+
+hist(discrete_normal_arr, prob=TRUE, ylim=c(0,150), breaks=50)
+curve(dnorm(x, mean(discrete_normal_arr), sd(discrete_normal_arr)), add=TRUE, col=&quot;darkblue&quot;, lwd=2)
+</code></pre>
+
+<p><img src="{{ site.baseurl }}/assets/images/posts/2025-11-01-asymptotic-feature-of-shannon-entropy-01.png" width="504" height="504" loading="lazy" decoding="async" /></p>
+
+<p><em>Yes thats&#39;it :)</em></p>
