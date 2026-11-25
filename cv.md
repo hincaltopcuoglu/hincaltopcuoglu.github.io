@@ -13,13 +13,13 @@ Email: [hincal@topcuoglu.me](mailto:hincal@topcuoglu.me)
 
 ## Professional Summary
 
-Experienced Data Scientist with 13 years of expertise in statistics and data-driven solutions across e-commerce, telecommunications, banking, travel, and aviation sectors. Skilled in machine learning, big data, and cloud technologies. Known for creativity, innovation, and close collaboration with business teams to translate needs into actionable data science solutions.
+Experienced Data Scientist with 14 years of expertise in statistics and data-driven solutions across e-commerce, telecommunications, banking, travel, and aviation sectors. Skilled in machine learning, big data, and cloud technologies. Known for creativity, innovation, and close collaboration with business teams to translate needs into actionable data science solutions.
 
 ---
 
 ## Experience Highlights
 
-- **Data Science Consultant, Intellium (Turkish Airlines) (May 2024 – Apr 2025):** Developed chatbot using Llama 38B and Lang Chain; built income forecasting models improving savings by 12-13%.
+- **Data Science Consultant, Turkish Airlines (May 2024 – Apr 2025):** Developed chatbot using Llama 38B and Lang Chain; built income forecasting models improving savings by 12-13%.
 - **Data Science Consultant, Yapı Kredi Bank (Sep 2023 – Feb 2024):** Worked on default rate measurement for customer groups.
 - **Senior Data Scientist, Enuygun.com (Dec 2020 – Jun 2023):** Led data science team; developed smart ranking, anomaly detection, text mining, image similarity, recommendation engines, and sales forecasting tools.
 - **Senior Data Scientist, Cerebro (Sep 2019 – Mar 2020):** Created clustering-based click prediction models improving performance by 10-12%.
