@@ -1,0 +1,70 @@
+---
+layout: default
+---
+{%- assign meta = site.data.post_meta[page.url] -%}
+
+<div class="reading-progress" id="reading-progress" role="presentation"></div>
+
+<article class="post">
+
+  <header class="post-header">
+    {%- if meta and meta.categories and meta.categories.size > 0 %}
+    <div class="post-categories">
+      {%- for cat in meta.categories %}
+      <a class="post-category" href="{{ '/blog/' | relative_url }}?topic={{ cat | uri_escape }}">{{ cat }}</a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    <h1 class="post-title">{{ meta.title | default: page.title }}</h1>
+
+    {%- if meta and meta.description %}
+    <p class="post-lede">{{ meta.description }}</p>
+    {%- endif %}
+
+    <div class="post-meta">
+      {%- if page.date %}
+      <span><i class="far fa-calendar" aria-hidden="true"></i> {{ page.date | date: "%B %-d, %Y" }}</span>
+      {%- endif %}
+      {%- if meta and meta.reading_time %}
+      <span class="dot" aria-hidden="true">•</span>
+      <span><i class="far fa-clock" aria-hidden="true"></i> {{ meta.reading_time }} min read</span>
+      {%- endif %}
+      {%- if page.author %}
+      <span class="dot" aria-hidden="true">•</span>
+      <span><i class="far fa-user" aria-hidden="true"></i> {{ page.author }}</span>
+      {%- endif %}
+    </div>
+
+    {%- if meta and meta.tags and meta.tags.size > 0 %}
+    <ul class="post-tags">
+      {%- for tag in meta.tags %}
+      <li>{{ tag }}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+  </header>
+
+  <div class="post-layout">
+    <div class="post-body">
+      {{ content }}
+    </div>
+
+    <aside class="post-aside">
+      <nav class="post-toc" aria-label="Table of contents">
+        <h2 class="post-toc-title">On this page</h2>
+        <div id="toc"></div>
+      </nav>
+    </aside>
+  </div>
+
+  <footer class="post-footer">
+    <a class="post-nav-prev" href="{{ '/blog/' | relative_url }}">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to all posts
+    </a>
+    <a class="post-nav-next" href="mailto:{{ site.email }}?subject={{ 'Hi Hincal' | uri_escape }}">
+      Discuss this post <i class="fas fa-arrow-right" aria-hidden="true"></i>
+    </a>
+  </footer>
+
+</article>

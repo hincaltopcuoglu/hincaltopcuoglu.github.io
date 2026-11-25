@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Funnel diagnostics: traffic is not the bottleneck, the broken step is">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="warn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <text x="70" y="88" font-family="Georgia, serif" font-size="42" font-weight="600" fill="#f1f5f9">Traffic isn't the bottleneck</text>
+  <text x="70" y="132" font-family="system-ui, sans-serif" font-size="21" fill="#94a3b8">Diagnosing where the funnel actually breaks</text>
+
+  <!-- Funnel steps -->
+  <g font-family="system-ui, sans-serif" font-size="19" fill="#e2e8f0">
+    <!-- Step 1: sessions -->
+    <rect x="70" y="196" width="440" height="58" rx="8" fill="#1e40af"/>
+    <text x="92" y="232">Sessions</text>
+    <text x="486" y="232" text-anchor="end" fill="#bfdbfe" font-weight="600">25,000</text>
+
+    <!-- Step 2: engaged -->
+    <rect x="70" y="272" width="370" height="58" rx="8" fill="#1d4ed8"/>
+    <text x="92" y="308">Engaged sessions</text>
+    <text x="416" y="308" text-anchor="end" fill="#bfdbfe" font-weight="600">11,420</text>
+
+    <!-- Step 3: product view (the break) -->
+    <rect x="70" y="348" width="300" height="58" rx="8" fill="url(#warn)"/>
+    <text x="92" y="384">Product view</text>
+    <text x="346" y="384" text-anchor="end" fill="#fef3c7" font-weight="600">9,830</text>
+
+    <!-- Step 4: add to cart -->
+    <rect x="70" y="424" width="225" height="58" rx="8" fill="#334155"/>
+    <text x="92" y="460">Add to cart</text>
+    <text x="271" y="460" text-anchor="end" fill="#cbd5e1" font-weight="600">1,640</text>
+
+    <!-- Step 5: purchase -->
+    <rect x="70" y="500" width="150" height="58" rx="8" fill="#334155"/>
+    <text x="92" y="536">Purchase</text>
+    <text x="196" y="536" text-anchor="end" fill="#cbd5e1" font-weight="600">410</text>
+  </g>
+
+  <!-- Biggest drop marker -->
+  <g>
+    <rect x="70" y="336" width="312" height="82" rx="10" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <rect x="392" y="352" width="268" height="50" rx="8" fill="#fbbf24"/>
+    <text x="410" y="375" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#422006">BIGGEST DROP-OFF</text>
+    <text x="410" y="393" font-family="system-ui, sans-serif" font-size="14" fill="#78350f">−14% of engaged sessions reach product</text>
+  </g>
+
+  <!-- Right panel: insight -->
+  <g>
+    <rect x="700" y="186" width="430" height="372" rx="14" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+    <text x="732" y="232" font-family="Georgia, serif" font-size="26" font-weight="600" fill="#f1f5f9">The real diagnosis</text>
+
+    <circle cx="744" cy="280" r="5" fill="#2563eb"/>
+    <text x="764" y="287" font-family="system-ui, sans-serif" font-size="17" fill="#cbd5e1">Sessions are healthy and growing.</text>
+
+    <circle cx="744" cy="326" r="5" fill="#f59e0b"/>
+    <text x="764" y="333" font-family="system-ui, sans-serif" font-size="17" fill="#cbd5e1">The product page loses 14% of</text>
+    <text x="764" y="355" font-family="system-ui, sans-serif" font-size="17" fill="#cbd5e1">engaged users before cart.</text>
+
+    <circle cx="744" cy="394" r="5" fill="#ef4444"/>
+    <text x="764" y="401" font-family="system-ui, sans-serif" font-size="17" fill="#cbd5e1">More traffic amplifies a leak,</text>
+    <text x="764" y="423" font-family="system-ui, sans-serif" font-size="17" fill="#cbd5e1">it does not plug it.</text>
+
+    <rect x="732" y="462" width="366" height="62" rx="9" fill="url(#accent)"/>
+    <text x="752" y="489" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff">FIX THE STEP BEFORE THE SPEND</text>
+    <text x="752" y="511" font-family="system-ui, sans-serif" font-size="14" fill="#dbeafe">Fixing product view recovers ~30% of cart intent</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="70" y="586" width="1060" height="3" rx="1.5" fill="url(#accent)"/>
+</svg>

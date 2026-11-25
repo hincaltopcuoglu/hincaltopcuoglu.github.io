@@ -1,0 +1,24 @@
+# Areas of expertise shown on the home page.
+- title: Behavioral propensity modeling
+  icon: "fas fa-chart-line"
+  body: "Real-time session scoring that identifies high-intent users before they reach checkout — the core of my e-commerce work."
+
+- title: Cold start analytics
+  icon: "fas fa-seedling"
+  body: "Predictive systems for low-data environments, where A/B testing is not yet statistically viable."
+
+- title: Segmentation & retention
+  icon: "fas fa-layer-group"
+  body: "Customer segmentation, churn prediction and lifecycle modeling that turn raw events into decisions."
+
+- title: Marketing attribution
+  icon: "fas fa-bullseye"
+  body: "Campaign performance measurement and attribution that separates real value from noisy traffic."
+
+- title: Statistical experimentation
+  icon: "fas fa-flask"
+  body: "Bayesian inference, maximum entropy and rigorous resampling to make conclusions that hold up."
+
+- title: Scalable data pipelines
+  icon: "fas fa-server"
+  body: "BigQuery and GA4 analytics workflows engineered to run reliably on production data volumes."

@@ -1,9 +1,10 @@
 title: Hincal Topcuoglu
 email: hincal@topcuoglu.me
-description: Data Scientist with 13 years of experience in statistics, machine learning, and big data.
+description: Data Scientist with 14 years of experience in statistics, machine learning, and big data.
 baseurl: ""
 url: "https://hincaltopcuoglu.github.io"
 theme: minima
+permalink: /blog/:title/
 
 header_pages:
   - index.md
@@ -12,7 +13,22 @@ header_pages:
 
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 markdown: kramdown
 kramdown:
   math_engine: mathjax
+  input: GFM
+
+feed:
+  path: feed.xml
+  posts_limit: 50
+
+exclude:
+  - README.md
+  - tools/
+  - Files/
+  - vendor/
+  - .sass-cache/
+  - .jekyll-cache/

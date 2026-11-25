@@ -1,0 +1,27 @@
+---
+layout: default
+title: Page Not Found
+permalink: /404.html
+sitemap: false
+---
+
+<div class="error-page">
+  <p class="error-code">404</p>
+  <h1 class="error-title">This page doesn't exist</h1>
+  <p class="error-text">
+    The link may be outdated, or the post may have moved.
+    Try searching, or head back to the start.
+  </p>
+
+  <div class="error-actions">
+    <a class="cta-button" href="{{ '/' | relative_url }}">Back to home</a>
+    <a class="cta-button secondary" href="{{ '/blog/' | relative_url }}">Browse the blog</a>
+  </div>
+
+  <form class="error-search" action="{{ '/blog/' | relative_url }}" method="get">
+    <label class="filter-search" for="error-search-input">
+      <i class="fas fa-search" aria-hidden="true"></i>
+      <input type="search" id="error-search-input" name="q" placeholder="Search posts…" aria-label="Search posts" />
+    </label>
+  </form>
+</div>

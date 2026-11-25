@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  {% include head.html %}
+</head>
+
+<body class="page-{{ page.layout | default: 'default' }}">
+
+  {% include site-header.html %}
+
+  <main class="site-main" id="main">
+    {{ content }}
+  </main>
+
+  {% include site-footer.html %}
+
+  {% include search-modal.html %}
+
+  {%- comment -%} Search index — every page gets it so the modal works anywhere {%- endcomment -%}
+  <script>
+    window.__htSearchIndex = [
+      {%- assign search_posts = site.posts | sort: "date" | reverse -%}
+      {%- for post in search_posts -%}
+      {%- assign pm = site.data.post_meta[post.url] -%}
+      {
+        "url": {{ post.url | relative_url | jsonify }},
+        "title": {{ pm.title | default: post.title | jsonify }},
+        "description": {{ pm.description | default: post.description | default: post.excerpt | default: "" | strip_html | normalize_whitespace | truncate: 160 | jsonify }},
+        "categories": {{ pm.categories | default: post.categories | default: "" | jsonify }},
+        "tags": {{ pm.tags | default: post.tags | default: "" | jsonify }},
+        "reading_time": {{ pm.reading_time | default: 6 }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ];
+  </script>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+
+  {%- comment -%} MathJax for posts containing LaTeX {%- endcomment -%}
+  {%- if page.mathjax %}
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {%- endif %}
+
+</body>
+</html>

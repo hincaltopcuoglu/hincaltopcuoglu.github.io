@@ -1,0 +1,125 @@
+---
+title: "Understanding the Attention Mechanism"
+date: 2025-11-01
+permalink: /blog/attention_mechanism_explained.html
+layout: post
+categories: [Machine Learning]
+legacy_flavour: plain
+---
+<header>
+    <h1>Understanding the Attention Mechanism</h1>
+  </header>
+
+  <section>
+    <h2>1. What is Attention Mechanism?</h2>
+    <p>The attention mechanism allows models to focus on specific parts of the input sequence when producing an output. It assigns different importance to different parts of the input, enabling the model to "attend" to the most relevant parts of the sequence.</p>
+    <p>The attention mechanism works by using three key components: <b>Query</b> (Q), <b>Key</b> (K), and <b>Value</b> (V). These components are used to compute how much focus each part of the input should have in the output.</p>
+  </section>
+
+  <section>
+    <h2>2. Query, Key, and Value</h2>
+    <p>The attention mechanism relies on the following vectors:</p>
+    <ul>
+      <li><b>Query (Q)</b>: Represents the current word or token you're interested in.</li>
+      <li><b>Key (K)</b>: Represents the other words or tokens in the sequence that might be relevant to the query.</li>
+      <li><b>Value (V)</b>: Contains the information associated with the words or tokens, which are used to generate the output.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Attention Score Calculation</h2>
+    <p>The attention score between the query and key vectors is calculated as follows:</p>
+    <p>
+      \[
+      \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{Q \cdot K^T}{\sqrt{d_k}}\right) \cdot V
+      \]
+    </p>
+    <p>Where:</p>
+    <ul>
+      <li><b>Q * K^T</b>: Dot product of the query and key vectors.</li>
+      <li><b>d_k</b>: The dimension of the key vectors (usually the number of features in K).</li>
+      <li>The <b>softmax</b> function ensures the attention scores are converted into probabilities that sum to 1.</li>
+    </ul>
+
+    <h3>Key Information</h3>
+    <p>Here’s the key information used for this explanation:</p>
+
+    <h4>Word Embeddings (1x3):</h4>
+    <pre>
+      Word Embedding for "I": [0.2, 0.5, 0.7]
+      Word Embedding for "love": [0.4, 0.8, 0.6]
+      Word Embedding for "statistics": [0.1, 0.6, 0.9]
+    </pre>
+
+    <h4>Weight Matrices (3x2):</h4>
+    <pre>
+      Query Weight Matrix (Wq):
+      [0.1, 0.3]
+      [0.2, 0.4]
+      [0.5, 0.6]
+
+      Key Weight Matrix (Wk):
+      [0.6, 0.2]
+      [0.3, 0.5]
+      [0.7, 0.9]
+
+      Value Weight Matrix (Wv):
+      [0.5, 0.8]
+      [0.2, 0.3]
+      [0.4, 0.6]
+    </pre>
+
+    <h3>Step 1: Compute Weighted Key, Value, and Query Vectors</h3>
+    <p>We compute the weighted key, value, and query vectors by multiplying each word's embedding with the respective weight matrices. The word "love" is the query, so the query calculation is only done for "love". For other words, we calculate the weighted key and value vectors.</p>
+
+    <h4>Query Vector for "love"</h4>
+    <pre>
+      Weighted Query for "love": (Embedding of "love" transposed) * Wq
+      = [0.4, 0.8, 0.6] * Wq = [0.59, 0.78]
+    </pre>
+
+    <h3>Key and Value Vectors</h3>
+    <p>Similarly, we calculate the weighted key and value vectors for all words ("I", "love", "statistics"). Here are the results:</p>
+    <pre>
+      Weighted Key Vector for "I":         [0.48, 0.54]
+      Weighted Key Vector for "love":      [0.68, 0.82]
+      Weighted Key Vector for "statistics":[0.77, 1.12]
+
+      Weighted Value Vector for "I":         [0.66, 0.82]
+      Weighted Value Vector for "love":      [1.02, 1.10]
+      Weighted Value Vector for "statistics":[0.66, 1.02]
+    </pre>
+
+    <h3>Step 2: Calculate Unnormalized Attention Scores</h3>
+    <p>We calculate the unnormalized attention scores by taking the dot product between the weighted query vector for "love" and the weighted key vectors for each word.</p>
+
+    <h4>Unnormalized Attention Scores:</h4>
+    <pre>
+      Attention("love", "I") = 0.5152
+      Attention("love", "love") = 0.7178
+      Attention("love", "statistics") = 0.8934
+    </pre>
+
+    <h3>Step 3: Apply Softmax</h3>
+    <p>Now, we apply the softmax function to convert the unnormalized scores into probabilities:</p>
+    <pre>
+      Attention("love", "I") = 0.3012
+      Attention("love", "love") = 0.3675
+      Attention("love", "statistics") = 0.3313
+    </pre>
+    <p>Notice that the sum of the attention scores equals 1:</p>
+    <pre>
+      0.3012 + 0.3675 + 0.3313 = 1
+    </pre>
+
+    <h3>Step 4: Multiply Normalized Attention Scores with Weighted Value Vectors</h3>
+    <p>Finally, we calculate the context vector by multiplying the normalized attention scores with the corresponding weighted value vectors for each word:</p>
+
+    <h4>Context Vectors:</h4>
+    <pre>
+      Context Vector for "I" = [0.3012 * 0.66, 0.3012 * 0.82] = [0.1988, 0.2460]
+      Context Vector for "love" = [0.3675 * 1.02, 0.3675 * 1.10] = [0.3743, 0.4042]  <!-- Main Query -->
+      Context Vector for "statistics" = [0.3313 * 0.66, 0.3313 * 1.02] = [0.2184, 0.3377]
+    </pre>
+
+  </section>
